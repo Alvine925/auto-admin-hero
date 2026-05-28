@@ -366,6 +366,30 @@ export type Database = {
         }
         Relationships: []
       }
+      job_views: {
+        Row: {
+          created_at: string
+          id: string
+          job_id: string
+          table_name: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          job_id: string
+          table_name: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          job_id?: string
+          table_name?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       jobs: {
         Row: {
           application_email: string | null
