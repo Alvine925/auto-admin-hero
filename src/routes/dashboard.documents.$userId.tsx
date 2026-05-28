@@ -90,6 +90,7 @@ function UserDocumentsPage() {
               Parsed CV text
             </summary>
             <LinkedPre text={profile.parsed_cv_text as string} />
+          </details>
         ) : null}
       </Section>
 
@@ -159,7 +160,6 @@ function UserDocumentsPage() {
                       </Link>
                     </div>
                   )}
-                  )}
                 </div>
               );
             })}
@@ -171,6 +171,7 @@ function UserDocumentsPage() {
         {templates.length === 0 ? (
           <p className="text-sm text-muted-foreground">No saved templates.</p>
         ) : (
+          <div className="divide-y divide-border/60 rounded-lg border border-border bg-card/20">
             {templates.map((t) => (
               <details key={t.id as string} className="px-4 py-3">
                 <summary className="cursor-pointer text-sm font-medium text-foreground">
