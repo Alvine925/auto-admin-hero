@@ -4,13 +4,16 @@ import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { TABLE_CONFIGS, TableKey } from "@/components/admin/table-config";
-import { ArrowLeft, Eye, Loader2 } from "lucide-react";
+import { ArrowLeft, Eye, ExternalLink, Loader2, Mail } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard/t/$table/$id")({
   component: RowDetailPage,
 });
 
-function renderValue(v: unknown) {
+const URL_RE = /^https?:\/\/[^\s]+$/i;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function renderValue(v: unknown, field?: string) {
   if (v === null || v === undefined) return <span className="text-muted-foreground">—</span>;
   if (typeof v === "boolean") return v ? "Yes" : "No";
   if (typeof v === "object") {
@@ -24,8 +27,29 @@ function renderValue(v: unknown) {
   if (/^\d{4}-\d{2}-\d{2}T/.test(s)) {
     try { return new Date(s).toLocaleString(); } catch { /* */ }
   }
-  if (s.startsWith("http")) {
-    return <a href={s} target="_blank" rel="noreferrer" className="text-primary underline break-all">{s}</a>;
+  if (URL_RE.test(s)) {
+    return (
+      <a
+        href={s}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex items-center gap-1.5 break-all text-sm text-primary underline underline-offset-2 hover:text-primary/80"
+      >
+        <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+        {s}
+      </a>
+    );
+  }
+  if (EMAIL_RE.test(s) || field?.includes("email")) {
+    return (
+      <a
+        href={`mailto:${s}`}
+        className="inline-flex items-center gap-1.5 break-all text-sm text-primary underline underline-offset-2 hover:text-primary/80"
+      >
+        <Mail className="h-3.5 w-3.5 shrink-0" />
+        {s}
+      </a>
+    );
   }
   return <span className="whitespace-pre-wrap break-words">{s}</span>;
 }
