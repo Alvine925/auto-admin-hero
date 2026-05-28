@@ -13,8 +13,11 @@ export const Route = createFileRoute("/dashboard/t/$table/")({
   component: TableListPage,
 });
 
-function formatCell(value: unknown, truncate?: number): string {
-  if (value === null || value === undefined) return "—";
+const URL_RE = /^https?:\/\/[^\s]+$/i;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function formatCell(value: unknown, truncate?: number, field?: string): React.ReactNode {
+  if (value === null || value === undefined) return <span className="text-muted-foreground">—</span>;
   if (typeof value === "boolean") return value ? "Yes" : "No";
   if (value instanceof Date) return value.toISOString();
   if (typeof value === "string") {
@@ -22,13 +25,31 @@ function formatCell(value: unknown, truncate?: number): string {
     if (isDate) {
       try { return new Date(value).toLocaleString(); } catch { /* */ }
     }
-    return truncate && value.length > truncate ? value.slice(0, truncate) + "…" : value;
+    if (URL_RE.test(value)) {
+      return (
+        <a href={value} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-primary underline underline-offset-2 hover:text-primary/80">
+          <ExternalLink className="h-3 w-3 shrink-0" />
+          {truncate && value.length > truncate ? value.slice(0, truncate) + "…" : value}
+        </a>
+      );
+    }
+    if (EMAIL_RE.test(value) || field?.includes("email")) {
+      return (
+        <a href={`mailto:${value}`} className="inline-flex items-center gap-1 text-primary underline underline-offset-2 hover:text-primary/80">
+          <Mail className="h-3 w-3 shrink-0" />
+          {truncate && value.length > truncate ? value.slice(0, truncate) + "…" : value}
+        </a>
+      );
+    }
+    const text = truncate && value.length > truncate ? value.slice(0, truncate) + "…" : value;
+    return <span>{text}</span>;
   }
   if (typeof value === "object") {
     const s = JSON.stringify(value);
-    return truncate && s.length > truncate ? s.slice(0, truncate) + "…" : s;
+    const text = truncate && s.length > truncate ? s.slice(0, truncate) + "…" : s;
+    return <span>{text}</span>;
   }
-  return String(value);
+  return <span>{String(value)}</span>;
 }
 
 function TableListPage() {
