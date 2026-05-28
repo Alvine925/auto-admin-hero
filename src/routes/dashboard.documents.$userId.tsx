@@ -195,6 +195,7 @@ function DocBadges({ app }: { app: Record<string, unknown> }) {
     app.email_body && "Email",
     app.interview_report && "Interview",
     app.drive_url && "Drive",
+    app.application_url && "URL",
   ].filter(Boolean) as string[];
   return (
     <div className="flex flex-wrap gap-1">
@@ -207,14 +208,54 @@ function DocBadges({ app }: { app: Record<string, unknown> }) {
   );
 }
 
+const URL_RE = /(https?:\/\/[^\s<]+)/gi;
+const EMAIL_RE = /([^\s@]+@[^\s@]+\.[^\s@]+)/gi;
+
+function linkify(text: string): React.ReactNode[] {
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  const regex = new RegExp(`${URL_RE.source}|${EMAIL_RE.source}`, "gi");
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    const val = match[0];
+    if (val.startsWith("http")) {
+      parts.push(
+        <a key={match.index} href={val} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-2 hover:text-primary/80">
+          {val}
+        </a>
+      );
+    } else {
+      parts.push(
+        <a key={match.index} href={`mailto:${val}`} className="text-primary underline underline-offset-2 hover:text-primary/80">
+          {val}
+        </a>
+      );
+    }
+    lastIndex = match.index + val.length;
+  }
+  if (lastIndex < text.length) parts.push(text.slice(lastIndex));
+  return parts;
+}
+
 function DocBlock({ label, text }: { label: string; text: string | null }) {
   if (!text) return null;
   return (
     <div>
       <div className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{label}</div>
       <pre className="max-h-72 overflow-auto whitespace-pre-wrap rounded border border-border/40 bg-muted/20 p-3 text-xs">
-        {text}
+        {linkify(text)}
       </pre>
     </div>
+  );
+}
+
+function LinkedPre({ text }: { text: string }) {
+  return (
+    <pre className="max-h-80 overflow-auto whitespace-pre-wrap px-3 pb-3 text-xs">
+      {linkify(text)}
+    </pre>
   );
 }
