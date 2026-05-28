@@ -6,9 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { TABLE_CONFIGS, TableKey } from "@/components/admin/table-config";
-import { Eye, Search, ArrowLeft } from "lucide-react";
+import { Eye, Search, ArrowLeft, ExternalLink, Mail } from "lucide-react";
 import { useMemo, useState } from "react";
 
+export const Route = createFileRoute("/dashboard/t/$table/")({
+  component: TableListPage,
+});
 export const Route = createFileRoute("/dashboard/t/$table/")({
   component: TableListPage,
 });
