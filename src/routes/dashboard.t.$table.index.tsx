@@ -110,8 +110,7 @@ function TableListPage() {
             </span>
           </div>
         )}
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+                      <td key={c.key} className="px-4 py-3 align-middle">{formatCell(row[c.key], c.truncate, c.key)}</td>
             <thead>
               <tr className="border-b border-border bg-muted/20 text-left text-xs uppercase tracking-wider text-muted-foreground">
                 {cfg.columns.map((c) => (
