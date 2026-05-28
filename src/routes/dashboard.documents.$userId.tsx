@@ -24,7 +24,6 @@ function UserDocumentsPage() {
           .select("id, job_title, company, status, created_at, cover_letter, email_subject, email_body, interview_report, interview_questions, pack_questions, pack_answers, drive_url, drive_folder_id, application_url")
           .eq("user_id", userId)
           .order("created_at", { ascending: false }),
-          .order("created_at", { ascending: false }),
         supabase.from("templates").select("id, name, type, content, created_at").eq("user_id", userId),
       ]);
 
