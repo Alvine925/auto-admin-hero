@@ -1,24 +1,9 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import {
-  LayoutDashboard, Users, Briefcase, FileText, Workflow, Database,
-  MessageSquare, AlertTriangle, Bell, Crown, LogOut, Activity,
-} from "lucide-react";
+import { Crown, LogOut, LayoutDashboard, ChevronRight } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
-const nav = [
-  { to: "/dashboard", label: "Overview", icon: LayoutDashboard },
-  { to: "/dashboard/users", label: "Users", icon: Users },
-  { to: "/dashboard/jobs", label: "Saved Jobs", icon: Briefcase },
-  { to: "/dashboard/applications", label: "Applications", icon: FileText },
-  { to: "/dashboard/scraped", label: "Scraped Jobs", icon: Database },
-  { to: "/dashboard/workflows", label: "Workflows", icon: Workflow },
-  { to: "/dashboard/notifications", label: "Notifications", icon: Bell },
-  { to: "/dashboard/feedback", label: "Feedback", icon: MessageSquare },
-  { to: "/dashboard/errors", label: "Errors", icon: AlertTriangle },
-  { to: "/dashboard/usage", label: "Usage", icon: Activity },
-] as const;
+import { TABLE_CONFIGS, TABLE_GROUPS } from "./table-config";
 
 export function AdminSidebar() {
   const { pathname } = useLocation();
@@ -36,25 +21,50 @@ export function AdminSidebar() {
         </div>
       </div>
 
-      <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-4">
-        {nav.map((item) => {
-          const active = pathname === item.to || (item.to !== "/dashboard" && pathname.startsWith(item.to));
-          return (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={cn(
-                "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
-                active
-                  ? "bg-sidebar-accent text-sidebar-accent-foreground border-l-2 border-gold"
-                  : "text-sidebar-foreground/75 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground"
-              )}
-            >
-              <item.icon className="h-4 w-4" />
-              {item.label}
-            </Link>
-          );
-        })}
+      <nav className="flex-1 space-y-4 overflow-y-auto px-3 py-4">
+        <Link
+          to="/dashboard"
+          className={cn(
+            "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+            pathname === "/dashboard"
+              ? "bg-sidebar-accent text-sidebar-accent-foreground border-l-2 border-gold"
+              : "text-sidebar-foreground/75 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground"
+          )}
+        >
+          <LayoutDashboard className="h-4 w-4" />
+          Overview
+        </Link>
+
+        {TABLE_GROUPS.map(({ group, tables }) => (
+          <div key={group}>
+            <div className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-sidebar-foreground/40">
+              {group}
+            </div>
+            <div className="space-y-0.5">
+              {tables.map((t) => {
+                const to = `/dashboard/t/${t}`;
+                const active = pathname.startsWith(to);
+                const cfg = TABLE_CONFIGS[t];
+                return (
+                  <Link
+                    key={t}
+                    to="/dashboard/t/$table"
+                    params={{ table: t }}
+                    className={cn(
+                      "flex items-center justify-between gap-3 rounded-md px-3 py-1.5 text-sm transition-colors",
+                      active
+                        ? "bg-sidebar-accent text-sidebar-accent-foreground border-l-2 border-gold"
+                        : "text-sidebar-foreground/75 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground"
+                    )}
+                  >
+                    <span className="truncate">{cfg.label}</span>
+                    <ChevronRight className="h-3 w-3 opacity-40" />
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        ))}
       </nav>
 
       <div className="border-t border-sidebar-border p-3">
