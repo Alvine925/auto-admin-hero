@@ -36,8 +36,6 @@ export function AdminSidebar() {
         </Link>
 
         {TABLE_GROUPS.map(({ group, tables }) => (
-          <div key={group}>
-        {TABLE_GROUPS.map(({ group, tables }) => (
           <div key={group} className="pt-2">
             <div className="mb-2 flex items-center gap-2 px-3">
               <span className="h-px flex-1 bg-gold/30" />
@@ -46,7 +44,7 @@ export function AdminSidebar() {
               </span>
               <span className="h-px flex-1 bg-gold/30" />
             </div>
-
+            <div className="space-y-0.5">
               {tables.map((t) => {
                 const to = `/dashboard/t/${t}`;
                 const active = pathname.startsWith(to);
@@ -71,6 +69,7 @@ export function AdminSidebar() {
             </div>
           </div>
         ))}
+
       </nav>
 
       <div className="border-t border-sidebar-border p-3">
