@@ -2,7 +2,9 @@ import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
+import { NotificationBell } from "@/components/admin/NotificationBell";
 import { Loader2 } from "lucide-react";
+
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardLayout,
@@ -42,11 +44,13 @@ function DashboardLayout() {
       </div>
     );
   }
-
   return (
     <div className="flex min-h-screen w-full bg-background">
       <AdminSidebar />
       <main className="flex-1 min-w-0">
+        <header className="sticky top-0 z-20 flex h-14 items-center justify-end gap-2 border-b border-border bg-background/80 px-6 backdrop-blur">
+          <NotificationBell />
+        </header>
         <Outlet />
       </main>
     </div>
