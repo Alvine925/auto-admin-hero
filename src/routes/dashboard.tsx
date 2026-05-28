@@ -2,7 +2,9 @@ import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
+import { NotificationBell } from "@/components/admin/NotificationBell";
 import { Loader2 } from "lucide-react";
+
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardLayout,
