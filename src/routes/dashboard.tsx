@@ -44,13 +44,18 @@ function DashboardLayout() {
       </div>
     );
   }
-
   return (
     <div className="flex min-h-screen w-full bg-background">
       <AdminSidebar />
       <main className="flex-1 min-w-0">
+        <header className="sticky top-0 z-20 flex h-14 items-center justify-end gap-2 border-b border-border bg-background/80 px-6 backdrop-blur">
+          <NotificationBell />
+        </header>
         <Outlet />
       </main>
     </div>
+  );
+}
+
   );
 }
