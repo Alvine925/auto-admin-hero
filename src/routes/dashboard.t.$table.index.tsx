@@ -109,8 +109,8 @@ function TableListPage() {
               {filtered.length} of {data?.length ?? 0}
             </span>
           </div>
-        )}
-                      <td key={c.key} className="px-4 py-3 align-middle">{formatCell(row[c.key], c.truncate, c.key)}</td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border bg-muted/20 text-left text-xs uppercase tracking-wider text-muted-foreground">
                 {cfg.columns.map((c) => (
@@ -131,7 +131,7 @@ function TableListPage() {
                 return (
                   <tr key={id} className="border-b border-border/60 transition-colors hover:bg-muted/30">
                     {cfg.columns.map((c) => (
-                      <td key={c.key} className="px-4 py-3 align-middle">{formatCell(row[c.key], c.truncate)}</td>
+                      <td key={c.key} className="px-4 py-3 align-middle">{formatCell(row[c.key], c.truncate, c.key)}</td>
                     ))}
                     <td className="px-4 py-3 text-right">
                       <Button asChild size="sm" variant="outline">
