@@ -132,12 +132,7 @@ function RowDetailPage() {
         <div className="grid place-items-center p-12 text-muted-foreground">
           <Loader2 className="h-5 w-5 animate-spin" />
         </div>
-      )}
-
-      {error && (
-        <div className="p-6 text-sm text-destructive">{(error as Error).message}</div>
-      )}
-
+              <div className="text-sm">{renderValue(v, k)}</div>
       {!isLoading && !data && (
         <div className="p-6 text-sm text-muted-foreground">No record found.</div>
       )}
