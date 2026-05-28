@@ -109,6 +109,7 @@ function TableListPage() {
               {filtered.length} of {data?.length ?? 0}
             </span>
           </div>
+        )}
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
