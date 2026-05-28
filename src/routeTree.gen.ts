@@ -23,6 +23,7 @@ import { Route as DashboardFeedbackRouteImport } from './routes/dashboard.feedba
 import { Route as DashboardErrorsRouteImport } from './routes/dashboard.errors'
 import { Route as DashboardApplicationsRouteImport } from './routes/dashboard.applications'
 import { Route as DashboardTTableIndexRouteImport } from './routes/dashboard.t.$table.index'
+import { Route as DashboardTTableIdRouteImport } from './routes/dashboard.t.$table.$id'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -94,6 +95,11 @@ const DashboardTTableIndexRoute = DashboardTTableIndexRouteImport.update({
   path: '/t/$table/',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardTTableIdRoute = DashboardTTableIdRouteImport.update({
+  id: '/t/$table/$id',
+  path: '/t/$table/$id',
+  getParentRoute: () => DashboardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/t/$table/$id': typeof DashboardTTableIdRoute
   '/dashboard/t/$table/': typeof DashboardTTableIndexRoute
 }
 export interface FileRoutesByTo {
@@ -124,6 +131,7 @@ export interface FileRoutesByTo {
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/dashboard/t/$table/$id': typeof DashboardTTableIdRoute
   '/dashboard/t/$table': typeof DashboardTTableIndexRoute
 }
 export interface FileRoutesById {
@@ -141,6 +149,7 @@ export interface FileRoutesById {
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/t/$table/$id': typeof DashboardTTableIdRoute
   '/dashboard/t/$table/': typeof DashboardTTableIndexRoute
 }
 export interface FileRouteTypes {
@@ -159,6 +168,7 @@ export interface FileRouteTypes {
     | '/dashboard/users'
     | '/dashboard/workflows'
     | '/dashboard/'
+    | '/dashboard/t/$table/$id'
     | '/dashboard/t/$table/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
     | '/dashboard/users'
     | '/dashboard/workflows'
     | '/dashboard'
+    | '/dashboard/t/$table/$id'
     | '/dashboard/t/$table'
   id:
     | '__root__'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/dashboard/users'
     | '/dashboard/workflows'
     | '/dashboard/'
+    | '/dashboard/t/$table/$id'
     | '/dashboard/t/$table/'
   fileRoutesById: FileRoutesById
 }
@@ -299,6 +311,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardTTableIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/t/$table/$id': {
+      id: '/dashboard/t/$table/$id'
+      path: '/t/$table/$id'
+      fullPath: '/dashboard/t/$table/$id'
+      preLoaderRoute: typeof DashboardTTableIdRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
@@ -313,6 +332,7 @@ interface DashboardRouteChildren {
   DashboardUsersRoute: typeof DashboardUsersRoute
   DashboardWorkflowsRoute: typeof DashboardWorkflowsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardTTableIdRoute: typeof DashboardTTableIdRoute
   DashboardTTableIndexRoute: typeof DashboardTTableIndexRoute
 }
 
@@ -327,6 +347,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardUsersRoute: DashboardUsersRoute,
   DashboardWorkflowsRoute: DashboardWorkflowsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
+  DashboardTTableIdRoute: DashboardTTableIdRoute,
   DashboardTTableIndexRoute: DashboardTTableIndexRoute,
 }
 
@@ -342,3 +363,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
