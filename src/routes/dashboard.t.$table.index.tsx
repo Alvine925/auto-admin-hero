@@ -72,7 +72,7 @@ function TableListPage() {
 
   return (
     <div className="p-6 md:p-8">
-      <PageHeader title={cfg.label} subtitle={`${cfg.group} · ${data?.length ?? 0} rows`} />
+      <PageHeader title={cfg.label} description={`${cfg.group} · ${data?.length ?? 0} rows`} />
 
       <Card className="overflow-hidden">
         {cfg.searchKeys && (
