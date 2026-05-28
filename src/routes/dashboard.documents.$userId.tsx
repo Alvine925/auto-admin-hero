@@ -89,8 +89,9 @@ function UserDocumentsPage() {
             <summary className="cursor-pointer px-3 py-2 text-xs uppercase tracking-wider text-muted-foreground">
               Parsed CV text
             </summary>
-            <pre className="max-h-80 overflow-auto whitespace-pre-wrap px-3 pb-3 text-xs">{profile.parsed_cv_text as string}</pre>
+            <LinkedPre text={profile.parsed_cv_text as string} />
           </details>
+        ) : null}
         ) : null}
       </Section>
 
@@ -122,6 +123,16 @@ function UserDocumentsPage() {
 
                   {open && (
                     <div className="mt-4 space-y-4 border-t border-border/40 pt-4">
+                      {a.application_url ? (
+                        <a
+                          href={a.application_url as string}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 text-xs text-primary hover:underline"
+                        >
+                          <Link2 className="h-3 w-3" /> Application URL
+                        </a>
+                      ) : null}
                       {a.drive_url ? (
                         <a
                           href={a.drive_url as string}
@@ -150,6 +161,7 @@ function UserDocumentsPage() {
                       </Link>
                     </div>
                   )}
+                  )}
                 </div>
               );
             })}
@@ -161,16 +173,15 @@ function UserDocumentsPage() {
         {templates.length === 0 ? (
           <p className="text-sm text-muted-foreground">No saved templates.</p>
         ) : (
-          <div className="divide-y divide-border/60 rounded-lg border border-border bg-card/20">
             {templates.map((t) => (
               <details key={t.id as string} className="px-4 py-3">
                 <summary className="cursor-pointer text-sm font-medium text-foreground">
                   {(t.name as string) || "Template"}{" "}
                   <span className="ml-2 text-xs text-muted-foreground">{t.type as string}</span>
                 </summary>
-                <pre className="mt-2 max-h-80 overflow-auto whitespace-pre-wrap rounded bg-muted/30 p-3 text-xs">
-                  {t.content as string}
-                </pre>
+                <div className="mt-2 max-h-80 overflow-auto whitespace-pre-wrap rounded bg-muted/30 p-3 text-xs">
+                  {linkify(t.content as string)}
+                </div>
               </details>
             ))}
           </div>
