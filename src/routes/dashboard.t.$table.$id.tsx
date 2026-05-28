@@ -132,7 +132,12 @@ function RowDetailPage() {
         <div className="grid place-items-center p-12 text-muted-foreground">
           <Loader2 className="h-5 w-5 animate-spin" />
         </div>
-              <div className="text-sm">{renderValue(v, k)}</div>
+      )}
+
+      {error && (
+        <div className="p-6 text-sm text-destructive">{(error as Error).message}</div>
+      )}
+
       {!isLoading && !data && (
         <div className="p-6 text-sm text-muted-foreground">No record found.</div>
       )}
@@ -142,11 +147,12 @@ function RowDetailPage() {
           {Object.entries(data).map(([k, v]) => (
             <div key={k} className="grid grid-cols-1 gap-2 py-3 md:grid-cols-[200px_1fr]">
               <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{k}</div>
-              <div className="text-sm">{renderValue(v)}</div>
+              <div className="text-sm">{renderValue(v, k)}</div>
             </div>
           ))}
         </div>
       )}
     </div>
   );
+}
 }
