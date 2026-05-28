@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { StatCard } from "@/components/admin/StatCard";
 import { PageHeader, PageBody } from "@/components/admin/PageHeader";
-import { Card } from "@/components/admin/../ui/card";
+import { Card } from "@/components/ui/card";
 import { Users, Briefcase, FileText, Send, TrendingUp, Database, AlertTriangle, Crown } from "lucide-react";
 import { StatusBadge, formatDateTime, truncate } from "@/components/admin/format";
 import {
