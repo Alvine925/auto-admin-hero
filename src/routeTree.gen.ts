@@ -9,38 +9,200 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as DashboardWorkflowsRouteImport } from './routes/dashboard.workflows'
+import { Route as DashboardUsersRouteImport } from './routes/dashboard.users'
+import { Route as DashboardUsageRouteImport } from './routes/dashboard.usage'
+import { Route as DashboardScrapedRouteImport } from './routes/dashboard.scraped'
+import { Route as DashboardNotificationsRouteImport } from './routes/dashboard.notifications'
+import { Route as DashboardJobsRouteImport } from './routes/dashboard.jobs'
+import { Route as DashboardFeedbackRouteImport } from './routes/dashboard.feedback'
+import { Route as DashboardErrorsRouteImport } from './routes/dashboard.errors'
+import { Route as DashboardApplicationsRouteImport } from './routes/dashboard.applications'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardWorkflowsRoute = DashboardWorkflowsRouteImport.update({
+  id: '/workflows',
+  path: '/workflows',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardUsersRoute = DashboardUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardUsageRoute = DashboardUsageRouteImport.update({
+  id: '/usage',
+  path: '/usage',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardScrapedRoute = DashboardScrapedRouteImport.update({
+  id: '/scraped',
+  path: '/scraped',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardNotificationsRoute = DashboardNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardJobsRoute = DashboardJobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardFeedbackRoute = DashboardFeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardErrorsRoute = DashboardErrorsRouteImport.update({
+  id: '/errors',
+  path: '/errors',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardApplicationsRoute = DashboardApplicationsRouteImport.update({
+  id: '/applications',
+  path: '/applications',
+  getParentRoute: () => DashboardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/login': typeof LoginRoute
+  '/dashboard/applications': typeof DashboardApplicationsRoute
+  '/dashboard/errors': typeof DashboardErrorsRoute
+  '/dashboard/feedback': typeof DashboardFeedbackRoute
+  '/dashboard/jobs': typeof DashboardJobsRoute
+  '/dashboard/notifications': typeof DashboardNotificationsRoute
+  '/dashboard/scraped': typeof DashboardScrapedRoute
+  '/dashboard/usage': typeof DashboardUsageRoute
+  '/dashboard/users': typeof DashboardUsersRoute
+  '/dashboard/workflows': typeof DashboardWorkflowsRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/dashboard/applications': typeof DashboardApplicationsRoute
+  '/dashboard/errors': typeof DashboardErrorsRoute
+  '/dashboard/feedback': typeof DashboardFeedbackRoute
+  '/dashboard/jobs': typeof DashboardJobsRoute
+  '/dashboard/notifications': typeof DashboardNotificationsRoute
+  '/dashboard/scraped': typeof DashboardScrapedRoute
+  '/dashboard/usage': typeof DashboardUsageRoute
+  '/dashboard/users': typeof DashboardUsersRoute
+  '/dashboard/workflows': typeof DashboardWorkflowsRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/login': typeof LoginRoute
+  '/dashboard/applications': typeof DashboardApplicationsRoute
+  '/dashboard/errors': typeof DashboardErrorsRoute
+  '/dashboard/feedback': typeof DashboardFeedbackRoute
+  '/dashboard/jobs': typeof DashboardJobsRoute
+  '/dashboard/notifications': typeof DashboardNotificationsRoute
+  '/dashboard/scraped': typeof DashboardScrapedRoute
+  '/dashboard/usage': typeof DashboardUsageRoute
+  '/dashboard/users': typeof DashboardUsersRoute
+  '/dashboard/workflows': typeof DashboardWorkflowsRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/login'
+    | '/dashboard/applications'
+    | '/dashboard/errors'
+    | '/dashboard/feedback'
+    | '/dashboard/jobs'
+    | '/dashboard/notifications'
+    | '/dashboard/scraped'
+    | '/dashboard/usage'
+    | '/dashboard/users'
+    | '/dashboard/workflows'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/dashboard/applications'
+    | '/dashboard/errors'
+    | '/dashboard/feedback'
+    | '/dashboard/jobs'
+    | '/dashboard/notifications'
+    | '/dashboard/scraped'
+    | '/dashboard/usage'
+    | '/dashboard/users'
+    | '/dashboard/workflows'
+    | '/dashboard'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/login'
+    | '/dashboard/applications'
+    | '/dashboard/errors'
+    | '/dashboard/feedback'
+    | '/dashboard/jobs'
+    | '/dashboard/notifications'
+    | '/dashboard/scraped'
+    | '/dashboard/usage'
+    | '/dashboard/users'
+    | '/dashboard/workflows'
+    | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +210,113 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/workflows': {
+      id: '/dashboard/workflows'
+      path: '/workflows'
+      fullPath: '/dashboard/workflows'
+      preLoaderRoute: typeof DashboardWorkflowsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/users': {
+      id: '/dashboard/users'
+      path: '/users'
+      fullPath: '/dashboard/users'
+      preLoaderRoute: typeof DashboardUsersRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/usage': {
+      id: '/dashboard/usage'
+      path: '/usage'
+      fullPath: '/dashboard/usage'
+      preLoaderRoute: typeof DashboardUsageRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/scraped': {
+      id: '/dashboard/scraped'
+      path: '/scraped'
+      fullPath: '/dashboard/scraped'
+      preLoaderRoute: typeof DashboardScrapedRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/notifications': {
+      id: '/dashboard/notifications'
+      path: '/notifications'
+      fullPath: '/dashboard/notifications'
+      preLoaderRoute: typeof DashboardNotificationsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/jobs': {
+      id: '/dashboard/jobs'
+      path: '/jobs'
+      fullPath: '/dashboard/jobs'
+      preLoaderRoute: typeof DashboardJobsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/feedback': {
+      id: '/dashboard/feedback'
+      path: '/feedback'
+      fullPath: '/dashboard/feedback'
+      preLoaderRoute: typeof DashboardFeedbackRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/errors': {
+      id: '/dashboard/errors'
+      path: '/errors'
+      fullPath: '/dashboard/errors'
+      preLoaderRoute: typeof DashboardErrorsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/applications': {
+      id: '/dashboard/applications'
+      path: '/applications'
+      fullPath: '/dashboard/applications'
+      preLoaderRoute: typeof DashboardApplicationsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
+interface DashboardRouteChildren {
+  DashboardApplicationsRoute: typeof DashboardApplicationsRoute
+  DashboardErrorsRoute: typeof DashboardErrorsRoute
+  DashboardFeedbackRoute: typeof DashboardFeedbackRoute
+  DashboardJobsRoute: typeof DashboardJobsRoute
+  DashboardNotificationsRoute: typeof DashboardNotificationsRoute
+  DashboardScrapedRoute: typeof DashboardScrapedRoute
+  DashboardUsageRoute: typeof DashboardUsageRoute
+  DashboardUsersRoute: typeof DashboardUsersRoute
+  DashboardWorkflowsRoute: typeof DashboardWorkflowsRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardApplicationsRoute: DashboardApplicationsRoute,
+  DashboardErrorsRoute: DashboardErrorsRoute,
+  DashboardFeedbackRoute: DashboardFeedbackRoute,
+  DashboardJobsRoute: DashboardJobsRoute,
+  DashboardNotificationsRoute: DashboardNotificationsRoute,
+  DashboardScrapedRoute: DashboardScrapedRoute,
+  DashboardUsageRoute: DashboardUsageRoute,
+  DashboardUsersRoute: DashboardUsersRoute,
+  DashboardWorkflowsRoute: DashboardWorkflowsRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRouteWithChildren,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
