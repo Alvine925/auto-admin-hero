@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Download, ExternalLink, FileText, Loader2 } from "lucide-react";
+import { ArrowLeft, Download, ExternalLink, FileText, Loader2, Link2, Mail } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard/documents/$userId")({
   component: UserDocumentsPage,
@@ -21,7 +21,7 @@ function UserDocumentsPage() {
         supabase.from("profiles").select("*").eq("id", userId).maybeSingle(),
         supabase
           .from("applications")
-          .select("id, job_title, company, status, created_at, cover_letter, email_subject, email_body, interview_report, interview_questions, pack_questions, pack_answers, drive_url, drive_folder_id")
+          .select("id, job_title, company, status, created_at, cover_letter, email_subject, email_body, interview_report, interview_questions, pack_questions, pack_answers, drive_url, drive_folder_id, application_url")
           .eq("user_id", userId)
           .order("created_at", { ascending: false }),
         supabase.from("templates").select("id, name, type, content, created_at").eq("user_id", userId),
@@ -89,7 +89,7 @@ function UserDocumentsPage() {
             <summary className="cursor-pointer px-3 py-2 text-xs uppercase tracking-wider text-muted-foreground">
               Parsed CV text
             </summary>
-            <pre className="max-h-80 overflow-auto whitespace-pre-wrap px-3 pb-3 text-xs">{profile.parsed_cv_text as string}</pre>
+            <LinkedPre text={profile.parsed_cv_text as string} />
           </details>
         ) : null}
       </Section>
@@ -122,6 +122,16 @@ function UserDocumentsPage() {
 
                   {open && (
                     <div className="mt-4 space-y-4 border-t border-border/40 pt-4">
+                      {a.application_url ? (
+                        <a
+                          href={a.application_url as string}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 text-xs text-primary hover:underline"
+                        >
+                          <Link2 className="h-3 w-3" /> Application URL
+                        </a>
+                      ) : null}
                       {a.drive_url ? (
                         <a
                           href={a.drive_url as string}
@@ -168,9 +178,9 @@ function UserDocumentsPage() {
                   {(t.name as string) || "Template"}{" "}
                   <span className="ml-2 text-xs text-muted-foreground">{t.type as string}</span>
                 </summary>
-                <pre className="mt-2 max-h-80 overflow-auto whitespace-pre-wrap rounded bg-muted/30 p-3 text-xs">
-                  {t.content as string}
-                </pre>
+                <div className="mt-2 max-h-80 overflow-auto whitespace-pre-wrap rounded bg-muted/30 p-3 text-xs">
+                  {linkify(t.content as string)}
+                </div>
               </details>
             ))}
           </div>
@@ -195,6 +205,7 @@ function DocBadges({ app }: { app: Record<string, unknown> }) {
     app.email_body && "Email",
     app.interview_report && "Interview",
     app.drive_url && "Drive",
+    app.application_url && "URL",
   ].filter(Boolean) as string[];
   return (
     <div className="flex flex-wrap gap-1">
@@ -207,14 +218,54 @@ function DocBadges({ app }: { app: Record<string, unknown> }) {
   );
 }
 
+const URL_RE = /(https?:\/\/[^\s<]+)/gi;
+const EMAIL_RE = /([^\s@]+@[^\s@]+\.[^\s@]+)/gi;
+
+function linkify(text: string): React.ReactNode[] {
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  const regex = new RegExp(`${URL_RE.source}|${EMAIL_RE.source}`, "gi");
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    const val = match[0];
+    if (val.startsWith("http")) {
+      parts.push(
+        <a key={match.index} href={val} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-2 hover:text-primary/80">
+          {val}
+        </a>
+      );
+    } else {
+      parts.push(
+        <a key={match.index} href={`mailto:${val}`} className="text-primary underline underline-offset-2 hover:text-primary/80">
+          {val}
+        </a>
+      );
+    }
+    lastIndex = match.index + val.length;
+  }
+  if (lastIndex < text.length) parts.push(text.slice(lastIndex));
+  return parts;
+}
+
 function DocBlock({ label, text }: { label: string; text: string | null }) {
   if (!text) return null;
   return (
     <div>
       <div className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{label}</div>
       <pre className="max-h-72 overflow-auto whitespace-pre-wrap rounded border border-border/40 bg-muted/20 p-3 text-xs">
-        {text}
+        {linkify(text)}
       </pre>
     </div>
+  );
+}
+
+function LinkedPre({ text }: { text: string }) {
+  return (
+    <pre className="max-h-80 overflow-auto whitespace-pre-wrap px-3 pb-3 text-xs">
+      {linkify(text)}
+    </pre>
   );
 }
