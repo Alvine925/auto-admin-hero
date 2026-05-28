@@ -136,7 +136,7 @@ export const TABLE_CONFIGS: Record<TableKey, TableConfig> = {
     orderBy: { column: "created_at", ascending: false },
   },
   jobs: {
-    key: "jobs", label: "Saved Jobs", group: "Jobs",
+    key: "jobs", label: "Jobs", group: "Jobs",
     columns: [
       { key: "title", header: "Title" },
       { key: "company", header: "Company" },
@@ -147,6 +147,7 @@ export const TABLE_CONFIGS: Record<TableKey, TableConfig> = {
     searchKeys: ["title", "company"],
     orderBy: { column: "created_at", ascending: false },
   },
+
   job_listings: {
     key: "job_listings", label: "Job Listings", group: "Jobs",
     columns: [
