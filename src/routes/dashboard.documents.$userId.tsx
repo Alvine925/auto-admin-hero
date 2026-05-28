@@ -90,8 +90,6 @@ function UserDocumentsPage() {
               Parsed CV text
             </summary>
             <LinkedPre text={profile.parsed_cv_text as string} />
-          </details>
-        ) : null}
         ) : null}
       </Section>
 
