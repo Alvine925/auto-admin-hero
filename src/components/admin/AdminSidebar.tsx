@@ -46,6 +46,7 @@ export function AdminSidebar() {
         >
           <FolderOpen className="h-4 w-4" />
           User Documents
+        </Link>
 
         {TABLE_GROUPS.map(({ group, tables }) => (
           <div key={group} className="pt-2">
