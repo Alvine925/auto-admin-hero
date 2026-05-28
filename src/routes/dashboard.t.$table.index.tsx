@@ -12,9 +12,6 @@ import { useMemo, useState } from "react";
 export const Route = createFileRoute("/dashboard/t/$table/")({
   component: TableListPage,
 });
-export const Route = createFileRoute("/dashboard/t/$table/")({
-  component: TableListPage,
-});
 
 function formatCell(value: unknown, truncate?: number): string {
   if (value === null || value === undefined) return "—";
