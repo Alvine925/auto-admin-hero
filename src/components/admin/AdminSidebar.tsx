@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { Crown, LogOut, LayoutDashboard, ChevronRight } from "lucide-react";
+import { Crown, LogOut, LayoutDashboard, ChevronRight, FolderOpen } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -34,6 +34,18 @@ export function AdminSidebar() {
           <LayoutDashboard className="h-4 w-4" />
           Overview
         </Link>
+
+        <Link
+          to="/dashboard/documents"
+          className={cn(
+            "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+            pathname.startsWith("/dashboard/documents")
+              ? "bg-sidebar-accent text-sidebar-accent-foreground border-l-2 border-gold"
+              : "text-sidebar-foreground/75 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground"
+          )}
+        >
+          <FolderOpen className="h-4 w-4" />
+          User Documents
 
         {TABLE_GROUPS.map(({ group, tables }) => (
           <div key={group} className="pt-2">

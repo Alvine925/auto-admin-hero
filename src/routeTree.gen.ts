@@ -22,6 +22,8 @@ import { Route as DashboardJobsRouteImport } from './routes/dashboard.jobs'
 import { Route as DashboardFeedbackRouteImport } from './routes/dashboard.feedback'
 import { Route as DashboardErrorsRouteImport } from './routes/dashboard.errors'
 import { Route as DashboardApplicationsRouteImport } from './routes/dashboard.applications'
+import { Route as DashboardDocumentsIndexRouteImport } from './routes/dashboard.documents.index'
+import { Route as DashboardDocumentsUserIdRouteImport } from './routes/dashboard.documents.$userId'
 import { Route as DashboardTTableIndexRouteImport } from './routes/dashboard.t.$table.index'
 import { Route as DashboardTTableIdRouteImport } from './routes/dashboard.t.$table.$id'
 
@@ -90,6 +92,17 @@ const DashboardApplicationsRoute = DashboardApplicationsRouteImport.update({
   path: '/applications',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardDocumentsIndexRoute = DashboardDocumentsIndexRouteImport.update({
+  id: '/documents/',
+  path: '/documents/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardDocumentsUserIdRoute =
+  DashboardDocumentsUserIdRouteImport.update({
+    id: '/documents/$userId',
+    path: '/documents/$userId',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 const DashboardTTableIndexRoute = DashboardTTableIndexRouteImport.update({
   id: '/t/$table/',
   path: '/t/$table/',
@@ -115,6 +128,8 @@ export interface FileRoutesByFullPath {
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
+  '/dashboard/documents/': typeof DashboardDocumentsIndexRoute
   '/dashboard/t/$table/$id': typeof DashboardTTableIdRoute
   '/dashboard/t/$table/': typeof DashboardTTableIndexRoute
 }
@@ -131,6 +146,8 @@ export interface FileRoutesByTo {
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
+  '/dashboard/documents': typeof DashboardDocumentsIndexRoute
   '/dashboard/t/$table/$id': typeof DashboardTTableIdRoute
   '/dashboard/t/$table': typeof DashboardTTableIndexRoute
 }
@@ -149,6 +166,8 @@ export interface FileRoutesById {
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
+  '/dashboard/documents/': typeof DashboardDocumentsIndexRoute
   '/dashboard/t/$table/$id': typeof DashboardTTableIdRoute
   '/dashboard/t/$table/': typeof DashboardTTableIndexRoute
 }
@@ -168,6 +187,8 @@ export interface FileRouteTypes {
     | '/dashboard/users'
     | '/dashboard/workflows'
     | '/dashboard/'
+    | '/dashboard/documents/$userId'
+    | '/dashboard/documents/'
     | '/dashboard/t/$table/$id'
     | '/dashboard/t/$table/'
   fileRoutesByTo: FileRoutesByTo
@@ -184,6 +205,8 @@ export interface FileRouteTypes {
     | '/dashboard/users'
     | '/dashboard/workflows'
     | '/dashboard'
+    | '/dashboard/documents/$userId'
+    | '/dashboard/documents'
     | '/dashboard/t/$table/$id'
     | '/dashboard/t/$table'
   id:
@@ -201,6 +224,8 @@ export interface FileRouteTypes {
     | '/dashboard/users'
     | '/dashboard/workflows'
     | '/dashboard/'
+    | '/dashboard/documents/$userId'
+    | '/dashboard/documents/'
     | '/dashboard/t/$table/$id'
     | '/dashboard/t/$table/'
   fileRoutesById: FileRoutesById
@@ -304,6 +329,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardApplicationsRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/documents/': {
+      id: '/dashboard/documents/'
+      path: '/documents'
+      fullPath: '/dashboard/documents/'
+      preLoaderRoute: typeof DashboardDocumentsIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/documents/$userId': {
+      id: '/dashboard/documents/$userId'
+      path: '/documents/$userId'
+      fullPath: '/dashboard/documents/$userId'
+      preLoaderRoute: typeof DashboardDocumentsUserIdRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/t/$table/': {
       id: '/dashboard/t/$table/'
       path: '/t/$table'
@@ -332,6 +371,8 @@ interface DashboardRouteChildren {
   DashboardUsersRoute: typeof DashboardUsersRoute
   DashboardWorkflowsRoute: typeof DashboardWorkflowsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardDocumentsUserIdRoute: typeof DashboardDocumentsUserIdRoute
+  DashboardDocumentsIndexRoute: typeof DashboardDocumentsIndexRoute
   DashboardTTableIdRoute: typeof DashboardTTableIdRoute
   DashboardTTableIndexRoute: typeof DashboardTTableIndexRoute
 }
@@ -347,6 +388,8 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardUsersRoute: DashboardUsersRoute,
   DashboardWorkflowsRoute: DashboardWorkflowsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
+  DashboardDocumentsUserIdRoute: DashboardDocumentsUserIdRoute,
+  DashboardDocumentsIndexRoute: DashboardDocumentsIndexRoute,
   DashboardTTableIdRoute: DashboardTTableIdRoute,
   DashboardTTableIndexRoute: DashboardTTableIndexRoute,
 }
@@ -363,3 +406,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
