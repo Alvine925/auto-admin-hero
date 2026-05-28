@@ -37,10 +37,16 @@ export function AdminSidebar() {
 
         {TABLE_GROUPS.map(({ group, tables }) => (
           <div key={group}>
-            <div className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-sidebar-foreground/40">
-              {group}
+        {TABLE_GROUPS.map(({ group, tables }) => (
+          <div key={group} className="pt-2">
+            <div className="mb-2 flex items-center gap-2 px-3">
+              <span className="h-px flex-1 bg-gold/30" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-gold">
+                {group}
+              </span>
+              <span className="h-px flex-1 bg-gold/30" />
             </div>
-            <div className="space-y-0.5">
+
               {tables.map((t) => {
                 const to = `/dashboard/t/${t}`;
                 const active = pathname.startsWith(to);
