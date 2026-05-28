@@ -22,6 +22,7 @@ import { Route as DashboardJobsRouteImport } from './routes/dashboard.jobs'
 import { Route as DashboardFeedbackRouteImport } from './routes/dashboard.feedback'
 import { Route as DashboardErrorsRouteImport } from './routes/dashboard.errors'
 import { Route as DashboardApplicationsRouteImport } from './routes/dashboard.applications'
+import { Route as DashboardTTableIndexRouteImport } from './routes/dashboard.t.$table.index'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -88,6 +89,11 @@ const DashboardApplicationsRoute = DashboardApplicationsRouteImport.update({
   path: '/applications',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardTTableIndexRoute = DashboardTTableIndexRouteImport.update({
+  id: '/t/$table/',
+  path: '/t/$table/',
+  getParentRoute: () => DashboardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/t/$table/': typeof DashboardTTableIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -117,6 +124,7 @@ export interface FileRoutesByTo {
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/dashboard/t/$table': typeof DashboardTTableIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -133,6 +141,7 @@ export interface FileRoutesById {
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/t/$table/': typeof DashboardTTableIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -150,6 +159,7 @@ export interface FileRouteTypes {
     | '/dashboard/users'
     | '/dashboard/workflows'
     | '/dashboard/'
+    | '/dashboard/t/$table/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
     | '/dashboard/users'
     | '/dashboard/workflows'
     | '/dashboard'
+    | '/dashboard/t/$table'
   id:
     | '__root__'
     | '/'
@@ -179,6 +190,7 @@ export interface FileRouteTypes {
     | '/dashboard/users'
     | '/dashboard/workflows'
     | '/dashboard/'
+    | '/dashboard/t/$table/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -280,6 +292,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardApplicationsRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/t/$table/': {
+      id: '/dashboard/t/$table/'
+      path: '/t/$table'
+      fullPath: '/dashboard/t/$table/'
+      preLoaderRoute: typeof DashboardTTableIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
@@ -294,6 +313,7 @@ interface DashboardRouteChildren {
   DashboardUsersRoute: typeof DashboardUsersRoute
   DashboardWorkflowsRoute: typeof DashboardWorkflowsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardTTableIndexRoute: typeof DashboardTTableIndexRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
@@ -307,6 +327,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardUsersRoute: DashboardUsersRoute,
   DashboardWorkflowsRoute: DashboardWorkflowsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
+  DashboardTTableIndexRoute: DashboardTTableIndexRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
@@ -321,3 +342,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
