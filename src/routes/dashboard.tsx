@@ -56,6 +56,3 @@ function DashboardLayout() {
     </div>
   );
 }
-
-  );
-}
