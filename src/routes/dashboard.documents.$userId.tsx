@@ -71,16 +71,27 @@ function UserDocumentsPage() {
 
       <Section title="Uploaded CV">
         {cvUrl ? (
-          <a
-            href={cvUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-md border border-border bg-card/40 px-4 py-2 text-sm hover:bg-muted/40"
-          >
-            <FileText className="h-4 w-4 text-primary" />
-            Open CV
-            <Download className="ml-2 h-3 w-3 opacity-60" />
-          </a>
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <a
+                href={cvUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-md border border-border bg-card/40 px-4 py-2 text-sm hover:bg-muted/40"
+              >
+                <FileText className="h-4 w-4 text-primary" />
+                Open in new tab
+                <Download className="ml-2 h-3 w-3 opacity-60" />
+              </a>
+            </div>
+            <div className="overflow-hidden rounded-lg border border-border bg-card/20">
+              <iframe
+                src={cvUrl}
+                title="Uploaded CV"
+                className="h-[80vh] w-full"
+              />
+            </div>
+          </div>
         ) : (
           <p className="text-sm text-muted-foreground">No CV uploaded.</p>
         )}
@@ -98,6 +109,7 @@ function UserDocumentsPage() {
         {apps.length === 0 ? (
           <p className="text-sm text-muted-foreground">No applications yet.</p>
         ) : (
+
           <div className="divide-y divide-border/60 rounded-lg border border-border bg-card/20">
             {apps.map((a) => {
               const id = a.id as string;
