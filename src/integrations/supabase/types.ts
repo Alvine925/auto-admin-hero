@@ -580,6 +580,51 @@ export type Database = {
           },
         ]
       }
+      pending_oauth_sessions: {
+        Row: {
+          access_token: string | null
+          code_verifier: string | null
+          created_at: string
+          expires_at: string
+          google_access_token: string | null
+          google_refresh_token: string | null
+          id: string
+          ref_code: string | null
+          refresh_token: string | null
+          state_token: string
+          used: boolean
+          user_id: string | null
+        }
+        Insert: {
+          access_token?: string | null
+          code_verifier?: string | null
+          created_at?: string
+          expires_at?: string
+          google_access_token?: string | null
+          google_refresh_token?: string | null
+          id?: string
+          ref_code?: string | null
+          refresh_token?: string | null
+          state_token: string
+          used?: boolean
+          user_id?: string | null
+        }
+        Update: {
+          access_token?: string | null
+          code_verifier?: string | null
+          created_at?: string
+          expires_at?: string
+          google_access_token?: string | null
+          google_refresh_token?: string | null
+          id?: string
+          ref_code?: string | null
+          refresh_token?: string | null
+          state_token?: string
+          used?: boolean
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           active_referrals: number | null
@@ -1198,6 +1243,7 @@ export type Database = {
         Returns: Json
       }
       claim_referral: { Args: { ref_code: string }; Returns: undefined }
+      cleanup_expired_oauth_sessions: { Args: never; Returns: undefined }
       generate_referral_code: { Args: never; Returns: string }
       has_role: {
         Args: {
