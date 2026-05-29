@@ -170,21 +170,19 @@ export function UserDocumentsView({ userId }: { userId: string }) {
         ) : cvError ? (
           <p className="text-sm text-destructive">Failed to load CV.</p>
         ) : cvUrl ? (
-          <div className="space-y-3">
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" size="sm" onClick={() => setCvOpen(true)}>
+              <FileText className="mr-2 h-4 w-4 text-primary" /> View CV
+            </Button>
             <a
               href={cvUrl}
               target="_blank"
               rel="noreferrer"
               download
-              className="inline-flex items-center gap-2 rounded-md border border-border bg-card/40 px-4 py-2 text-sm hover:bg-muted/40"
+              className="inline-flex items-center gap-2 rounded-md border border-border bg-card/40 px-3 py-1.5 text-sm hover:bg-muted/40"
             >
-              <FileText className="h-4 w-4 text-primary" />
-              Open in new tab
-              <Download className="ml-2 h-3 w-3 opacity-60" />
+              <Download className="h-3 w-3" /> Download
             </a>
-            <div className="overflow-hidden rounded-lg border border-border bg-card/20">
-              <iframe src={cvUrl} title="Uploaded CV" className="h-[80vh] w-full" />
-            </div>
           </div>
         ) : (
           <p className="text-sm text-muted-foreground">No CV uploaded.</p>
@@ -198,6 +196,18 @@ export function UserDocumentsView({ userId }: { userId: string }) {
           </details>
         ) : null}
       </Section>
+
+      <Sheet open={cvOpen} onOpenChange={setCvOpen}>
+        <SheetContent side="right" className="w-full p-0 sm:max-w-2xl">
+          <SheetHeader className="border-b border-border px-6 py-4">
+            <SheetTitle>Uploaded CV</SheetTitle>
+          </SheetHeader>
+          {cvUrl ? (
+            <iframe src={cvUrl} title="Uploaded CV" className="h-[calc(100vh-64px)] w-full" />
+          ) : null}
+        </SheetContent>
+      </Sheet>
+
 
       <Section title={`Generated Application Documents (${apps.length})`}>
         {apps.length === 0 ? (
