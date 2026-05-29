@@ -71,10 +71,6 @@ function UserDocumentsPage() {
 
       <Section title="Uploaded CV">
         {cvUrl ? (
-          <a
-            href={cvUrl}
-      <Section title="Uploaded CV">
-        {cvUrl ? (
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               <a
@@ -109,7 +105,11 @@ function UserDocumentsPage() {
         ) : null}
       </Section>
 
+      <Section title={`Generated Application Documents (${apps.length})`}>
+        {apps.length === 0 ? (
+          <p className="text-sm text-muted-foreground">No applications yet.</p>
         ) : (
+
           <div className="divide-y divide-border/60 rounded-lg border border-border bg-card/20">
             {apps.map((a) => {
               const id = a.id as string;
