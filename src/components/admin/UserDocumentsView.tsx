@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Download, ExternalLink, FileText, Loader2, Link2 } from "lucide-react";
@@ -83,9 +83,13 @@ function LinkedPre({ text }: { text: string }) {
   );
 }
 
+import { useServerFn } from "@tanstack/react-start";
+import { fetchCvAsset } from "@/lib/cv.functions";
+
 export function UserDocumentsView({ userId }: { userId: string }) {
   const navigate = useNavigate();
   const [openId, setOpenId] = useState<string | null>(null);
+  const callFetchCv = useServerFn(fetchCvAsset);
 
   const { data, isLoading } = useQuery({
     queryKey: ["user-docs", userId],
@@ -99,22 +103,36 @@ export function UserDocumentsView({ userId }: { userId: string }) {
           .order("created_at", { ascending: false }),
         supabase.from("templates").select("id, name, type, content, created_at").eq("user_id", userId),
       ]);
-
-      let cvSignedUrl: string | null = null;
-      const path = (profile as Record<string, unknown> | null)?.cv_storage_path as string | undefined;
-      if (path) {
-        const { data: signed } = await supabase.storage.from("cvs").createSignedUrl(path, 3600);
-        cvSignedUrl = signed?.signedUrl ?? null;
-      }
-
       return {
         profile: profile as Record<string, unknown> | null,
         apps: (apps ?? []) as Array<Record<string, unknown>>,
         templates: (templates ?? []) as Array<Record<string, unknown>>,
-        cvSignedUrl,
       };
     },
   });
+
+  const hasCvPath = Boolean((data?.profile as { cv_storage_path?: string | null } | undefined)?.cv_storage_path);
+
+  const { data: cvBlobUrl, isLoading: cvLoading, error: cvError } = useQuery({
+    queryKey: ["user-cv-blob", userId],
+    enabled: hasCvPath,
+    staleTime: 1000 * 60 * 30,
+    queryFn: async () => {
+      const res = await callFetchCv({ data: { userId } });
+      if (!res.base64) return null;
+      const bin = atob(res.base64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      const blob = new Blob([bytes], { type: res.contentType || "application/pdf" });
+      return URL.createObjectURL(blob);
+    },
+  });
+
+  useEffect(() => {
+    return () => {
+      if (cvBlobUrl) URL.revokeObjectURL(cvBlobUrl);
+    };
+  }, [cvBlobUrl]);
 
   if (isLoading) {
     return (
@@ -127,7 +145,7 @@ export function UserDocumentsView({ userId }: { userId: string }) {
   const profile = data?.profile;
   const apps = data?.apps ?? [];
   const templates = data?.templates ?? [];
-  const cvUrl = data?.cvSignedUrl || (profile?.cv_url as string | undefined);
+  const cvUrl = cvBlobUrl || (profile?.cv_url as string | undefined);
   const displayName = (profile?.full_name as string) || (profile?.email as string) || userId;
   const parsedCv = profile?.parsed_cv_text as string | undefined;
 
@@ -143,12 +161,19 @@ export function UserDocumentsView({ userId }: { userId: string }) {
       </div>
 
       <Section title="Uploaded CV">
-        {cvUrl ? (
+        {cvLoading && hasCvPath ? (
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Loader2 className="h-4 w-4 animate-spin" /> Loading CV…
+          </div>
+        ) : cvError ? (
+          <p className="text-sm text-destructive">Failed to load CV.</p>
+        ) : cvUrl ? (
           <div className="space-y-3">
             <a
               href={cvUrl}
               target="_blank"
               rel="noreferrer"
+              download
               className="inline-flex items-center gap-2 rounded-md border border-border bg-card/40 px-4 py-2 text-sm hover:bg-muted/40"
             >
               <FileText className="h-4 w-4 text-primary" />
