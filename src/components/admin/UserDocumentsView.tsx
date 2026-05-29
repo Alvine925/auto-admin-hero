@@ -145,7 +145,7 @@ export function UserDocumentsView({ userId }: { userId: string }) {
   const profile = data?.profile;
   const apps = data?.apps ?? [];
   const templates = data?.templates ?? [];
-  const cvUrl = data?.cvSignedUrl || (profile?.cv_url as string | undefined);
+  const cvUrl = cvBlobUrl || (profile?.cv_url as string | undefined);
   const displayName = (profile?.full_name as string) || (profile?.email as string) || userId;
   const parsedCv = profile?.parsed_cv_text as string | undefined;
 
