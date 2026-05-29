@@ -70,6 +70,7 @@ export type Database = {
           sent_at: string | null
           sent_via: string | null
           status: string
+          tailored_cv: string | null
           user_id: string
         }
         Insert: {
@@ -100,6 +101,7 @@ export type Database = {
           sent_at?: string | null
           sent_via?: string | null
           status?: string
+          tailored_cv?: string | null
           user_id: string
         }
         Update: {
@@ -130,6 +132,7 @@ export type Database = {
           sent_at?: string | null
           sent_via?: string | null
           status?: string
+          tailored_cv?: string | null
           user_id?: string
         }
         Relationships: [
