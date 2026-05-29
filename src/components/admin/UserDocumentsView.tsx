@@ -83,9 +83,13 @@ function LinkedPre({ text }: { text: string }) {
   );
 }
 
+import { useServerFn } from "@tanstack/react-start";
+import { fetchCvAsset } from "@/lib/cv.functions";
+
 export function UserDocumentsView({ userId }: { userId: string }) {
   const navigate = useNavigate();
   const [openId, setOpenId] = useState<string | null>(null);
+  const callFetchCv = useServerFn(fetchCvAsset);
 
   const { data, isLoading } = useQuery({
     queryKey: ["user-docs", userId],
