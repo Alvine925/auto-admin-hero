@@ -85,10 +85,12 @@ function LinkedPre({ text }: { text: string }) {
 
 import { useServerFn } from "@tanstack/react-start";
 import { fetchCvAsset } from "@/lib/cv.functions";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 
 export function UserDocumentsView({ userId }: { userId: string }) {
   const navigate = useNavigate();
   const [openId, setOpenId] = useState<string | null>(null);
+  const [cvOpen, setCvOpen] = useState(false);
   const callFetchCv = useServerFn(fetchCvAsset);
 
   const { data, isLoading } = useQuery({
