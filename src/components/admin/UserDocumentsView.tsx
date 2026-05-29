@@ -103,22 +103,36 @@ export function UserDocumentsView({ userId }: { userId: string }) {
           .order("created_at", { ascending: false }),
         supabase.from("templates").select("id, name, type, content, created_at").eq("user_id", userId),
       ]);
-
-      let cvSignedUrl: string | null = null;
-      const path = (profile as Record<string, unknown> | null)?.cv_storage_path as string | undefined;
-      if (path) {
-        const { data: signed } = await supabase.storage.from("cvs").createSignedUrl(path, 3600);
-        cvSignedUrl = signed?.signedUrl ?? null;
-      }
-
       return {
         profile: profile as Record<string, unknown> | null,
         apps: (apps ?? []) as Array<Record<string, unknown>>,
         templates: (templates ?? []) as Array<Record<string, unknown>>,
-        cvSignedUrl,
       };
     },
   });
+
+  const hasCvPath = Boolean((data?.profile as { cv_storage_path?: string | null } | undefined)?.cv_storage_path);
+
+  const { data: cvBlobUrl, isLoading: cvLoading, error: cvError } = useQuery({
+    queryKey: ["user-cv-blob", userId],
+    enabled: hasCvPath,
+    staleTime: 1000 * 60 * 30,
+    queryFn: async () => {
+      const res = await callFetchCv({ data: { userId } });
+      if (!res.base64) return null;
+      const bin = atob(res.base64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      const blob = new Blob([bytes], { type: res.contentType || "application/pdf" });
+      return URL.createObjectURL(blob);
+    },
+  });
+
+  useEffect(() => {
+    return () => {
+      if (cvBlobUrl) URL.revokeObjectURL(cvBlobUrl);
+    };
+  }, [cvBlobUrl]);
 
   if (isLoading) {
     return (
