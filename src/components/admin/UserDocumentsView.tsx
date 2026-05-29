@@ -161,12 +161,19 @@ export function UserDocumentsView({ userId }: { userId: string }) {
       </div>
 
       <Section title="Uploaded CV">
-        {cvUrl ? (
+        {cvLoading && hasCvPath ? (
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Loader2 className="h-4 w-4 animate-spin" /> Loading CV…
+          </div>
+        ) : cvError ? (
+          <p className="text-sm text-destructive">Failed to load CV.</p>
+        ) : cvUrl ? (
           <div className="space-y-3">
             <a
               href={cvUrl}
               target="_blank"
               rel="noreferrer"
+              download
               className="inline-flex items-center gap-2 rounded-md border border-border bg-card/40 px-4 py-2 text-sm hover:bg-muted/40"
             >
               <FileText className="h-4 w-4 text-primary" />
