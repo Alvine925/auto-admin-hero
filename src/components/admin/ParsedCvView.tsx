@@ -23,8 +23,29 @@ const HEADING_RE = new RegExp(
 
 type Section = { title: string; body: string };
 
+function normalize(text: string): string {
+  let t = text.replace(/\r\n/g, "\n");
+  // Put bullets on their own line
+  t = t.replace(/\s*•\s*/g, "\n• ");
+  // Insert newline before known section headings appearing inline
+  const headingAlt = SECTION_HEADINGS
+    .slice()
+    .sort((a, b) => b.length - a.length)
+    .map((h) => h.replace(/\s/g, "\\s+"))
+    .join("|");
+  const inlineHeading = new RegExp(`\\s+(?=(?:${headingAlt})\\b)`, "gi");
+  t = t.replace(inlineHeading, (m, _g, offset, str) => {
+    // Only break if the following heading word is uppercase (likely a real heading)
+    const next = str.slice(offset + m.length, offset + m.length + 40);
+    return /^[A-Z][A-Z\s&]{2,}/.test(next) ? "\n" : m;
+  });
+  // Break before ALL-CAPS runs of 2-5 words (likely headings) when inline
+  t = t.replace(/([a-z.)\]])\s+([A-Z][A-Z&]{2,}(?:\s+[A-Z][A-Z&]+){0,4})(?=\s)/g, "$1\n$2");
+  return t;
+}
+
 function splitSections(text: string): { header: string; sections: Section[] } {
-  const lines = text.replace(/\r\n/g, "\n").split("\n");
+  const lines = normalize(text).split("\n");
   const sections: Section[] = [];
   let current: Section | null = null;
   let headerLines: string[] = [];
