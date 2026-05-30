@@ -85,7 +85,7 @@ function LinkedPre({ text }: { text: string }) {
 
 import { useServerFn } from "@tanstack/react-start";
 import { fetchCvAsset } from "@/lib/cv.functions";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function UserDocumentsView({ userId }: { userId: string }) {
   const navigate = useNavigate();
