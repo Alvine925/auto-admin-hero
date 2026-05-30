@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Download, ExternalLink, FileText, Loader2, Link2 } from "lucide-react";
+import { ArrowLeft, Download, ExternalLink, Loader2, Link2 } from "lucide-react";
 
 const URL_RE = /(https?:\/\/[^\s<]+)/gi;
 const EMAIL_RE = /([^\s@]+@[^\s@]+\.[^\s@]+)/gi;
@@ -85,12 +85,12 @@ function LinkedPre({ text }: { text: string }) {
 
 import { useServerFn } from "@tanstack/react-start";
 import { fetchCvAsset } from "@/lib/cv.functions";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function UserDocumentsView({ userId }: { userId: string }) {
   const navigate = useNavigate();
   const [openId, setOpenId] = useState<string | null>(null);
-  const [cvOpen, setCvOpen] = useState(false);
+  const [cvTab, setCvTab] = useState<"parsed" | "original">("parsed");
   const callFetchCv = useServerFn(fetchCvAsset);
 
   const { data, isLoading } = useQuery({
@@ -162,51 +162,52 @@ export function UserDocumentsView({ userId }: { userId: string }) {
         <p className="mt-1 text-sm text-muted-foreground">{profile?.email as string}</p>
       </div>
 
-      <Section title="Uploaded CV">
+      <Section title="CV">
         {cvLoading && hasCvPath ? (
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Loader2 className="h-4 w-4 animate-spin" /> Loading CV…
           </div>
         ) : cvError ? (
           <p className="text-sm text-destructive">Failed to load CV.</p>
-        ) : cvUrl ? (
-          <div className="flex flex-wrap gap-2">
-            <Button variant="outline" size="sm" onClick={() => setCvOpen(true)}>
-              <FileText className="mr-2 h-4 w-4 text-primary" /> View CV
-            </Button>
-            <a
-              href={cvUrl}
-              target="_blank"
-              rel="noreferrer"
-              download
-              className="inline-flex items-center gap-2 rounded-md border border-border bg-card/40 px-3 py-1.5 text-sm hover:bg-muted/40"
-            >
-              <Download className="h-3 w-3" /> Download
-            </a>
-          </div>
-        ) : (
+        ) : !cvUrl && !parsedCv ? (
           <p className="text-sm text-muted-foreground">No CV uploaded.</p>
+        ) : (
+          <div className="rounded-lg border border-border bg-card/20">
+            <div className="flex items-center justify-between gap-2 border-b border-border/60 px-4 py-3">
+              <Tabs value={cvTab} onValueChange={(v) => setCvTab(v as "parsed" | "original")}>
+                <TabsList>
+                  <TabsTrigger value="parsed" disabled={!parsedCv}>Parsed</TabsTrigger>
+                  <TabsTrigger value="original" disabled={!cvUrl}>Original</TabsTrigger>
+                </TabsList>
+              </Tabs>
+              {cvUrl ? (
+                <a
+                  href={cvUrl}
+                  download
+                  className="inline-flex items-center gap-2 rounded-md border border-border bg-card/40 px-3 py-1.5 text-xs hover:bg-muted/40"
+                >
+                  <Download className="h-3 w-3" /> Download
+                </a>
+              ) : null}
+            </div>
+
+            {cvTab === "parsed" && parsedCv ? (
+              <article className="prose prose-sm prose-invert max-w-none whitespace-pre-wrap px-6 py-5 text-sm leading-relaxed text-foreground">
+                {linkify(parsedCv)}
+              </article>
+            ) : null}
+
+            {cvTab === "original" && cvUrl ? (
+              <iframe
+                src={cvUrl}
+                title="Uploaded CV"
+                className="h-[80vh] w-full rounded-b-lg bg-background"
+              />
+            ) : null}
+          </div>
         )}
-        {parsedCv ? (
-          <details className="mt-3 rounded-md border border-border/60 bg-card/20">
-            <summary className="cursor-pointer px-3 py-2 text-xs uppercase tracking-wider text-muted-foreground">
-              Parsed CV text
-            </summary>
-            <LinkedPre text={parsedCv} />
-          </details>
-        ) : null}
       </Section>
 
-      <Sheet open={cvOpen} onOpenChange={setCvOpen}>
-        <SheetContent side="right" className="w-full p-0 sm:max-w-2xl">
-          <SheetHeader className="border-b border-border px-6 py-4">
-            <SheetTitle>Uploaded CV</SheetTitle>
-          </SheetHeader>
-          {cvUrl ? (
-            <iframe src={cvUrl} title="Uploaded CV" className="h-[calc(100vh-64px)] w-full" />
-          ) : null}
-        </SheetContent>
-      </Sheet>
 
 
       <Section title={`Generated Application Documents (${apps.length})`}>

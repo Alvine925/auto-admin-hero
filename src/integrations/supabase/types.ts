@@ -809,6 +809,7 @@ export type Database = {
           job_type: string | null
           location: string | null
           logo_url: string | null
+          match_score_cache: Json
           posted_at: string | null
           raw: Json | null
           requirements: string | null
@@ -846,6 +847,7 @@ export type Database = {
           job_type?: string | null
           location?: string | null
           logo_url?: string | null
+          match_score_cache?: Json
           posted_at?: string | null
           raw?: Json | null
           requirements?: string | null
@@ -883,6 +885,7 @@ export type Database = {
           job_type?: string | null
           location?: string | null
           logo_url?: string | null
+          match_score_cache?: Json
           posted_at?: string | null
           raw?: Json | null
           requirements?: string | null
