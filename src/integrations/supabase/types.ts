@@ -656,6 +656,7 @@ export type Database = {
           phone: string | null
           preferred_county: string | null
           professional_summary: string | null
+          projects: Json | null
           referral_code: string | null
           referred_by: string | null
           skills: string[] | null
@@ -692,6 +693,7 @@ export type Database = {
           phone?: string | null
           preferred_county?: string | null
           professional_summary?: string | null
+          projects?: Json | null
           referral_code?: string | null
           referred_by?: string | null
           skills?: string[] | null
@@ -728,6 +730,7 @@ export type Database = {
           phone?: string | null
           preferred_county?: string | null
           professional_summary?: string | null
+          projects?: Json | null
           referral_code?: string | null
           referred_by?: string | null
           skills?: string[] | null
