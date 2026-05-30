@@ -4,36 +4,9 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Download, ExternalLink, Loader2, Link2 } from "lucide-react";
+import { linkify } from "./linkify";
+import { ParsedCvView } from "./ParsedCvView";
 
-const URL_RE = /(https?:\/\/[^\s<]+)/gi;
-const EMAIL_RE = /([^\s@]+@[^\s@]+\.[^\s@]+)/gi;
-
-function linkify(text: string): React.ReactNode[] {
-  const parts: React.ReactNode[] = [];
-  let lastIndex = 0;
-  const regex = new RegExp(`${URL_RE.source}|${EMAIL_RE.source}`, "gi");
-  let match: RegExpExecArray | null;
-  while ((match = regex.exec(text)) !== null) {
-    if (match.index > lastIndex) parts.push(text.slice(lastIndex, match.index));
-    const val = match[0];
-    if (val.startsWith("http")) {
-      parts.push(
-        <a key={match.index} href={val} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-2 hover:text-primary/80">
-          {val}
-        </a>,
-      );
-    } else {
-      parts.push(
-        <a key={match.index} href={`mailto:${val}`} className="text-primary underline underline-offset-2 hover:text-primary/80">
-          {val}
-        </a>,
-      );
-    }
-    lastIndex = match.index + val.length;
-  }
-  if (lastIndex < text.length) parts.push(text.slice(lastIndex));
-  return parts;
-}
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -192,10 +165,13 @@ export function UserDocumentsView({ userId }: { userId: string }) {
             </div>
 
             {cvTab === "parsed" && parsedCv ? (
-              <article className="prose prose-sm prose-invert max-w-none whitespace-pre-wrap px-6 py-5 text-sm leading-relaxed text-foreground">
-                {linkify(parsedCv)}
-              </article>
+              <ParsedCvView
+                text={parsedCv}
+                fallbackName={(profile?.full_name as string) || undefined}
+                fallbackEmail={(profile?.email as string) || undefined}
+              />
             ) : null}
+
 
             {cvTab === "original" && cvUrl ? (
               <iframe
