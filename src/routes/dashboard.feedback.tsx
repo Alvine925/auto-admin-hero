@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { PageHeader, PageBody } from "@/components/admin/PageHeader";
 import { DataTable, type Column } from "@/components/admin/DataTable";
 import { formatDateTime } from "@/components/admin/format";
+import { UserLink } from "@/components/admin/UserLink";
 import { Star } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard/feedback")({
@@ -37,6 +38,7 @@ function FeedbackPage() {
       </div>
     ) : <span className="text-muted-foreground">—</span> },
     { key: "message", header: "Message", render: (r) => <div className="max-w-xl text-sm text-foreground">{r.message}</div> },
+    { key: "user", header: "User", render: (r) => <UserLink userId={r.user_id} /> },
     { key: "created", header: "When", render: (r) => <span className="text-xs text-muted-foreground">{formatDateTime(r.created_at)}</span> },
   ];
 

@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { PageHeader, PageBody } from "@/components/admin/PageHeader";
 import { DataTable, type Column } from "@/components/admin/DataTable";
 import { StatusBadge, formatDateTime } from "@/components/admin/format";
+import { UserLink } from "@/components/admin/UserLink";
 
 export const Route = createFileRoute("/dashboard/workflows")({
   head: () => ({ meta: [{ title: "Workflows — Admin" }] }),
@@ -33,6 +34,7 @@ function WorkflowsPage() {
 
   const columns: Column<Wf>[] = [
     { key: "name", header: "Workflow", render: (r) => <div className="font-medium">{r.name}</div> },
+    { key: "user", header: "User", render: (r) => <UserLink userId={r.user_id} /> },
     { key: "active", header: "Status", render: (r) => <StatusBadge value={r.active ? "active" : "draft"} /> },
     { key: "mode", header: "Mode", render: (r) => (
       <span className="text-xs uppercase tracking-wide text-muted-foreground">

@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { PageHeader, PageBody } from "@/components/admin/PageHeader";
 import { DataTable, type Column } from "@/components/admin/DataTable";
 import { formatDateTime, truncate } from "@/components/admin/format";
+import { UserLink } from "@/components/admin/UserLink";
 
 export const Route = createFileRoute("/dashboard/notifications")({
   head: () => ({ meta: [{ title: "Notifications — Admin" }] }),
@@ -34,6 +35,7 @@ function NotificationsPage() {
     { key: "title", header: "Title", render: (r) => <div className="font-medium">{r.title}</div> },
     { key: "message", header: "Message", render: (r) => <span className="text-sm text-muted-foreground">{truncate(r.message, 80)}</span> },
     { key: "read", header: "Read", render: (r) => r.read ? <span className="text-xs text-success">✓ read</span> : <span className="text-xs text-warning">unread</span> },
+    { key: "user", header: "User", render: (r) => <UserLink userId={r.user_id} /> },
     { key: "created", header: "When", render: (r) => <span className="text-xs text-muted-foreground">{formatDateTime(r.created_at)}</span> },
   ];
 

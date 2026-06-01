@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { TABLE_CONFIGS, TableKey } from "@/components/admin/table-config";
 import { ArrowLeft, Eye, ExternalLink, Loader2, Mail } from "lucide-react";
+import { UserLink } from "@/components/admin/UserLink";
 
 export const Route = createFileRoute("/dashboard/t/$table/$id")({
   component: RowDetailPage,
@@ -12,6 +13,14 @@ export const Route = createFileRoute("/dashboard/t/$table/$id")({
 
 const URL_RE = /^https?:\/\/[^\s]+$/i;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const USER_ID_FIELDS = new Set([
+  "user_id",
+  "referred_by",
+  "referrer_user_id",
+  "referred_user_id",
+]);
 
 function renderValue(v: unknown, field?: string) {
   if (v === null || v === undefined) return <span className="text-muted-foreground">—</span>;
@@ -24,6 +33,9 @@ function renderValue(v: unknown, field?: string) {
     );
   }
   const s = String(v);
+  if (field && USER_ID_FIELDS.has(field) && UUID_RE.test(s)) {
+    return <UserLink userId={s} />;
+  }
   if (/^\d{4}-\d{2}-\d{2}T/.test(s)) {
     try { return new Date(s).toLocaleString(); } catch { /* */ }
   }

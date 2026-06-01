@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { PageHeader, PageBody } from "@/components/admin/PageHeader";
 import { DataTable, type Column } from "@/components/admin/DataTable";
 import { formatDateTime, truncate } from "@/components/admin/format";
+import { UserLink } from "@/components/admin/UserLink";
 
 export const Route = createFileRoute("/dashboard/errors")({
   head: () => ({ meta: [{ title: "Errors — Admin" }] }),
@@ -38,6 +39,7 @@ function ErrorsPage() {
     )},
     { key: "section", header: "Section", render: (r) => <span className="rounded bg-muted px-2 py-1 text-xs">{r.section || "unknown"}</span> },
     { key: "ctx", header: "Context", render: (r) => <span className="text-xs text-muted-foreground">{truncate(r.action_context, 40)}</span> },
+    { key: "user", header: "User", render: (r) => <UserLink userId={r.user_id} /> },
     { key: "created", header: "When", render: (r) => <span className="text-xs text-muted-foreground">{formatDateTime(r.created_at)}</span> },
   ];
 

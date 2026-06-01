@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { PageHeader, PageBody } from "@/components/admin/PageHeader";
 import { DataTable, type Column } from "@/components/admin/DataTable";
 import { StatusBadge, formatDateTime } from "@/components/admin/format";
+import { UserLink } from "@/components/admin/UserLink";
 
 export const Route = createFileRoute("/dashboard/applications")({
   head: () => ({ meta: [{ title: "Applications — Admin" }] }),
@@ -38,6 +39,7 @@ function ApplicationsPage() {
         <div className="text-xs text-muted-foreground">{r.company || "—"}</div>
       </div>
     )},
+    { key: "user", header: "User", render: (r) => <UserLink userId={r.user_id} /> },
     { key: "status", header: "Status", render: (r) => <StatusBadge value={r.status} /> },
     { key: "mode", header: "Mode", render: (r) => (
       <span className="text-xs uppercase tracking-wide text-muted-foreground">{r.application_mode} · {r.application_type}</span>
