@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { PageHeader, PageBody } from "@/components/admin/PageHeader";
 import { DataTable, type Column } from "@/components/admin/DataTable";
 import { StatusBadge, formatDateTime } from "@/components/admin/format";
+import { UserLink } from "@/components/admin/UserLink";
 import { ExternalLink } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard/jobs")({
