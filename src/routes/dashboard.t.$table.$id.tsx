@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { TABLE_CONFIGS, TableKey } from "@/components/admin/table-config";
 import { ArrowLeft, Eye, ExternalLink, Loader2, Mail } from "lucide-react";
+import { UserLink } from "@/components/admin/UserLink";
 
 export const Route = createFileRoute("/dashboard/t/$table/$id")({
   component: RowDetailPage,
