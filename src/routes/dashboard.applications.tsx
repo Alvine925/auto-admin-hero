@@ -39,6 +39,7 @@ function ApplicationsPage() {
         <div className="text-xs text-muted-foreground">{r.company || "—"}</div>
       </div>
     )},
+    { key: "user", header: "User", render: (r) => <UserLink userId={r.user_id} /> },
     { key: "status", header: "Status", render: (r) => <StatusBadge value={r.status} /> },
     { key: "mode", header: "Mode", render: (r) => (
       <span className="text-xs uppercase tracking-wide text-muted-foreground">{r.application_mode} · {r.application_type}</span>
