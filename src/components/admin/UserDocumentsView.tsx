@@ -174,11 +174,23 @@ export function UserDocumentsView({ userId }: { userId: string }) {
 
 
             {cvTab === "original" && cvUrl ? (
-              <iframe
-                src={cvUrl}
-                title="Uploaded CV"
+              <object
+                data={cvUrl}
+                type="application/pdf"
                 className="h-[80vh] w-full rounded-b-lg bg-background"
-              />
+              >
+                <div className="flex flex-col items-center justify-center gap-3 p-8 text-sm text-muted-foreground">
+                  <p>Your browser can't display this PDF inline.</p>
+                  <a
+                    href={cvUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-md border border-border bg-card/40 px-3 py-1.5 text-xs hover:bg-muted/40"
+                  >
+                    <ExternalLink className="h-3 w-3" /> Open CV in new tab
+                  </a>
+                </div>
+              </object>
             ) : null}
           </div>
         )}
