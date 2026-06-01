@@ -14,6 +14,14 @@ export const Route = createFileRoute("/dashboard/t/$table/$id")({
 const URL_RE = /^https?:\/\/[^\s]+$/i;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const USER_ID_FIELDS = new Set([
+  "user_id",
+  "referred_by",
+  "referrer_user_id",
+  "referred_user_id",
+]);
+
 function renderValue(v: unknown, field?: string) {
   if (v === null || v === undefined) return <span className="text-muted-foreground">—</span>;
   if (typeof v === "boolean") return v ? "Yes" : "No";
