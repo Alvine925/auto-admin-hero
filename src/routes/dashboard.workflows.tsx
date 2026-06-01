@@ -34,6 +34,7 @@ function WorkflowsPage() {
 
   const columns: Column<Wf>[] = [
     { key: "name", header: "Workflow", render: (r) => <div className="font-medium">{r.name}</div> },
+    { key: "user", header: "User", render: (r) => <UserLink userId={r.user_id} /> },
     { key: "active", header: "Status", render: (r) => <StatusBadge value={r.active ? "active" : "draft"} /> },
     { key: "mode", header: "Mode", render: (r) => (
       <span className="text-xs uppercase tracking-wide text-muted-foreground">
