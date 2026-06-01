@@ -33,6 +33,9 @@ function renderValue(v: unknown, field?: string) {
     );
   }
   const s = String(v);
+  if (field && USER_ID_FIELDS.has(field) && UUID_RE.test(s)) {
+    return <UserLink userId={s} />;
+  }
   if (/^\d{4}-\d{2}-\d{2}T/.test(s)) {
     try { return new Date(s).toLocaleString(); } catch { /* */ }
   }
