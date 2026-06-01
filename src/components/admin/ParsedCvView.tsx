@@ -34,8 +34,9 @@ function normalize(text: string): string {
     .map((h) => h.replace(/\s/g, "\\s+"))
     .join("|");
   const inlineHeading = new RegExp(`\\s+(?=(?:${headingAlt})\\b)`, "gi");
-  t = t.replace(inlineHeading, (m, _g, offset, str) => {
-    // Only break if the following heading word is uppercase (likely a real heading)
+  t = t.replace(inlineHeading, (m, ...args) => {
+    const offset = args[args.length - 2] as number;
+    const str = args[args.length - 1] as string;
     const next = str.slice(offset + m.length, offset + m.length + 40);
     return /^[A-Z][A-Z\s&]{2,}/.test(next) ? "\n" : m;
   });
