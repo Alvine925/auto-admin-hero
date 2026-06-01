@@ -46,6 +46,7 @@ function JobsPage() {
     )},
     { key: "status", header: "Status", render: (r) => <StatusBadge value={r.tracker_status} /> },
     { key: "source", header: "Source", render: (r) => <span className="text-xs text-muted-foreground">{r.source || "—"}</span> },
+    { key: "user", header: "User", render: (r) => <UserLink userId={r.user_id} /> },
     { key: "url", header: "", render: (r) => r.source_url ? (
       <a href={r.source_url} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary"><ExternalLink className="h-4 w-4" /></a>
     ) : null },
