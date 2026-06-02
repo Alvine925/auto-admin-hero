@@ -174,12 +174,28 @@ function RowDetailPage() {
 
       {data && (
         <div className="divide-y divide-border/60">
-          {Object.entries(data).map(([k, v]) => (
-            <div key={k} className="grid grid-cols-1 gap-2 py-3 md:grid-cols-[200px_1fr]">
-              <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{k}</div>
-              <div className="text-sm">{renderValue(v, k)}</div>
-            </div>
-          ))}
+          {Object.entries(data).map(([k, v]) => {
+            const isCvField = k === "cv_url" || k === "cv_storage_path";
+            return (
+              <div key={k} className="grid grid-cols-1 gap-2 py-3 md:grid-cols-[200px_1fr]">
+                <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{k}</div>
+                <div className="text-sm">
+                  {isCvField && linkedUserId && v ? (
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Link
+                        to="/dashboard/documents/$userId"
+                        params={{ userId: linkedUserId }}
+                        className="inline-flex items-center gap-1.5 text-primary underline underline-offset-2 hover:text-primary/80"
+                      >
+                        <FileText className="h-3.5 w-3.5" /> Open CV in secure viewer
+                      </Link>
+                      <span className="break-all text-xs text-muted-foreground">{String(v)}</span>
+                    </div>
+                  ) : renderValue(v, k)}
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
