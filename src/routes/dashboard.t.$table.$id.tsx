@@ -127,6 +127,7 @@ function RowDetailPage() {
     `${cfg?.label ?? table} record`;
 
   const subtitle = [data?.company, data?.location].filter(Boolean).join(" · ");
+  const linkedUserId = getLinkedUserId(table, data, id);
 
   return (
     <div className="p-6 md:p-8">
@@ -145,6 +146,17 @@ function RowDetailPage() {
           <span className="text-muted-foreground">{(viewCount ?? 0) === 1 ? "view" : "views"}</span>
         </div>
       </div>
+
+      {linkedUserId ? (
+        <div className="mb-6 flex flex-wrap gap-2 rounded-lg border border-border bg-card/40 p-3">
+          <Button asChild size="sm" variant="outline">
+            <Link to="/dashboard/documents/$userId" params={{ userId: linkedUserId }}>
+              <FileText className="mr-2 h-4 w-4" /> User documents & CV
+            </Link>
+          </Button>
+          {table !== "profiles" ? <UserLink userId={linkedUserId} className="inline-flex items-center gap-1 px-2 text-sm text-primary hover:underline" /> : null}
+        </div>
+      ) : null}
 
       {isLoading && (
         <div className="grid place-items-center p-12 text-muted-foreground">
