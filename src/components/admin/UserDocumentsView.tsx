@@ -63,7 +63,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export function UserDocumentsView({ userId }: { userId: string }) {
   const navigate = useNavigate();
   const [openId, setOpenId] = useState<string | null>(null);
-  const [cvTab, setCvTab] = useState<"parsed" | "original">("parsed");
+  const [cvTab, setCvTab] = useState<"parsed" | "original">("original");
   const callFetchCv = useServerFn(fetchCvAsset);
 
   const { data, isLoading } = useQuery({
@@ -156,10 +156,11 @@ export function UserDocumentsView({ userId }: { userId: string }) {
               {cvUrl ? (
                 <a
                   href={cvUrl}
-                  download
+                  target="_blank"
+                  rel="noreferrer"
                   className="inline-flex items-center gap-2 rounded-md border border-border bg-card/40 px-3 py-1.5 text-xs hover:bg-muted/40"
                 >
-                  <Download className="h-3 w-3" /> Download
+                  <ExternalLink className="h-3 w-3" /> Open in new tab
                 </a>
               ) : null}
             </div>
