@@ -63,7 +63,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export function UserDocumentsView({ userId }: { userId: string }) {
   const navigate = useNavigate();
   const [openId, setOpenId] = useState<string | null>(null);
-  const [cvTab, setCvTab] = useState<"parsed" | "original">("parsed");
+  const [cvTab, setCvTab] = useState<"parsed" | "original">("original");
   const callFetchCv = useServerFn(fetchCvAsset);
 
   const { data, isLoading } = useQuery({
