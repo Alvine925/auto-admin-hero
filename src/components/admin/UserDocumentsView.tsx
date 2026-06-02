@@ -156,10 +156,11 @@ export function UserDocumentsView({ userId }: { userId: string }) {
               {cvUrl ? (
                 <a
                   href={cvUrl}
-                  download
+                  target="_blank"
+                  rel="noreferrer"
                   className="inline-flex items-center gap-2 rounded-md border border-border bg-card/40 px-3 py-1.5 text-xs hover:bg-muted/40"
                 >
-                  <Download className="h-3 w-3" /> Download
+                  <ExternalLink className="h-3 w-3" /> Open in new tab
                 </a>
               ) : null}
             </div>
