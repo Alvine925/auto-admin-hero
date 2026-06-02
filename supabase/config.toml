@@ -1,1 +1,4 @@
 project_id = "eqkctzjyqmafpytvdepf"
+
+[functions.fetch-cv]
+verify_jwt = true
