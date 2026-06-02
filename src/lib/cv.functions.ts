@@ -1,6 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
 export const fetchCvAsset = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -30,7 +29,9 @@ export const fetchCvAsset = createServerFn({ method: "POST" })
     }
     if (!path) return { base64: null, contentType: null };
 
-    // Try candidate paths (with/without userId prefix) using admin client to bypass storage RLS
+    // Try candidate paths (with/without userId prefix) using the authenticated user client.
+    // Avoid the service-role client here because this viewer must not crash when that
+    // runtime secret is unavailable in preview/dev environments.
     const candidates = Array.from(new Set([
       path,
       path.replace(/^\/+/, ""),
@@ -40,7 +41,7 @@ export const fetchCvAsset = createServerFn({ method: "POST" })
     let file: Blob | null = null;
     let lastErr: string | null = null;
     for (const p of candidates) {
-      const { data: f, error } = await supabaseAdmin.storage.from("cvs").download(p);
+      const { data: f, error } = await supabase.storage.from("cvs").download(p);
       if (!error && f) { file = f; break; }
       lastErr = error?.message ?? "not found";
     }
