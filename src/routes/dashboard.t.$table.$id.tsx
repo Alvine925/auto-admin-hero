@@ -1,10 +1,10 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { TABLE_CONFIGS, TableKey } from "@/components/admin/table-config";
-import { ArrowLeft, Eye, ExternalLink, Loader2, Mail } from "lucide-react";
+import { ArrowLeft, Eye, ExternalLink, FileText, Loader2, Mail } from "lucide-react";
 import { UserLink } from "@/components/admin/UserLink";
 
 export const Route = createFileRoute("/dashboard/t/$table/$id")({
@@ -66,6 +66,12 @@ function renderValue(v: unknown, field?: string) {
   return <span className="whitespace-pre-wrap break-words">{s}</span>;
 }
 
+function getLinkedUserId(table: string, row: Record<string, unknown> | null | undefined, rowId: string) {
+  if (table === "profiles") return rowId;
+  const value = row?.user_id ?? row?.referrer_user_id ?? row?.referred_user_id ?? row?.referred_by;
+  return typeof value === "string" && UUID_RE.test(value) ? value : null;
+}
+
 function RowDetailPage() {
   const { table, id } = Route.useParams();
   const navigate = useNavigate();
@@ -121,6 +127,7 @@ function RowDetailPage() {
     `${cfg?.label ?? table} record`;
 
   const subtitle = [data?.company, data?.location].filter(Boolean).join(" · ");
+  const linkedUserId = getLinkedUserId(table, data, id);
 
   return (
     <div className="p-6 md:p-8">
@@ -140,6 +147,17 @@ function RowDetailPage() {
         </div>
       </div>
 
+      {linkedUserId ? (
+        <div className="mb-6 flex flex-wrap gap-2 rounded-lg border border-border bg-card/40 p-3">
+          <Button asChild size="sm" variant="outline">
+            <Link to="/dashboard/documents/$userId" params={{ userId: linkedUserId }}>
+              <FileText className="mr-2 h-4 w-4" /> User documents & CV
+            </Link>
+          </Button>
+          {table !== "profiles" ? <UserLink userId={linkedUserId} className="inline-flex items-center gap-1 px-2 text-sm text-primary hover:underline" /> : null}
+        </div>
+      ) : null}
+
       {isLoading && (
         <div className="grid place-items-center p-12 text-muted-foreground">
           <Loader2 className="h-5 w-5 animate-spin" />
@@ -156,12 +174,28 @@ function RowDetailPage() {
 
       {data && (
         <div className="divide-y divide-border/60">
-          {Object.entries(data).map(([k, v]) => (
-            <div key={k} className="grid grid-cols-1 gap-2 py-3 md:grid-cols-[200px_1fr]">
-              <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{k}</div>
-              <div className="text-sm">{renderValue(v, k)}</div>
-            </div>
-          ))}
+          {Object.entries(data).map(([k, v]) => {
+            const isCvField = k === "cv_url" || k === "cv_storage_path";
+            return (
+              <div key={k} className="grid grid-cols-1 gap-2 py-3 md:grid-cols-[200px_1fr]">
+                <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{k}</div>
+                <div className="text-sm">
+                  {isCvField && linkedUserId && v ? (
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Link
+                        to="/dashboard/documents/$userId"
+                        params={{ userId: linkedUserId }}
+                        className="inline-flex items-center gap-1.5 text-primary underline underline-offset-2 hover:text-primary/80"
+                      >
+                        <FileText className="h-3.5 w-3.5" /> Open CV in secure viewer
+                      </Link>
+                      <span className="break-all text-xs text-muted-foreground">{String(v)}</span>
+                    </div>
+                  ) : renderValue(v, k)}
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
