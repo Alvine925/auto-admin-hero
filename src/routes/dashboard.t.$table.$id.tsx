@@ -1,10 +1,10 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { TABLE_CONFIGS, TableKey } from "@/components/admin/table-config";
-import { ArrowLeft, Eye, ExternalLink, Loader2, Mail } from "lucide-react";
+import { ArrowLeft, Eye, ExternalLink, FileText, Loader2, Mail } from "lucide-react";
 import { UserLink } from "@/components/admin/UserLink";
 
 export const Route = createFileRoute("/dashboard/t/$table/$id")({
@@ -64,6 +64,12 @@ function renderValue(v: unknown, field?: string) {
     );
   }
   return <span className="whitespace-pre-wrap break-words">{s}</span>;
+}
+
+function getLinkedUserId(table: string, row: Record<string, unknown> | null | undefined, rowId: string) {
+  if (table === "profiles") return rowId;
+  const value = row?.user_id ?? row?.referrer_user_id ?? row?.referred_user_id ?? row?.referred_by;
+  return typeof value === "string" && UUID_RE.test(value) ? value : null;
 }
 
 function RowDetailPage() {
