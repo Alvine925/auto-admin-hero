@@ -8,6 +8,7 @@ import { PageHeader } from "@/components/admin/PageHeader";
 import { TABLE_CONFIGS, TableKey } from "@/components/admin/table-config";
 import { Eye, Search, ArrowLeft, ExternalLink, Mail } from "lucide-react";
 import { useMemo, useState } from "react";
+import { UserLink } from "@/components/admin/UserLink";
 
 export const Route = createFileRoute("/dashboard/t/$table/")({
   component: TableListPage,
@@ -15,12 +16,17 @@ export const Route = createFileRoute("/dashboard/t/$table/")({
 
 const URL_RE = /^https?:\/\/[^\s]+$/i;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const USER_ID_FIELDS = new Set(["user_id", "referred_by", "referrer_user_id", "referred_user_id"]);
 
 function formatCell(value: unknown, truncate?: number, field?: string): React.ReactNode {
   if (value === null || value === undefined) return <span className="text-muted-foreground">—</span>;
   if (typeof value === "boolean") return value ? "Yes" : "No";
   if (value instanceof Date) return value.toISOString();
   if (typeof value === "string") {
+    if (field && USER_ID_FIELDS.has(field) && UUID_RE.test(value)) {
+      return <UserLink userId={value} />;
+    }
     const isDate = /^\d{4}-\d{2}-\d{2}T/.test(value);
     if (isDate) {
       try { return new Date(value).toLocaleString(); } catch { /* */ }
