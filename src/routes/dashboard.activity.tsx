@@ -83,6 +83,8 @@ function ActivityPage() {
 }
 
 function UserLinkInline({ userId }: { userId: string }) {
-  // Reuse UserLink's profile map but render as inline text
-  return <UserLink userId={userId} showIcon={false} className="text-primary hover:underline" />;
+  const { data: map } = useProfilesMap();
+  const p = map?.get(userId);
+  const label = p?.full_name || p?.email || `${userId.slice(0, 8)}…`;
+  return <span className="truncate max-w-[140px]">{label}</span>;
 }
