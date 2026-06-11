@@ -37,7 +37,7 @@ export function UserLink({
   const label = p?.full_name || p?.email || `${userId.slice(0, 8)}…`;
   return (
     <Link
-      to="/dashboard/documents/$userId"
+      to="/dashboard/journey/$userId"
       params={{ userId }}
       className={
         className ??
