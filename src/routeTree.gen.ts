@@ -22,7 +22,9 @@ import { Route as DashboardJobsRouteImport } from './routes/dashboard.jobs'
 import { Route as DashboardFeedbackRouteImport } from './routes/dashboard.feedback'
 import { Route as DashboardErrorsRouteImport } from './routes/dashboard.errors'
 import { Route as DashboardApplicationsRouteImport } from './routes/dashboard.applications'
+import { Route as DashboardActivityRouteImport } from './routes/dashboard.activity'
 import { Route as DashboardDocumentsIndexRouteImport } from './routes/dashboard.documents.index'
+import { Route as DashboardJourneyUserIdRouteImport } from './routes/dashboard.journey.$userId'
 import { Route as DashboardDocumentsUserIdRouteImport } from './routes/dashboard.documents.$userId'
 import { Route as DashboardTTableIndexRouteImport } from './routes/dashboard.t.$table.index'
 import { Route as DashboardTTableIdRouteImport } from './routes/dashboard.t.$table.$id'
@@ -92,9 +94,19 @@ const DashboardApplicationsRoute = DashboardApplicationsRouteImport.update({
   path: '/applications',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardActivityRoute = DashboardActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardDocumentsIndexRoute = DashboardDocumentsIndexRouteImport.update({
   id: '/documents/',
   path: '/documents/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardJourneyUserIdRoute = DashboardJourneyUserIdRouteImport.update({
+  id: '/journey/$userId',
+  path: '/journey/$userId',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardDocumentsUserIdRoute =
@@ -118,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
+  '/dashboard/activity': typeof DashboardActivityRoute
   '/dashboard/applications': typeof DashboardApplicationsRoute
   '/dashboard/errors': typeof DashboardErrorsRoute
   '/dashboard/feedback': typeof DashboardFeedbackRoute
@@ -129,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
+  '/dashboard/journey/$userId': typeof DashboardJourneyUserIdRoute
   '/dashboard/documents/': typeof DashboardDocumentsIndexRoute
   '/dashboard/t/$table/$id': typeof DashboardTTableIdRoute
   '/dashboard/t/$table/': typeof DashboardTTableIndexRoute
@@ -136,6 +150,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/dashboard/activity': typeof DashboardActivityRoute
   '/dashboard/applications': typeof DashboardApplicationsRoute
   '/dashboard/errors': typeof DashboardErrorsRoute
   '/dashboard/feedback': typeof DashboardFeedbackRoute
@@ -147,6 +162,7 @@ export interface FileRoutesByTo {
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
   '/dashboard': typeof DashboardIndexRoute
   '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
+  '/dashboard/journey/$userId': typeof DashboardJourneyUserIdRoute
   '/dashboard/documents': typeof DashboardDocumentsIndexRoute
   '/dashboard/t/$table/$id': typeof DashboardTTableIdRoute
   '/dashboard/t/$table': typeof DashboardTTableIndexRoute
@@ -156,6 +172,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
+  '/dashboard/activity': typeof DashboardActivityRoute
   '/dashboard/applications': typeof DashboardApplicationsRoute
   '/dashboard/errors': typeof DashboardErrorsRoute
   '/dashboard/feedback': typeof DashboardFeedbackRoute
@@ -167,6 +184,7 @@ export interface FileRoutesById {
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
+  '/dashboard/journey/$userId': typeof DashboardJourneyUserIdRoute
   '/dashboard/documents/': typeof DashboardDocumentsIndexRoute
   '/dashboard/t/$table/$id': typeof DashboardTTableIdRoute
   '/dashboard/t/$table/': typeof DashboardTTableIndexRoute
@@ -177,6 +195,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/login'
+    | '/dashboard/activity'
     | '/dashboard/applications'
     | '/dashboard/errors'
     | '/dashboard/feedback'
@@ -188,6 +207,7 @@ export interface FileRouteTypes {
     | '/dashboard/workflows'
     | '/dashboard/'
     | '/dashboard/documents/$userId'
+    | '/dashboard/journey/$userId'
     | '/dashboard/documents/'
     | '/dashboard/t/$table/$id'
     | '/dashboard/t/$table/'
@@ -195,6 +215,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
+    | '/dashboard/activity'
     | '/dashboard/applications'
     | '/dashboard/errors'
     | '/dashboard/feedback'
@@ -206,6 +227,7 @@ export interface FileRouteTypes {
     | '/dashboard/workflows'
     | '/dashboard'
     | '/dashboard/documents/$userId'
+    | '/dashboard/journey/$userId'
     | '/dashboard/documents'
     | '/dashboard/t/$table/$id'
     | '/dashboard/t/$table'
@@ -214,6 +236,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/login'
+    | '/dashboard/activity'
     | '/dashboard/applications'
     | '/dashboard/errors'
     | '/dashboard/feedback'
@@ -225,6 +248,7 @@ export interface FileRouteTypes {
     | '/dashboard/workflows'
     | '/dashboard/'
     | '/dashboard/documents/$userId'
+    | '/dashboard/journey/$userId'
     | '/dashboard/documents/'
     | '/dashboard/t/$table/$id'
     | '/dashboard/t/$table/'
@@ -329,11 +353,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardApplicationsRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/activity': {
+      id: '/dashboard/activity'
+      path: '/activity'
+      fullPath: '/dashboard/activity'
+      preLoaderRoute: typeof DashboardActivityRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/documents/': {
       id: '/dashboard/documents/'
       path: '/documents'
       fullPath: '/dashboard/documents/'
       preLoaderRoute: typeof DashboardDocumentsIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/journey/$userId': {
+      id: '/dashboard/journey/$userId'
+      path: '/journey/$userId'
+      fullPath: '/dashboard/journey/$userId'
+      preLoaderRoute: typeof DashboardJourneyUserIdRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/dashboard/documents/$userId': {
@@ -361,6 +399,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface DashboardRouteChildren {
+  DashboardActivityRoute: typeof DashboardActivityRoute
   DashboardApplicationsRoute: typeof DashboardApplicationsRoute
   DashboardErrorsRoute: typeof DashboardErrorsRoute
   DashboardFeedbackRoute: typeof DashboardFeedbackRoute
@@ -372,12 +411,14 @@ interface DashboardRouteChildren {
   DashboardWorkflowsRoute: typeof DashboardWorkflowsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardDocumentsUserIdRoute: typeof DashboardDocumentsUserIdRoute
+  DashboardJourneyUserIdRoute: typeof DashboardJourneyUserIdRoute
   DashboardDocumentsIndexRoute: typeof DashboardDocumentsIndexRoute
   DashboardTTableIdRoute: typeof DashboardTTableIdRoute
   DashboardTTableIndexRoute: typeof DashboardTTableIndexRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardActivityRoute: DashboardActivityRoute,
   DashboardApplicationsRoute: DashboardApplicationsRoute,
   DashboardErrorsRoute: DashboardErrorsRoute,
   DashboardFeedbackRoute: DashboardFeedbackRoute,
@@ -389,6 +430,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardWorkflowsRoute: DashboardWorkflowsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardDocumentsUserIdRoute: DashboardDocumentsUserIdRoute,
+  DashboardJourneyUserIdRoute: DashboardJourneyUserIdRoute,
   DashboardDocumentsIndexRoute: DashboardDocumentsIndexRoute,
   DashboardTTableIdRoute: DashboardTTableIdRoute,
   DashboardTTableIndexRoute: DashboardTTableIndexRoute,
