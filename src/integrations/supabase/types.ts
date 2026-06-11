@@ -51,6 +51,7 @@ export type Database = {
           company: string | null
           cover_letter: string | null
           created_at: string
+          draft_notification_sent: boolean | null
           drive_file_id: string | null
           drive_folder_id: string | null
           drive_pack_saved_at: string | null
@@ -82,6 +83,7 @@ export type Database = {
           company?: string | null
           cover_letter?: string | null
           created_at?: string
+          draft_notification_sent?: boolean | null
           drive_file_id?: string | null
           drive_folder_id?: string | null
           drive_pack_saved_at?: string | null
@@ -113,6 +115,7 @@ export type Database = {
           company?: string | null
           cover_letter?: string | null
           created_at?: string
+          draft_notification_sent?: boolean | null
           drive_file_id?: string | null
           drive_folder_id?: string | null
           drive_pack_saved_at?: string | null
@@ -141,6 +144,153 @@ export type Database = {
             columns: ["job_id"]
             isOneToOne: false
             referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      automation_notifications: {
+        Row: {
+          body_preview: string | null
+          created_at: string
+          error_message: string | null
+          id: string
+          recipient_email: string
+          run_id: string | null
+          status: string
+          subject: string
+          user_id: string
+        }
+        Insert: {
+          body_preview?: string | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          recipient_email: string
+          run_id?: string | null
+          status: string
+          subject: string
+          user_id: string
+        }
+        Update: {
+          body_preview?: string | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          recipient_email?: string
+          run_id?: string | null
+          status?: string
+          subject?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "automation_notifications_run_id_fkey"
+            columns: ["run_id"]
+            isOneToOne: false
+            referencedRelation: "automation_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      automation_run_steps: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          details: string | null
+          error_message: string | null
+          id: string
+          jobs_found: number | null
+          label: string
+          metadata: Json
+          run_id: string
+          started_at: string | null
+          status: string
+          step_key: string
+          step_order: number
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          details?: string | null
+          error_message?: string | null
+          id?: string
+          jobs_found?: number | null
+          label: string
+          metadata?: Json
+          run_id: string
+          started_at?: string | null
+          status?: string
+          step_key: string
+          step_order: number
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          details?: string | null
+          error_message?: string | null
+          id?: string
+          jobs_found?: number | null
+          label?: string
+          metadata?: Json
+          run_id?: string
+          started_at?: string | null
+          status?: string
+          step_key?: string
+          step_order?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "automation_run_steps_run_id_fkey"
+            columns: ["run_id"]
+            isOneToOne: false
+            referencedRelation: "automation_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      automation_runs: {
+        Row: {
+          completed_at: string | null
+          error_message: string | null
+          id: string
+          jobs_applied: number | null
+          jobs_found: number | null
+          started_at: string
+          status: string
+          user_id: string
+          workflow_id: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          error_message?: string | null
+          id?: string
+          jobs_applied?: number | null
+          jobs_found?: number | null
+          started_at?: string
+          status: string
+          user_id: string
+          workflow_id?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          error_message?: string | null
+          id?: string
+          jobs_applied?: number | null
+          jobs_found?: number | null
+          started_at?: string
+          status?: string
+          user_id?: string
+          workflow_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "automation_runs_workflow_id_fkey"
+            columns: ["workflow_id"]
+            isOneToOne: false
+            referencedRelation: "workflows"
             referencedColumns: ["id"]
           },
         ]
@@ -245,6 +395,7 @@ export type Database = {
           application_email: string | null
           application_method: string
           application_url: string | null
+          category: string | null
           company: string | null
           company_summary: string | null
           contact_person: string | null
@@ -257,6 +408,7 @@ export type Database = {
           job_type: string | null
           location: string | null
           logo_url: string | null
+          required_skills: string[] | null
           requirements: string | null
           responsibilities: string | null
           role_description: string | null
@@ -271,6 +423,7 @@ export type Database = {
           application_email?: string | null
           application_method?: string
           application_url?: string | null
+          category?: string | null
           company?: string | null
           company_summary?: string | null
           contact_person?: string | null
@@ -283,6 +436,7 @@ export type Database = {
           job_type?: string | null
           location?: string | null
           logo_url?: string | null
+          required_skills?: string[] | null
           requirements?: string | null
           responsibilities?: string | null
           role_description?: string | null
@@ -297,6 +451,7 @@ export type Database = {
           application_email?: string | null
           application_method?: string
           application_url?: string | null
+          category?: string | null
           company?: string | null
           company_summary?: string | null
           contact_person?: string | null
@@ -309,6 +464,7 @@ export type Database = {
           job_type?: string | null
           location?: string | null
           logo_url?: string | null
+          required_skills?: string[] | null
           requirements?: string | null
           responsibilities?: string | null
           role_description?: string | null
@@ -320,6 +476,69 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      job_match_notifications: {
+        Row: {
+          application_method: string | null
+          brevo_message_id: string | null
+          company: string | null
+          created_at: string
+          error_message: string | null
+          id: string
+          job_id: string | null
+          job_title: string
+          match_score: number | null
+          notification_type: string
+          scraped_job_id: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          application_method?: string | null
+          brevo_message_id?: string | null
+          company?: string | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          job_id?: string | null
+          job_title: string
+          match_score?: number | null
+          notification_type?: string
+          scraped_job_id?: string | null
+          status: string
+          user_id: string
+        }
+        Update: {
+          application_method?: string | null
+          brevo_message_id?: string | null
+          company?: string | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          job_id?: string | null
+          job_title?: string
+          match_score?: number | null
+          notification_type?: string
+          scraped_job_id?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_match_notifications_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_match_notifications_scraped_job_id_fkey"
+            columns: ["scraped_job_id"]
+            isOneToOne: false
+            referencedRelation: "scraped_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       job_monitors: {
         Row: {
@@ -407,6 +626,7 @@ export type Database = {
           created_at: string
           deadline: string | null
           description: string | null
+          description_summary: string | null
           id: string
           job_type: string | null
           listing_id: string | null
@@ -417,6 +637,8 @@ export type Database = {
           match_score: number | null
           match_strengths: string | null
           notes: string | null
+          notified_at: string | null
+          required_skills: string[] | null
           requirements: string | null
           responsibilities: string | null
           role_description: string | null
@@ -444,6 +666,7 @@ export type Database = {
           created_at?: string
           deadline?: string | null
           description?: string | null
+          description_summary?: string | null
           id?: string
           job_type?: string | null
           listing_id?: string | null
@@ -454,6 +677,8 @@ export type Database = {
           match_score?: number | null
           match_strengths?: string | null
           notes?: string | null
+          notified_at?: string | null
+          required_skills?: string[] | null
           requirements?: string | null
           responsibilities?: string | null
           role_description?: string | null
@@ -481,6 +706,7 @@ export type Database = {
           created_at?: string
           deadline?: string | null
           description?: string | null
+          description_summary?: string | null
           id?: string
           job_type?: string | null
           listing_id?: string | null
@@ -491,6 +717,8 @@ export type Database = {
           match_score?: number | null
           match_strengths?: string | null
           notes?: string | null
+          notified_at?: string | null
+          required_skills?: string[] | null
           requirements?: string | null
           responsibilities?: string | null
           role_description?: string | null
@@ -795,6 +1023,7 @@ export type Database = {
           application_email: string | null
           application_method: string | null
           application_url: string | null
+          category: string | null
           company: string | null
           company_summary: string | null
           contact_person: string | null
@@ -807,7 +1036,11 @@ export type Database = {
           description_summary: string | null
           education_level: string | null
           experience_level: string | null
+          facebook_post_id: string | null
+          facebook_posted: boolean
+          facebook_posted_at: string | null
           id: string
+          image_url: string | null
           is_remote: boolean | null
           job_type: string | null
           location: string | null
@@ -815,6 +1048,7 @@ export type Database = {
           match_score_cache: Json
           posted_at: string | null
           raw: Json | null
+          required_skills: string[] | null
           requirements: string | null
           responsibilities: string | null
           role_description: string | null
@@ -833,6 +1067,7 @@ export type Database = {
           application_email?: string | null
           application_method?: string | null
           application_url?: string | null
+          category?: string | null
           company?: string | null
           company_summary?: string | null
           contact_person?: string | null
@@ -845,7 +1080,11 @@ export type Database = {
           description_summary?: string | null
           education_level?: string | null
           experience_level?: string | null
+          facebook_post_id?: string | null
+          facebook_posted?: boolean
+          facebook_posted_at?: string | null
           id?: string
+          image_url?: string | null
           is_remote?: boolean | null
           job_type?: string | null
           location?: string | null
@@ -853,6 +1092,7 @@ export type Database = {
           match_score_cache?: Json
           posted_at?: string | null
           raw?: Json | null
+          required_skills?: string[] | null
           requirements?: string | null
           responsibilities?: string | null
           role_description?: string | null
@@ -871,6 +1111,7 @@ export type Database = {
           application_email?: string | null
           application_method?: string | null
           application_url?: string | null
+          category?: string | null
           company?: string | null
           company_summary?: string | null
           contact_person?: string | null
@@ -883,7 +1124,11 @@ export type Database = {
           description_summary?: string | null
           education_level?: string | null
           experience_level?: string | null
+          facebook_post_id?: string | null
+          facebook_posted?: boolean
+          facebook_posted_at?: string | null
           id?: string
+          image_url?: string | null
           is_remote?: boolean | null
           job_type?: string | null
           location?: string | null
@@ -891,6 +1136,7 @@ export type Database = {
           match_score_cache?: Json
           posted_at?: string | null
           raw?: Json | null
+          required_skills?: string[] | null
           requirements?: string | null
           responsibilities?: string | null
           role_description?: string | null
@@ -1186,12 +1432,15 @@ export type Database = {
           auto_apply: boolean | null
           cover_letter_tone: string | null
           created_at: string
+          cron_expression: string | null
           id: string
+          job_categories: string[] | null
           job_types: string[] | null
           max_applications: number | null
           min_match_score: number | null
           minimum_salary: number | null
           name: string
+          required_skills: string[] | null
           run_days: string[] | null
           run_time: string | null
           sources: string[] | null
@@ -1206,12 +1455,15 @@ export type Database = {
           auto_apply?: boolean | null
           cover_letter_tone?: string | null
           created_at?: string
+          cron_expression?: string | null
           id?: string
+          job_categories?: string[] | null
           job_types?: string[] | null
           max_applications?: number | null
           min_match_score?: number | null
           minimum_salary?: number | null
           name?: string
+          required_skills?: string[] | null
           run_days?: string[] | null
           run_time?: string | null
           sources?: string[] | null
@@ -1226,12 +1478,15 @@ export type Database = {
           auto_apply?: boolean | null
           cover_letter_tone?: string | null
           created_at?: string
+          cron_expression?: string | null
           id?: string
+          job_categories?: string[] | null
           job_types?: string[] | null
           max_applications?: number | null
           min_match_score?: number | null
           minimum_salary?: number | null
           name?: string
+          required_skills?: string[] | null
           run_days?: string[] | null
           run_time?: string | null
           sources?: string[] | null
@@ -1247,6 +1502,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_set_user_plan: {
+        Args: { p_days?: number; p_email: string; p_plan?: string }
+        Returns: {
+          current_plan: string
+          email: string
+          id: string
+          upgrade_expires_at: string
+        }[]
+      }
       check_user_limits: {
         Args: { p_action_type: string; p_user_id: string }
         Returns: Json
@@ -1261,6 +1525,8 @@ export type Database = {
         }
         Returns: boolean
       }
+      invoke_auto_apply_edge: { Args: never; Returns: undefined }
+      invoke_job_match_notify_edge: { Args: never; Returns: undefined }
       invoke_match_engine_edge: { Args: never; Returns: undefined }
       invoke_new_site_scraper_edge: {
         Args: { p_function: string; p_limit?: number }
