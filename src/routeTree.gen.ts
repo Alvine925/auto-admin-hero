@@ -22,6 +22,7 @@ import { Route as DashboardJobsRouteImport } from './routes/dashboard.jobs'
 import { Route as DashboardFeedbackRouteImport } from './routes/dashboard.feedback'
 import { Route as DashboardErrorsRouteImport } from './routes/dashboard.errors'
 import { Route as DashboardApplicationsRouteImport } from './routes/dashboard.applications'
+import { Route as DashboardActivityRouteImport } from './routes/dashboard.activity'
 import { Route as DashboardDocumentsIndexRouteImport } from './routes/dashboard.documents.index'
 import { Route as DashboardJourneyUserIdRouteImport } from './routes/dashboard.journey.$userId'
 import { Route as DashboardDocumentsUserIdRouteImport } from './routes/dashboard.documents.$userId'
@@ -93,6 +94,11 @@ const DashboardApplicationsRoute = DashboardApplicationsRouteImport.update({
   path: '/applications',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardActivityRoute = DashboardActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardDocumentsIndexRoute = DashboardDocumentsIndexRouteImport.update({
   id: '/documents/',
   path: '/documents/',
@@ -124,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
+  '/dashboard/activity': typeof DashboardActivityRoute
   '/dashboard/applications': typeof DashboardApplicationsRoute
   '/dashboard/errors': typeof DashboardErrorsRoute
   '/dashboard/feedback': typeof DashboardFeedbackRoute
@@ -143,6 +150,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/dashboard/activity': typeof DashboardActivityRoute
   '/dashboard/applications': typeof DashboardApplicationsRoute
   '/dashboard/errors': typeof DashboardErrorsRoute
   '/dashboard/feedback': typeof DashboardFeedbackRoute
@@ -164,6 +172,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
+  '/dashboard/activity': typeof DashboardActivityRoute
   '/dashboard/applications': typeof DashboardApplicationsRoute
   '/dashboard/errors': typeof DashboardErrorsRoute
   '/dashboard/feedback': typeof DashboardFeedbackRoute
@@ -186,6 +195,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/login'
+    | '/dashboard/activity'
     | '/dashboard/applications'
     | '/dashboard/errors'
     | '/dashboard/feedback'
@@ -205,6 +215,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
+    | '/dashboard/activity'
     | '/dashboard/applications'
     | '/dashboard/errors'
     | '/dashboard/feedback'
@@ -225,6 +236,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/login'
+    | '/dashboard/activity'
     | '/dashboard/applications'
     | '/dashboard/errors'
     | '/dashboard/feedback'
@@ -341,6 +353,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardApplicationsRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/activity': {
+      id: '/dashboard/activity'
+      path: '/activity'
+      fullPath: '/dashboard/activity'
+      preLoaderRoute: typeof DashboardActivityRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/documents/': {
       id: '/dashboard/documents/'
       path: '/documents'
@@ -380,6 +399,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface DashboardRouteChildren {
+  DashboardActivityRoute: typeof DashboardActivityRoute
   DashboardApplicationsRoute: typeof DashboardApplicationsRoute
   DashboardErrorsRoute: typeof DashboardErrorsRoute
   DashboardFeedbackRoute: typeof DashboardFeedbackRoute
@@ -398,6 +418,7 @@ interface DashboardRouteChildren {
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardActivityRoute: DashboardActivityRoute,
   DashboardApplicationsRoute: DashboardApplicationsRoute,
   DashboardErrorsRoute: DashboardErrorsRoute,
   DashboardFeedbackRoute: DashboardFeedbackRoute,
