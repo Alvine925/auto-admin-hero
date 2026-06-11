@@ -5,7 +5,7 @@ import { getGlobalActivity, type JourneyEvent } from "@/lib/journey.functions";
 import { PageHeader, PageBody } from "@/components/admin/PageHeader";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { UserLink } from "@/components/admin/UserLink";
+import { useProfilesMap } from "@/components/admin/UserLink";
 import { Loader2, ExternalLink, User as UserIcon } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard/activity")({
