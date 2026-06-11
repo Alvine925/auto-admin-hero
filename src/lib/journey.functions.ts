@@ -24,7 +24,7 @@ export type JourneyEvent = {
   description?: string | null;
   user_id: string;
   link?: { table: string; id: string } | null;
-  metadata?: Record<string, unknown> | null;
+  metadata?: any;
 };
 
 async function assertAdmin(supabase: any, userId: string) {
