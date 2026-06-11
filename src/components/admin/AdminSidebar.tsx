@@ -36,6 +36,19 @@ export function AdminSidebar() {
         </Link>
 
         <Link
+          to="/dashboard/activity"
+          className={cn(
+            "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+            pathname.startsWith("/dashboard/activity")
+              ? "bg-sidebar-accent text-sidebar-accent-foreground border-l-2 border-gold"
+              : "text-sidebar-foreground/75 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground"
+          )}
+        >
+          <Activity className="h-4 w-4" />
+          Live Activity
+        </Link>
+
+        <Link
           to="/dashboard/documents"
           className={cn(
             "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
