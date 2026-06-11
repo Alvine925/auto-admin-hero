@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { Crown, LogOut, LayoutDashboard, ChevronRight, FolderOpen } from "lucide-react";
+import { Crown, LogOut, LayoutDashboard, ChevronRight, FolderOpen, Activity } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
