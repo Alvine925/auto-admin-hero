@@ -899,6 +899,42 @@ export type Database = {
           },
         ]
       }
+      newsletter_sends: {
+        Row: {
+          created_at: string
+          error: string | null
+          id: string
+          newsletter_id: string
+          newsletter_title: string | null
+          recipient_email: string
+          recipient_user_id: string | null
+          sent_by: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          error?: string | null
+          id?: string
+          newsletter_id: string
+          newsletter_title?: string | null
+          recipient_email: string
+          recipient_user_id?: string | null
+          sent_by?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          error?: string | null
+          id?: string
+          newsletter_id?: string
+          newsletter_title?: string | null
+          recipient_email?: string
+          recipient_user_id?: string | null
+          sent_by?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           created_at: string
