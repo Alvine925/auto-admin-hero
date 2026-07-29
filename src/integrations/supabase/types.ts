@@ -551,7 +551,9 @@ export type Database = {
           last_scraped_at: string | null
           name: string
           notes: string | null
+          scrape_day: string | null
           scrape_frequency: string
+          scrape_time: string | null
           updated_at: string
           url: string
           user_id: string
@@ -566,7 +568,9 @@ export type Database = {
           last_scraped_at?: string | null
           name: string
           notes?: string | null
+          scrape_day?: string | null
           scrape_frequency?: string
+          scrape_time?: string | null
           updated_at?: string
           url: string
           user_id: string
@@ -581,7 +585,9 @@ export type Database = {
           last_scraped_at?: string | null
           name?: string
           notes?: string | null
+          scrape_day?: string | null
           scrape_frequency?: string
+          scrape_time?: string | null
           updated_at?: string
           url?: string
           user_id?: string
@@ -743,6 +749,66 @@ export type Database = {
           },
         ]
       }
+      leads: {
+        Row: {
+          address: string | null
+          county: string | null
+          description: string | null
+          email: string | null
+          google_maps_url: string | null
+          id: string
+          name: string
+          org_type: string | null
+          phone: string | null
+          place_id: string | null
+          raw: Json | null
+          scraped_at: string
+          search_query: string | null
+          source: string
+          source_url: string
+          town: string | null
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          county?: string | null
+          description?: string | null
+          email?: string | null
+          google_maps_url?: string | null
+          id?: string
+          name: string
+          org_type?: string | null
+          phone?: string | null
+          place_id?: string | null
+          raw?: Json | null
+          scraped_at?: string
+          search_query?: string | null
+          source?: string
+          source_url: string
+          town?: string | null
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          county?: string | null
+          description?: string | null
+          email?: string | null
+          google_maps_url?: string | null
+          id?: string
+          name?: string
+          org_type?: string | null
+          phone?: string | null
+          place_id?: string | null
+          raw?: Json | null
+          scraped_at?: string
+          search_query?: string | null
+          source?: string
+          source_url?: string
+          town?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
       login_attempts: {
         Row: {
           attempts: number
@@ -769,6 +835,69 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      monitored_jobs: {
+        Row: {
+          added_to_jobs: boolean
+          company: string | null
+          deadline: string | null
+          description: string | null
+          id: string
+          location: string | null
+          monitor_id: string
+          scraped_at: string
+          scraped_job_id: string | null
+          source_url: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          added_to_jobs?: boolean
+          company?: string | null
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          location?: string | null
+          monitor_id: string
+          scraped_at?: string
+          scraped_job_id?: string | null
+          source_url: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          added_to_jobs?: boolean
+          company?: string | null
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          location?: string | null
+          monitor_id?: string
+          scraped_at?: string
+          scraped_job_id?: string | null
+          source_url?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monitored_jobs_monitor_id_fkey"
+            columns: ["monitor_id"]
+            isOneToOne: false
+            referencedRelation: "job_monitors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "monitored_jobs_scraped_job_id_fkey"
+            columns: ["scraped_job_id"]
+            isOneToOne: false
+            referencedRelation: "scraped_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       notifications: {
         Row: {
@@ -859,6 +988,7 @@ export type Database = {
       profiles: {
         Row: {
           active_referrals: number | null
+          ai_processing_consent_at: string | null
           certifications: string | null
           created_at: string
           current_address: string | null
@@ -896,6 +1026,7 @@ export type Database = {
         }
         Insert: {
           active_referrals?: number | null
+          ai_processing_consent_at?: string | null
           certifications?: string | null
           created_at?: string
           current_address?: string | null
@@ -933,6 +1064,7 @@ export type Database = {
         }
         Update: {
           active_referrals?: number | null
+          ai_processing_consent_at?: string | null
           certifications?: string | null
           created_at?: string
           current_address?: string | null
@@ -1499,7 +1631,51 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      recent_leads: {
+        Row: {
+          county: string | null
+          description: string | null
+          email: string | null
+          google_maps_url: string | null
+          id: string | null
+          name: string | null
+          org_type: string | null
+          phone: string | null
+          scraped_at: string | null
+          source: string | null
+          town: string | null
+          website: string | null
+        }
+        Insert: {
+          county?: string | null
+          description?: string | null
+          email?: string | null
+          google_maps_url?: string | null
+          id?: string | null
+          name?: string | null
+          org_type?: string | null
+          phone?: string | null
+          scraped_at?: string | null
+          source?: string | null
+          town?: string | null
+          website?: string | null
+        }
+        Update: {
+          county?: string | null
+          description?: string | null
+          email?: string | null
+          google_maps_url?: string | null
+          id?: string | null
+          name?: string | null
+          org_type?: string | null
+          phone?: string | null
+          scraped_at?: string | null
+          source?: string | null
+          town?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       admin_set_user_plan: {
@@ -1527,6 +1703,7 @@ export type Database = {
       }
       invoke_auto_apply_edge: { Args: never; Returns: undefined }
       invoke_job_match_notify_edge: { Args: never; Returns: undefined }
+      invoke_job_monitors_cron: { Args: never; Returns: undefined }
       invoke_match_engine_edge: { Args: never; Returns: undefined }
       invoke_new_site_scraper_edge: {
         Args: { p_function: string; p_limit?: number }
