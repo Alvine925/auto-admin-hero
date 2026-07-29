@@ -1384,7 +1384,9 @@ export function renderNewsletterHtml(n: Newsletter): string {
             </div>
             <div style="margin:48px 0 0;font-size:13px;line-height:1.7;color:#8b9a93;">
               You are receiving this because you have a Tellus Jobs account.<br />
-              <a href="${esc(APP_DOMAIN)}" style="color:#8b9a93;text-decoration:underline;">myjobs.tellusjobs.site</a>
+              <a href="${esc(APP_DOMAIN)}" style="color:#8b9a93;text-decoration:underline;">Visit Tellus Jobs</a>
+              &nbsp;&middot;&nbsp;
+              <a href="${esc(APP_DOMAIN)}/feedback" style="color:#8b9a93;text-decoration:underline;">Share feedback</a>
             </div>
           </td>
         </tr>
