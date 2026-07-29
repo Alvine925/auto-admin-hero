@@ -23,6 +23,7 @@ import { Route as DashboardFeedbackRouteImport } from './routes/dashboard.feedba
 import { Route as DashboardErrorsRouteImport } from './routes/dashboard.errors'
 import { Route as DashboardApplicationsRouteImport } from './routes/dashboard.applications'
 import { Route as DashboardActivityRouteImport } from './routes/dashboard.activity'
+import { Route as DashboardNewslettersIndexRouteImport } from './routes/dashboard.newsletters.index'
 import { Route as DashboardDocumentsIndexRouteImport } from './routes/dashboard.documents.index'
 import { Route as DashboardJourneyUserIdRouteImport } from './routes/dashboard.journey.$userId'
 import { Route as DashboardDocumentsUserIdRouteImport } from './routes/dashboard.documents.$userId'
@@ -99,6 +100,12 @@ const DashboardActivityRoute = DashboardActivityRouteImport.update({
   path: '/activity',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardNewslettersIndexRoute =
+  DashboardNewslettersIndexRouteImport.update({
+    id: '/newsletters/',
+    path: '/newsletters/',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 const DashboardDocumentsIndexRoute = DashboardDocumentsIndexRouteImport.update({
   id: '/documents/',
   path: '/documents/',
@@ -144,6 +151,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
   '/dashboard/journey/$userId': typeof DashboardJourneyUserIdRoute
   '/dashboard/documents/': typeof DashboardDocumentsIndexRoute
+  '/dashboard/newsletters/': typeof DashboardNewslettersIndexRoute
   '/dashboard/t/$table/$id': typeof DashboardTTableIdRoute
   '/dashboard/t/$table/': typeof DashboardTTableIndexRoute
 }
@@ -164,6 +172,7 @@ export interface FileRoutesByTo {
   '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
   '/dashboard/journey/$userId': typeof DashboardJourneyUserIdRoute
   '/dashboard/documents': typeof DashboardDocumentsIndexRoute
+  '/dashboard/newsletters': typeof DashboardNewslettersIndexRoute
   '/dashboard/t/$table/$id': typeof DashboardTTableIdRoute
   '/dashboard/t/$table': typeof DashboardTTableIndexRoute
 }
@@ -186,6 +195,7 @@ export interface FileRoutesById {
   '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
   '/dashboard/journey/$userId': typeof DashboardJourneyUserIdRoute
   '/dashboard/documents/': typeof DashboardDocumentsIndexRoute
+  '/dashboard/newsletters/': typeof DashboardNewslettersIndexRoute
   '/dashboard/t/$table/$id': typeof DashboardTTableIdRoute
   '/dashboard/t/$table/': typeof DashboardTTableIndexRoute
 }
@@ -209,6 +219,7 @@ export interface FileRouteTypes {
     | '/dashboard/documents/$userId'
     | '/dashboard/journey/$userId'
     | '/dashboard/documents/'
+    | '/dashboard/newsletters/'
     | '/dashboard/t/$table/$id'
     | '/dashboard/t/$table/'
   fileRoutesByTo: FileRoutesByTo
@@ -229,6 +240,7 @@ export interface FileRouteTypes {
     | '/dashboard/documents/$userId'
     | '/dashboard/journey/$userId'
     | '/dashboard/documents'
+    | '/dashboard/newsletters'
     | '/dashboard/t/$table/$id'
     | '/dashboard/t/$table'
   id:
@@ -250,6 +262,7 @@ export interface FileRouteTypes {
     | '/dashboard/documents/$userId'
     | '/dashboard/journey/$userId'
     | '/dashboard/documents/'
+    | '/dashboard/newsletters/'
     | '/dashboard/t/$table/$id'
     | '/dashboard/t/$table/'
   fileRoutesById: FileRoutesById
@@ -360,6 +373,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardActivityRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/newsletters/': {
+      id: '/dashboard/newsletters/'
+      path: '/newsletters'
+      fullPath: '/dashboard/newsletters/'
+      preLoaderRoute: typeof DashboardNewslettersIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/documents/': {
       id: '/dashboard/documents/'
       path: '/documents'
@@ -413,6 +433,7 @@ interface DashboardRouteChildren {
   DashboardDocumentsUserIdRoute: typeof DashboardDocumentsUserIdRoute
   DashboardJourneyUserIdRoute: typeof DashboardJourneyUserIdRoute
   DashboardDocumentsIndexRoute: typeof DashboardDocumentsIndexRoute
+  DashboardNewslettersIndexRoute: typeof DashboardNewslettersIndexRoute
   DashboardTTableIdRoute: typeof DashboardTTableIdRoute
   DashboardTTableIndexRoute: typeof DashboardTTableIndexRoute
 }
@@ -432,6 +453,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardDocumentsUserIdRoute: DashboardDocumentsUserIdRoute,
   DashboardJourneyUserIdRoute: DashboardJourneyUserIdRoute,
   DashboardDocumentsIndexRoute: DashboardDocumentsIndexRoute,
+  DashboardNewslettersIndexRoute: DashboardNewslettersIndexRoute,
   DashboardTTableIdRoute: DashboardTTableIdRoute,
   DashboardTTableIndexRoute: DashboardTTableIndexRoute,
 }
