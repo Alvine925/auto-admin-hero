@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as NewslettersRouteImport } from './routes/newsletters'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
@@ -30,6 +31,11 @@ import { Route as DashboardDocumentsUserIdRouteImport } from './routes/dashboard
 import { Route as DashboardTTableIndexRouteImport } from './routes/dashboard.t.$table.index'
 import { Route as DashboardTTableIdRouteImport } from './routes/dashboard.t.$table.$id'
 
+const NewslettersRoute = NewslettersRouteImport.update({
+  id: '/newsletters',
+  path: '/newsletters',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -137,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
+  '/newsletters': typeof NewslettersRoute
   '/dashboard/activity': typeof DashboardActivityRoute
   '/dashboard/applications': typeof DashboardApplicationsRoute
   '/dashboard/errors': typeof DashboardErrorsRoute
@@ -158,6 +165,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/newsletters': typeof NewslettersRoute
   '/dashboard/activity': typeof DashboardActivityRoute
   '/dashboard/applications': typeof DashboardApplicationsRoute
   '/dashboard/errors': typeof DashboardErrorsRoute
@@ -181,6 +189,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
+  '/newsletters': typeof NewslettersRoute
   '/dashboard/activity': typeof DashboardActivityRoute
   '/dashboard/applications': typeof DashboardApplicationsRoute
   '/dashboard/errors': typeof DashboardErrorsRoute
@@ -205,6 +214,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/login'
+    | '/newsletters'
     | '/dashboard/activity'
     | '/dashboard/applications'
     | '/dashboard/errors'
@@ -226,6 +236,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
+    | '/newsletters'
     | '/dashboard/activity'
     | '/dashboard/applications'
     | '/dashboard/errors'
@@ -248,6 +259,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/login'
+    | '/newsletters'
     | '/dashboard/activity'
     | '/dashboard/applications'
     | '/dashboard/errors'
@@ -271,10 +283,18 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRouteWithChildren
   LoginRoute: typeof LoginRoute
+  NewslettersRoute: typeof NewslettersRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/newsletters': {
+      id: '/newsletters'
+      path: '/newsletters'
+      fullPath: '/newsletters'
+      preLoaderRoute: typeof NewslettersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -466,6 +486,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRouteWithChildren,
   LoginRoute: LoginRoute,
+  NewslettersRoute: NewslettersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
