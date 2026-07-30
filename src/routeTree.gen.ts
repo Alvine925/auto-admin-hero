@@ -15,6 +15,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NewslettersIndexRouteImport } from './routes/newsletters.index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as NewslettersIdRouteImport } from './routes/newsletters.$id'
 import { Route as DashboardWorkflowsRouteImport } from './routes/dashboard.workflows'
 import { Route as DashboardUsersRouteImport } from './routes/dashboard.users'
 import { Route as DashboardUsageRouteImport } from './routes/dashboard.usage'
@@ -61,6 +62,11 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DashboardRoute,
+} as any)
+const NewslettersIdRoute = NewslettersIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => NewslettersRoute,
 } as any)
 const DashboardWorkflowsRoute = DashboardWorkflowsRouteImport.update({
   id: '/workflows',
@@ -160,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/usage': typeof DashboardUsageRoute
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
+  '/newsletters/$id': typeof NewslettersIdRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/newsletters/': typeof NewslettersIndexRoute
   '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
@@ -182,6 +189,7 @@ export interface FileRoutesByTo {
   '/dashboard/usage': typeof DashboardUsageRoute
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
+  '/newsletters/$id': typeof NewslettersIdRoute
   '/dashboard': typeof DashboardIndexRoute
   '/newsletters': typeof NewslettersIndexRoute
   '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
@@ -207,6 +215,7 @@ export interface FileRoutesById {
   '/dashboard/usage': typeof DashboardUsageRoute
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
+  '/newsletters/$id': typeof NewslettersIdRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/newsletters/': typeof NewslettersIndexRoute
   '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
@@ -233,6 +242,7 @@ export interface FileRouteTypes {
     | '/dashboard/usage'
     | '/dashboard/users'
     | '/dashboard/workflows'
+    | '/newsletters/$id'
     | '/dashboard/'
     | '/newsletters/'
     | '/dashboard/documents/$userId'
@@ -255,6 +265,7 @@ export interface FileRouteTypes {
     | '/dashboard/usage'
     | '/dashboard/users'
     | '/dashboard/workflows'
+    | '/newsletters/$id'
     | '/dashboard'
     | '/newsletters'
     | '/dashboard/documents/$userId'
@@ -279,6 +290,7 @@ export interface FileRouteTypes {
     | '/dashboard/usage'
     | '/dashboard/users'
     | '/dashboard/workflows'
+    | '/newsletters/$id'
     | '/dashboard/'
     | '/newsletters/'
     | '/dashboard/documents/$userId'
@@ -339,6 +351,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
+    }
+    '/newsletters/$id': {
+      id: '/newsletters/$id'
+      path: '/$id'
+      fullPath: '/newsletters/$id'
+      preLoaderRoute: typeof NewslettersIdRouteImport
+      parentRoute: typeof NewslettersRoute
     }
     '/dashboard/workflows': {
       id: '/dashboard/workflows'
@@ -500,10 +519,12 @@ const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
 )
 
 interface NewslettersRouteChildren {
+  NewslettersIdRoute: typeof NewslettersIdRoute
   NewslettersIndexRoute: typeof NewslettersIndexRoute
 }
 
 const NewslettersRouteChildren: NewslettersRouteChildren = {
+  NewslettersIdRoute: NewslettersIdRoute,
   NewslettersIndexRoute: NewslettersIndexRoute,
 }
 
