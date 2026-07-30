@@ -1313,6 +1313,101 @@ export const NEWSLETTERS: Newsletter[] = [
     ctaLabel: "Browse your matched companies",
     ctaPath: "/jobs",
   },
+
+  // ── 26. Encouragement during the job hunt ─────────────────────────────────
+  {
+    id: "keep-going-job-search",
+    title: "Keep going: your next role is closer than it feels",
+    subject: "The job hunt is hard, but you are not stuck. Here is encouragement that actually helps.",
+    preheader: "Practical encouragement for anyone who is tired of job searching. Your next yes is on its way.",
+    heroImage:
+      "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1200&q=80",
+    heroAlt: "A sunrise over a quiet road, symbolising a new beginning and fresh hope",
+    eyebrow: "Encouragement",
+    headline: "The job hunt is hard. That does not mean you are failing.",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Hi {{FIRST_NAME}}, if you are reading this email, there is a good chance that today has been difficult. Maybe you sent five applications and heard nothing back. Maybe you made it to the final interview and were told they chose someone else. Maybe you have been searching for longer than you ever expected, and the whole process is starting to feel personal. Before anything else, please hear this: the difficulty you are feeling is real, and it is not a sign that something is wrong with you.",
+      },
+      {
+        type: "paragraph",
+        text: "Job searching is one of the most emotionally demanding things a person can do. It asks you to present your best self, repeatedly, to people who do not know you, while living with uncertainty about your income, your future, and your sense of identity. It is normal to feel discouraged. It is normal to feel tired. It is normal to wonder whether you are good enough. What matters is not whether you feel those things. What matters is that you do not let them stop you from taking the next small step.",
+      },
+      { type: "heading", text: "Rejection is information, not a verdict" },
+      {
+        type: "paragraph",
+        text: "One of the hardest parts of job searching is how easy it is to interpret silence or rejection as a judgement on your entire value as a professional. A company does not call back, and suddenly you start questioning your CV, your experience, your communication skills, and whether you will ever be hired again. This is a natural response, but it is not an accurate one.",
+      },
+      {
+        type: "paragraph",
+        text: "The truth is that most rejections have very little to do with your overall competence. The role may have been filled internally before it was ever posted. The hiring manager may have had a specific, unstated preference for a particular industry background. The budget may have changed. The timeline may have shifted. The company may have received two hundred applications and only had time to interview six. You are competing against a combination of factors that are entirely outside your control, and some of those factors will never be visible to you.",
+      },
+      {
+        type: "paragraph",
+        text: "The healthiest way to process a rejection is to treat it as data about one specific opportunity, not as data about your worth. Ask yourself: did I apply early enough? Was my CV genuinely tailored to this role? Did I follow up appropriately? If the answer to all of those is yes, then the rejection is almost certainly about fit, timing, or internal circumstances, not about you. Take what you can learn, let the rest go, and move on to the next application.",
+      },
+      { type: "heading", text: "Small consistent action beats occasional heroic effort" },
+      {
+        type: "paragraph",
+        text: "A lot of people approach job searching in bursts. They spend an entire weekend applying to thirty roles, then do nothing for two weeks because the silence feels exhausting. Then they panic and repeat the cycle. This approach is emotionally draining and usually produces worse results than a slower, steadier rhythm.",
+      },
+      {
+        type: "paragraph",
+        text: "The most effective job search is usually a modest daily routine: two or three quality applications per day, one meaningful outreach message per week, twenty minutes of interview practice, and a regular update to your profile. This rhythm keeps your pipeline full without burning you out. It also keeps you emotionally regulated, because you are measuring yourself by effort you control rather than by responses you do not.",
+      },
+      {
+        type: "paragraph",
+        text: "If today you only have the energy to do one small thing, do that one small thing. Update your LinkedIn headline. Tailor one cover letter. Reach out to one former colleague. Send one application. The accumulation of small steps over time is what produces breakthroughs. Momentum is not about feeling motivated every day. It is about showing up on the days when motivation is low.",
+      },
+      { type: "heading", text: "Your value does not depend on your current employment status" },
+      {
+        type: "paragraph",
+        text: "It is very easy to let your job search define your identity. When you are not working, or when you are working in a role that does not reflect your ability, the question 'So what do you do?' can feel loaded. You may start describing yourself as unemployed, in between roles, or just job searching. Try not to let that language settle too deeply.",
+      },
+      {
+        type: "paragraph",
+        text: "You are not your current employment status. You are a professional with a history, skills, relationships, and potential. The fact that you are searching for your next role does not erase everything you have done up to this point. The companies you have worked for, the problems you have solved, the people you have helped, and the skills you have developed all remain real. Your next employer will benefit from them. The gap between now and then is temporary.",
+      },
+      { type: "heading", text: "Comparison is the fastest way to lose perspective" },
+      {
+        type: "paragraph",
+        text: "While you are job searching, it can feel like everyone else is moving forward. Your friends are posting about new roles, promotions, and exciting projects. People in your network are updating their LinkedIn with job changes. Meanwhile, your inbox is quiet. It is easy to conclude that you are falling behind.",
+      },
+      {
+        type: "paragraph",
+        text: "What you do not see is the full picture. You do not see the rejections they received. You do not see the roles they did not get. You do not see the months of uncertainty that may have preceded their update. Most people only publicise the wins. Comparing your entire private process to someone else's highlight reel is unfair to yourself and almost always inaccurate.",
+      },
+      {
+        type: "paragraph",
+        text: "The only useful comparison is between you now and you earlier in your search. Are you applying more strategically than you were a month ago? Is your CV clearer? Have you had more conversations? Are you better at interviews? If you are improving, you are winning, even if the results have not arrived yet.",
+      },
+      { type: "heading", text: "Rest is part of the process, not a failure of discipline" },
+      {
+        type: "paragraph",
+        text: "There is a toxic idea that job searching should consume all of your time and energy until you land something. In reality, the people who search sustainably are the people who take breaks. A tired, anxious, depleted candidate does not write strong cover letters. They do not perform well in interviews. They do not project the confidence that makes employers want to hire them.",
+      },
+      {
+        type: "paragraph",
+        text: "Give yourself permission to rest. Take one day a week where you do not apply to anything. Spend time with people who remind you that you are more than your job. Do things that make you feel capable and competent, whether that is cooking, exercising, helping a friend, learning something new, or working on a small project. Resting is not giving up. It is preserving the energy you need to keep going well.",
+      },
+      { type: "heading", text: "The yes you are waiting for is being built by the work you do today" },
+      {
+        type: "paragraph",
+        text: "Every application you send, every conversation you have, every interview you prepare for, and every skill you sharpen is increasing the probability that your next yes will arrive. You cannot see the exact moment it will happen, but you can influence the likelihood that it happens. The work you put in today is not wasted even if it does not produce immediate feedback.",
+      },
+      {
+        type: "paragraph",
+        text: "Tellus is here to make that work lighter. We built this platform so that you do not have to spend hours searching through irrelevant listings, writing cover letters from scratch, or wondering whether your CV is being read correctly. Let the tools handle the repetitive parts. Save your energy for the decisions, the conversations, and the preparation that only you can do.",
+      },
+      {
+        type: "paragraph",
+        text: "Keep going. Your next role is not guaranteed to arrive on a specific timeline, but if you keep applying strategically, keep learning from each step, and keep taking care of yourself along the way, it will arrive. The work you are doing now is the path that leads there. One day soon, you will look back at this season and be glad you did not stop.",
+      },
+    ],
+    ctaLabel: "Keep your momentum going",
+    ctaPath: "/dashboard",
+  },
 ];
 
 export function getNewsletter(id: string) {
