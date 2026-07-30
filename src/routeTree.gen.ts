@@ -13,6 +13,7 @@ import { Route as NewslettersRouteImport } from './routes/newsletters'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as NewslettersIndexRouteImport } from './routes/newsletters.index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 import { Route as DashboardWorkflowsRouteImport } from './routes/dashboard.workflows'
 import { Route as DashboardUsersRouteImport } from './routes/dashboard.users'
@@ -50,6 +51,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const NewslettersIndexRoute = NewslettersIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => NewslettersRoute,
 } as any)
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/',
@@ -143,7 +149,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
-  '/newsletters': typeof NewslettersRoute
+  '/newsletters': typeof NewslettersRouteWithChildren
   '/dashboard/activity': typeof DashboardActivityRoute
   '/dashboard/applications': typeof DashboardApplicationsRoute
   '/dashboard/errors': typeof DashboardErrorsRoute
@@ -155,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/newsletters/': typeof NewslettersIndexRoute
   '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
   '/dashboard/journey/$userId': typeof DashboardJourneyUserIdRoute
   '/dashboard/documents/': typeof DashboardDocumentsIndexRoute
@@ -165,7 +172,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/newsletters': typeof NewslettersRoute
   '/dashboard/activity': typeof DashboardActivityRoute
   '/dashboard/applications': typeof DashboardApplicationsRoute
   '/dashboard/errors': typeof DashboardErrorsRoute
@@ -177,6 +183,7 @@ export interface FileRoutesByTo {
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/newsletters': typeof NewslettersIndexRoute
   '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
   '/dashboard/journey/$userId': typeof DashboardJourneyUserIdRoute
   '/dashboard/documents': typeof DashboardDocumentsIndexRoute
@@ -189,7 +196,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
-  '/newsletters': typeof NewslettersRoute
+  '/newsletters': typeof NewslettersRouteWithChildren
   '/dashboard/activity': typeof DashboardActivityRoute
   '/dashboard/applications': typeof DashboardApplicationsRoute
   '/dashboard/errors': typeof DashboardErrorsRoute
@@ -201,6 +208,7 @@ export interface FileRoutesById {
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/newsletters/': typeof NewslettersIndexRoute
   '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
   '/dashboard/journey/$userId': typeof DashboardJourneyUserIdRoute
   '/dashboard/documents/': typeof DashboardDocumentsIndexRoute
@@ -226,6 +234,7 @@ export interface FileRouteTypes {
     | '/dashboard/users'
     | '/dashboard/workflows'
     | '/dashboard/'
+    | '/newsletters/'
     | '/dashboard/documents/$userId'
     | '/dashboard/journey/$userId'
     | '/dashboard/documents/'
@@ -236,7 +245,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
-    | '/newsletters'
     | '/dashboard/activity'
     | '/dashboard/applications'
     | '/dashboard/errors'
@@ -248,6 +256,7 @@ export interface FileRouteTypes {
     | '/dashboard/users'
     | '/dashboard/workflows'
     | '/dashboard'
+    | '/newsletters'
     | '/dashboard/documents/$userId'
     | '/dashboard/journey/$userId'
     | '/dashboard/documents'
@@ -271,6 +280,7 @@ export interface FileRouteTypes {
     | '/dashboard/users'
     | '/dashboard/workflows'
     | '/dashboard/'
+    | '/newsletters/'
     | '/dashboard/documents/$userId'
     | '/dashboard/journey/$userId'
     | '/dashboard/documents/'
@@ -283,7 +293,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRouteWithChildren
   LoginRoute: typeof LoginRoute
-  NewslettersRoute: typeof NewslettersRoute
+  NewslettersRoute: typeof NewslettersRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -315,6 +325,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/newsletters/': {
+      id: '/newsletters/'
+      path: '/'
+      fullPath: '/newsletters/'
+      preLoaderRoute: typeof NewslettersIndexRouteImport
+      parentRoute: typeof NewslettersRoute
     }
     '/dashboard/': {
       id: '/dashboard/'
@@ -482,11 +499,23 @@ const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
   DashboardRouteChildren,
 )
 
+interface NewslettersRouteChildren {
+  NewslettersIndexRoute: typeof NewslettersIndexRoute
+}
+
+const NewslettersRouteChildren: NewslettersRouteChildren = {
+  NewslettersIndexRoute: NewslettersIndexRoute,
+}
+
+const NewslettersRouteWithChildren = NewslettersRoute._addFileChildren(
+  NewslettersRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRouteWithChildren,
   LoginRoute: LoginRoute,
-  NewslettersRoute: NewslettersRoute,
+  NewslettersRoute: NewslettersRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
