@@ -9,10 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as NewslettersRouteImport } from './routes/newsletters'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as NewslettersIndexRouteImport } from './routes/newsletters.index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as NewslettersIdRouteImport } from './routes/newsletters.$id'
 import { Route as DashboardWorkflowsRouteImport } from './routes/dashboard.workflows'
 import { Route as DashboardUsersRouteImport } from './routes/dashboard.users'
 import { Route as DashboardUsageRouteImport } from './routes/dashboard.usage'
@@ -30,6 +33,11 @@ import { Route as DashboardDocumentsUserIdRouteImport } from './routes/dashboard
 import { Route as DashboardTTableIndexRouteImport } from './routes/dashboard.t.$table.index'
 import { Route as DashboardTTableIdRouteImport } from './routes/dashboard.t.$table.$id'
 
+const NewslettersRoute = NewslettersRouteImport.update({
+  id: '/newsletters',
+  path: '/newsletters',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -45,10 +53,20 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NewslettersIndexRoute = NewslettersIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => NewslettersRoute,
+} as any)
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DashboardRoute,
+} as any)
+const NewslettersIdRoute = NewslettersIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => NewslettersRoute,
 } as any)
 const DashboardWorkflowsRoute = DashboardWorkflowsRouteImport.update({
   id: '/workflows',
@@ -137,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
+  '/newsletters': typeof NewslettersRouteWithChildren
   '/dashboard/activity': typeof DashboardActivityRoute
   '/dashboard/applications': typeof DashboardApplicationsRoute
   '/dashboard/errors': typeof DashboardErrorsRoute
@@ -147,7 +166,9 @@ export interface FileRoutesByFullPath {
   '/dashboard/usage': typeof DashboardUsageRoute
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
+  '/newsletters/$id': typeof NewslettersIdRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/newsletters/': typeof NewslettersIndexRoute
   '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
   '/dashboard/journey/$userId': typeof DashboardJourneyUserIdRoute
   '/dashboard/documents/': typeof DashboardDocumentsIndexRoute
@@ -168,7 +189,9 @@ export interface FileRoutesByTo {
   '/dashboard/usage': typeof DashboardUsageRoute
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
+  '/newsletters/$id': typeof NewslettersIdRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/newsletters': typeof NewslettersIndexRoute
   '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
   '/dashboard/journey/$userId': typeof DashboardJourneyUserIdRoute
   '/dashboard/documents': typeof DashboardDocumentsIndexRoute
@@ -181,6 +204,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
+  '/newsletters': typeof NewslettersRouteWithChildren
   '/dashboard/activity': typeof DashboardActivityRoute
   '/dashboard/applications': typeof DashboardApplicationsRoute
   '/dashboard/errors': typeof DashboardErrorsRoute
@@ -191,7 +215,9 @@ export interface FileRoutesById {
   '/dashboard/usage': typeof DashboardUsageRoute
   '/dashboard/users': typeof DashboardUsersRoute
   '/dashboard/workflows': typeof DashboardWorkflowsRoute
+  '/newsletters/$id': typeof NewslettersIdRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/newsletters/': typeof NewslettersIndexRoute
   '/dashboard/documents/$userId': typeof DashboardDocumentsUserIdRoute
   '/dashboard/journey/$userId': typeof DashboardJourneyUserIdRoute
   '/dashboard/documents/': typeof DashboardDocumentsIndexRoute
@@ -205,6 +231,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/login'
+    | '/newsletters'
     | '/dashboard/activity'
     | '/dashboard/applications'
     | '/dashboard/errors'
@@ -215,7 +242,9 @@ export interface FileRouteTypes {
     | '/dashboard/usage'
     | '/dashboard/users'
     | '/dashboard/workflows'
+    | '/newsletters/$id'
     | '/dashboard/'
+    | '/newsletters/'
     | '/dashboard/documents/$userId'
     | '/dashboard/journey/$userId'
     | '/dashboard/documents/'
@@ -236,7 +265,9 @@ export interface FileRouteTypes {
     | '/dashboard/usage'
     | '/dashboard/users'
     | '/dashboard/workflows'
+    | '/newsletters/$id'
     | '/dashboard'
+    | '/newsletters'
     | '/dashboard/documents/$userId'
     | '/dashboard/journey/$userId'
     | '/dashboard/documents'
@@ -248,6 +279,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/login'
+    | '/newsletters'
     | '/dashboard/activity'
     | '/dashboard/applications'
     | '/dashboard/errors'
@@ -258,7 +290,9 @@ export interface FileRouteTypes {
     | '/dashboard/usage'
     | '/dashboard/users'
     | '/dashboard/workflows'
+    | '/newsletters/$id'
     | '/dashboard/'
+    | '/newsletters/'
     | '/dashboard/documents/$userId'
     | '/dashboard/journey/$userId'
     | '/dashboard/documents/'
@@ -271,10 +305,18 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRouteWithChildren
   LoginRoute: typeof LoginRoute
+  NewslettersRoute: typeof NewslettersRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/newsletters': {
+      id: '/newsletters'
+      path: '/newsletters'
+      fullPath: '/newsletters'
+      preLoaderRoute: typeof NewslettersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -296,12 +338,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/newsletters/': {
+      id: '/newsletters/'
+      path: '/'
+      fullPath: '/newsletters/'
+      preLoaderRoute: typeof NewslettersIndexRouteImport
+      parentRoute: typeof NewslettersRoute
+    }
     '/dashboard/': {
       id: '/dashboard/'
       path: '/'
       fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
+    }
+    '/newsletters/$id': {
+      id: '/newsletters/$id'
+      path: '/$id'
+      fullPath: '/newsletters/$id'
+      preLoaderRoute: typeof NewslettersIdRouteImport
+      parentRoute: typeof NewslettersRoute
     }
     '/dashboard/workflows': {
       id: '/dashboard/workflows'
@@ -462,10 +518,25 @@ const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
   DashboardRouteChildren,
 )
 
+interface NewslettersRouteChildren {
+  NewslettersIdRoute: typeof NewslettersIdRoute
+  NewslettersIndexRoute: typeof NewslettersIndexRoute
+}
+
+const NewslettersRouteChildren: NewslettersRouteChildren = {
+  NewslettersIdRoute: NewslettersIdRoute,
+  NewslettersIndexRoute: NewslettersIndexRoute,
+}
+
+const NewslettersRouteWithChildren = NewslettersRoute._addFileChildren(
+  NewslettersRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRouteWithChildren,
   LoginRoute: LoginRoute,
+  NewslettersRoute: NewslettersRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

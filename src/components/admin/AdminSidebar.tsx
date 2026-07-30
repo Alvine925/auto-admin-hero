@@ -62,10 +62,10 @@ export function AdminSidebar() {
         </Link>
 
         <Link
-          to="/dashboard/newsletters"
+          to="/newsletters"
           className={cn(
             "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
-            pathname.startsWith("/dashboard/newsletters")
+            pathname.startsWith("/newsletters")
               ? "bg-sidebar-accent text-sidebar-accent-foreground border-l-2 border-gold"
               : "text-sidebar-foreground/75 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground"
           )}
@@ -73,6 +73,7 @@ export function AdminSidebar() {
           <Mail className="h-4 w-4" />
           Newsletters
         </Link>
+
 
 
         {TABLE_GROUPS.map(({ group, tables }) => (
