@@ -1408,6 +1408,501 @@ export const NEWSLETTERS: Newsletter[] = [
     ctaLabel: "Keep your momentum going",
     ctaPath: "/dashboard",
   },
+
+  // ── 27. Rejection is redirection ──────────────────────────────────────────
+  {
+    id: "rejection-is-not-the-end",
+    title: "Rejection is not a verdict on your worth",
+    subject: "That rejection email says far less about you than you think",
+    preheader: "How to read a rejection correctly, recover quickly, and use it to get sharper.",
+    heroImage:
+      "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80",
+    heroAlt: "A calm workspace with a notebook and coffee in warm morning light",
+    eyebrow: "Resilience",
+    headline: "A rejection is information, not a judgement",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Hi {{FIRST_NAME}}, there is a particular sting to opening an email that begins with the words we regret to inform you. Even when you were not certain you wanted the role, even when you knew the competition was strong, it lands somewhere personal. That reaction is normal and human, and you do not need to pretend otherwise.",
+      },
+      {
+        type: "paragraph",
+        text: "But we want you to understand something about how hiring decisions are actually made, because most candidates carry a story about rejection that is simply not accurate.",
+      },
+      { type: "heading", text: "What a rejection usually means" },
+      {
+        type: "paragraph",
+        text: "A single open role in Kenya often attracts between one hundred and six hundred applications. From that pool, a hiring manager will interview perhaps five people and hire one. That means the overwhelming majority of qualified, capable, genuinely excellent candidates receive a rejection. Not because they lacked ability, but because arithmetic left only one seat.",
+      },
+      {
+        type: "paragraph",
+        text: "Beyond the numbers, hiring decisions turn on factors you will never see. An internal candidate applied at the last minute. The budget shifted and the role was reshaped. Someone already knew the team. The manager wanted a specific tool on the CV that was not listed in the advertisement. None of these are statements about your worth or your future.",
+      },
+      { type: "heading", text: "How to recover in twenty four hours" },
+      {
+        type: "list",
+        items: [
+          "Give yourself the evening. Feel the disappointment fully rather than suppressing it, then set a deadline for it",
+          "Write down one thing you did well in that process, even if it was simply submitting the application",
+          "Write down one thing you would change next time, and make it specific and actionable",
+          "Reply to the rejection with a short, gracious thank you. Recruiters remember candidates who handle rejection with grace, and roles reopen more often than you would expect",
+          "Send one new application the following morning. Momentum is the strongest antidote to discouragement",
+        ],
+      },
+      { type: "heading", text: "The compounding you cannot see" },
+      {
+        type: "paragraph",
+        text: "Every application makes your next one faster. Every interview makes your next answer sharper. Every rejection narrows the gap between where you are and the role that will finally say yes. You are not starting over each time. You are accumulating skill, clarity, and evidence, and none of that disappears when one door closes.",
+      },
+      {
+        type: "paragraph",
+        text: "Keep your CV updated, keep your applications targeted, and keep going. The people who eventually get hired are almost never the people who never got rejected. They are the people who kept applying after they were.",
+      },
+    ],
+    ctaLabel: "Find your next opportunity",
+    ctaPath: "/dashboard",
+  },
+
+  // ── 28. Small daily habits ────────────────────────────────────────────────
+  {
+    id: "daily-job-search-habits",
+    title: "The one hour a day that changes everything",
+    subject: "You do not need a perfect job search. You need a consistent one.",
+    preheader: "A simple daily routine that beats occasional bursts of frantic effort.",
+    heroImage:
+      "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1200&q=80",
+    heroAlt: "An open planner and pen on a clean desk",
+    eyebrow: "Consistency",
+    headline: "Small daily effort beats occasional heroics",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Hi {{FIRST_NAME}}, most job searches fail not because of a lack of talent but because of an inconsistent rhythm. People spend an entire Saturday sending thirty rushed applications, burn out completely, then avoid the whole thing for two weeks. The result is a search that feels enormous and produces very little.",
+      },
+      {
+        type: "paragraph",
+        text: "There is a better way, and it takes about one hour a day.",
+      },
+      { type: "heading", text: "The one hour structure" },
+      {
+        type: "list",
+        items: [
+          "First fifteen minutes: review the new matched roles that appeared on Tellus overnight and shortlist the two or three worth your attention",
+          "Next thirty minutes: apply properly to one or two roles with a tailored cover letter that references the actual job description",
+          "Next ten minutes: follow up on one application from last week or send one message to someone in your network",
+          "Final five minutes: write down what you did and what you will do tomorrow, then close the laptop",
+        ],
+      },
+      {
+        type: "paragraph",
+        text: "One hour a day, five days a week, produces between five and ten strong, tailored applications every week. That is between twenty and forty a month. Almost nobody sustains that with weekend bursts, and quality collapses when you rush.",
+      },
+      { type: "heading", text: "Why quality beats volume every time" },
+      {
+        type: "paragraph",
+        text: "Ten carefully tailored applications will nearly always outperform fifty generic ones. A tailored application demonstrates that you read the job description, understood the problem the employer is trying to solve, and can explain in plain terms why your experience is relevant to it. That is the difference between a CV that gets skimmed and one that gets a phone call.",
+      },
+      { type: "heading", text: "Protect the rhythm, not the mood" },
+      {
+        type: "paragraph",
+        text: "You will not feel motivated every day. Motivation is unreliable and always has been. What you can control is showing up for the hour whether you feel like it or not. On the hard days, lower the bar rather than skipping entirely. Fifteen minutes of reviewing matches still keeps the chain unbroken, and an unbroken chain is what carries you to the offer.",
+      },
+      {
+        type: "paragraph",
+        text: "Start today. One hour. Tellus has already done the searching for you, so your hour goes into the part that actually matters.",
+      },
+    ],
+    ctaLabel: "Start today's hour",
+    ctaPath: "/dashboard",
+  },
+
+  // ── 29. Confidence and impostor feelings ──────────────────────────────────
+  {
+    id: "confidence-when-applying",
+    title: "Apply anyway, even when you feel unqualified",
+    subject: "You are more qualified than you think. Apply anyway.",
+    preheader: "Why the checklist in the job advertisement is a wish list, not a barrier.",
+    heroImage:
+      "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=80",
+    heroAlt: "A confident professional standing in a bright modern office",
+    eyebrow: "Confidence",
+    headline: "The requirements list is a wish list, not a wall",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Hi {{FIRST_NAME}}, here is a pattern we see constantly. A strong candidate opens a job advertisement, reads a list of ten requirements, matches seven of them clearly and two of them partially, and then closes the tab because of the one they do not have.",
+      },
+      {
+        type: "paragraph",
+        text: "That decision costs people more opportunities than any skills gap ever has.",
+      },
+      { type: "heading", text: "How job descriptions are actually written" },
+      {
+        type: "paragraph",
+        text: "A job description is rarely a precise specification. It is usually assembled by a manager describing an ideal person who does not exist, often copied partially from an older advertisement, then padded by human resources with standard language. Hiring managers routinely hire candidates who meet six or seven of ten listed requirements because those candidates demonstrated judgement, willingness to learn, and clear communication.",
+      },
+      { type: "heading", text: "What actually gets people hired" },
+      {
+        type: "list",
+        items: [
+          "Evidence that you have solved a similar problem before, even in a different context or a smaller organisation",
+          "Clear, specific examples with outcomes rather than vague descriptions of responsibilities",
+          "Demonstrated ability to learn quickly, which you can prove by naming something you taught yourself and what it produced",
+          "Genuine understanding of what the employer needs, which comes from ten minutes of research",
+          "Communication that is calm, direct, and free of desperation or overclaiming",
+        ],
+      },
+      { type: "heading", text: "A simple rule to follow from now on" },
+      {
+        type: "paragraph",
+        text: "If you meet roughly sixty percent of the stated requirements and you are genuinely interested in the work, apply. Address the gap honestly in one sentence in your cover letter and immediately pair it with evidence that you learn fast. Do not apologise for what you lack. Point at what you bring.",
+      },
+      {
+        type: "paragraph",
+        text: "The worst realistic outcome is a rejection you would have received anyway by not applying. The best outcome is a role that stretches you into the professional you are becoming. Those odds are firmly in your favour.",
+      },
+    ],
+    ctaLabel: "Apply to a stretch role",
+    ctaPath: "/dashboard",
+  },
+
+  // ── 30. Your career is long ───────────────────────────────────────────────
+  {
+    id: "your-career-is-long",
+    title: "Your career is longer than this season",
+    subject: "This difficult stretch is a chapter, not the whole story",
+    preheader: "Perspective for anyone who feels behind, stuck, or late to where they wanted to be.",
+    heroImage:
+      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80",
+    heroAlt: "A long winding road through green hills at sunrise",
+    eyebrow: "Perspective",
+    headline: "You are not behind. You are in progress.",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Hi {{FIRST_NAME}}, if you are reading this while feeling that you are somehow behind where you should be by now, we want to offer a different frame. Careers are not races with a shared starting gun and a single finishing line. They are long, uneven, and full of turns that look like setbacks in the moment and like foundations in hindsight.",
+      },
+      { type: "heading", text: "The timeline you are comparing yourself to is fiction" },
+      {
+        type: "paragraph",
+        text: "The people whose progress you see online are showing you announcements, not the six months of silence before them. Almost every professional you admire has a stretch in their history that they never posted about: a redundancy, a role that did not work out, a year of applications that went nowhere. Comparing your full inner experience to someone else's edited highlights is a guaranteed way to feel behind while doing perfectly well.",
+      },
+      { type: "heading", text: "What this season is actually building" },
+      {
+        type: "list",
+        items: [
+          "Clarity about what you actually want, which most people never take the time to develop",
+          "The ability to explain your value plainly, which is a skill that pays for the rest of your working life",
+          "Resilience that will steady you the next time something uncertain arrives, and something always does",
+          "A wider network, because every conversation you have during a search stays available to you afterwards",
+          "Discipline, because showing up without immediate reward is the rarest professional habit there is",
+        ],
+      },
+      { type: "heading", text: "A working life is roughly forty years long" },
+      {
+        type: "paragraph",
+        text: "Three months of searching is a very small fraction of that. Six months is still small. The role you take next is not your final destination, and it does not have to be perfect. It has to be a reasonable next step that keeps you learning, keeps you paid, and keeps doors open. That is enough. You can adjust from a moving position far more easily than from a standing one.",
+      },
+      {
+        type: "paragraph",
+        text: "Be patient with yourself and stubborn about the process. Keep applying, keep learning, keep going. This chapter ends, and you will be more capable on the other side of it than you were before it started.",
+      },
+    ],
+    ctaLabel: "Take the next step",
+    ctaPath: "/dashboard",
+  },
+
+  // ── 31. Celebrate small wins ──────────────────────────────────────────────
+  {
+    id: "celebrate-small-wins",
+    title: "Count the wins nobody else is counting",
+    subject: "You have done more than you are giving yourself credit for",
+    preheader: "Why tracking small progress keeps you going when offers feel far away.",
+    heroImage:
+      "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1200&q=80",
+    heroAlt: "Hands clapping in a bright meeting room",
+    eyebrow: "Momentum",
+    headline: "Progress is happening even when offers are not",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Hi {{FIRST_NAME}}, job searching has a cruel scoring system. There is only one outcome that officially counts as success, and it arrives once, at the very end, after weeks or months of work that produced no visible score at all. That structure would demoralise anyone.",
+      },
+      {
+        type: "paragraph",
+        text: "So we suggest you change the scoring system.",
+      },
+      { type: "heading", text: "Things that genuinely count as wins" },
+      {
+        type: "list",
+        items: [
+          "You updated your CV and it now reads better than it did last month",
+          "You sent an application you were proud of instead of one you rushed",
+          "You reached out to someone you had been putting off contacting",
+          "You got a reply, even a short one, from a real person at a company",
+          "You made it to a first interview out of hundreds of applicants",
+          "You answered a difficult interview question better than you would have three weeks ago",
+          "You showed up on a day when you did not feel like showing up at all",
+        ],
+      },
+      {
+        type: "paragraph",
+        text: "Every item on that list is real progress. None of them will feel like it in the moment unless you deliberately record them, because the brain discounts anything that does not produce an immediate reward.",
+      },
+      { type: "heading", text: "Keep a visible record" },
+      {
+        type: "paragraph",
+        text: "Your Tellus dashboard already tracks your applications, their status, and your activity over time. Open it once a week and actually look at the numbers. Seeing that you sent twelve tailored applications in a month, had three conversations, and reached two second-round interviews is a completely different emotional experience from vaguely feeling that nothing is happening.",
+      },
+      {
+        type: "paragraph",
+        text: "You are further along than the story in your head suggests. Count the wins, keep the record, and let the evidence carry you through the weeks when motivation does not.",
+      },
+    ],
+    ctaLabel: "Review your progress",
+    ctaPath: "/dashboard",
+  },
+
+  // ── 32. Skills while you search ───────────────────────────────────────────
+  {
+    id: "build-skills-while-searching",
+    title: "Build something while you wait",
+    subject: "The gap on your CV can become the most interesting part of it",
+    preheader: "How to turn waiting time into evidence that makes employers pay attention.",
+    heroImage:
+      "https://images.unsplash.com/photo-1454165833767-1265ba7fef3b?auto=format&fit=crop&w=1200&q=80",
+    heroAlt: "A person working intently on a laptop with notes spread out",
+    eyebrow: "Growth",
+    headline: "Turn waiting time into proof",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Hi {{FIRST_NAME}}, one of the hardest parts of a job search is the waiting. You send strong applications and then days pass with no reply. That empty time is where discouragement grows, and it is also the single most underused resource available to you right now.",
+      },
+      { type: "heading", text: "Employers do not fear gaps. They fear idleness." },
+      {
+        type: "paragraph",
+        text: "A hiring manager looking at a three month gap is not thinking that you are unemployable. They are wondering what you did with the time. If your answer is that you completed a certification, built a small project, volunteered your skills to an organisation, or took on freelance work, the gap immediately becomes a positive signal about initiative rather than a question mark.",
+      },
+      { type: "heading", text: "High value things you can do in a few weeks" },
+      {
+        type: "list",
+        items: [
+          "Complete a recognised short course in a tool that appears repeatedly in the job descriptions you are targeting",
+          "Build a small portfolio piece that demonstrates the exact skill an employer is hiring for, even if it is a personal project",
+          "Volunteer a specific skill to a community organisation and record the measurable outcome you produced",
+          "Take on one small freelance engagement, which gives you both recent experience and a reference",
+          "Write publicly about your field, which builds credibility and gives interviewers something to react to",
+        ],
+      },
+      { type: "heading", text: "Choose based on the job descriptions in front of you" },
+      {
+        type: "paragraph",
+        text: "Do not learn randomly. Open the ten roles you most want on Tellus and note which tools, certifications, or skills appear again and again. That repeated list is your curriculum. Learning something that three of your target employers explicitly ask for is worth far more than a general course that none of them mentioned.",
+      },
+      {
+        type: "paragraph",
+        text: "You are not stuck waiting. You are in a period where you can add something to your CV that was not there before, and that addition may be exactly what makes the difference in your next application.",
+      },
+    ],
+    ctaLabel: "See what employers are asking for",
+    ctaPath: "/dashboard",
+  },
+
+  // ── 33. Ask for help ──────────────────────────────────────────────────────
+  {
+    id: "asking-for-help",
+    title: "Asking for help is a strategy, not a weakness",
+    subject: "The message you are afraid to send could change your search",
+    preheader: "How to reach out to people in your network without feeling like a burden.",
+    heroImage:
+      "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80",
+    heroAlt: "Two professionals shaking hands warmly",
+    eyebrow: "Support",
+    headline: "The message you are afraid to send",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Hi {{FIRST_NAME}}, most people search for work in near silence. They do not tell former colleagues, they do not tell friends, and they certainly do not message someone they met once at a conference two years ago. The reason is almost always the same fear: that asking for help makes you look desperate.",
+      },
+      {
+        type: "paragraph",
+        text: "It does not. It makes you look like someone taking their career seriously, and the vast majority of people are genuinely willing to help when the ask is clear and small.",
+      },
+      { type: "heading", text: "Why silence is expensive" },
+      {
+        type: "paragraph",
+        text: "A large share of roles in Kenya are filled through referral before or shortly after they are advertised publicly. Every person who knows you are looking becomes a potential route into a company you would otherwise never hear about. Every person who does not know cannot help you, no matter how much they would want to.",
+      },
+      { type: "heading", text: "How to write the message" },
+      {
+        type: "list",
+        items: [
+          "Be direct in the first line about why you are writing rather than burying it after three paragraphs of small talk",
+          "Say clearly what kind of role you are looking for, including the function, the level, and the location",
+          "Make the ask small and specific, such as whether they know of anything or would be willing to introduce you to one person",
+          "Attach or link your CV so they can forward it without extra effort",
+          "Thank them and make it easy to say no, which paradoxically makes people far more likely to say yes",
+        ],
+      },
+      { type: "heading", text: "Who to contact this week" },
+      {
+        type: "paragraph",
+        text: "Pick five people. A former manager who valued your work. A colleague who moved to a company you admire. A classmate now working in your target industry. Someone you worked with on a project years ago. A friend who simply knows a lot of people. Send five short messages this week. You do not need all five to respond. You need one.",
+      },
+      {
+        type: "paragraph",
+        text: "You are not asking anyone to hand you a job. You are asking them to keep you in mind. That is a small thing to ask and a very large thing to receive.",
+      },
+    ],
+    ctaLabel: "Get your CV ready to share",
+    ctaPath: "/dashboard",
+  },
+
+  // ── 34. Interview nerves ──────────────────────────────────────────────────
+  {
+    id: "walk-into-the-interview-calm",
+    title: "Walk into the interview calm",
+    subject: "Nerves before an interview are normal. Here is how to use them.",
+    preheader: "Preparation, framing, and a simple routine for the hour before you sit down.",
+    heroImage:
+      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
+    heroAlt: "A calm professional preparing notes before a meeting",
+    eyebrow: "Interview mindset",
+    headline: "You are not being judged. You are having a conversation.",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Hi {{FIRST_NAME}}, if your heart rate climbs before an interview, nothing is wrong with you. Your body is preparing for something that matters. The goal is not to eliminate that response but to arrive prepared enough that it becomes focus rather than panic.",
+      },
+      { type: "heading", text: "Reframe what an interview actually is" },
+      {
+        type: "paragraph",
+        text: "An interview is not an examination where you either pass or fail as a person. It is a two way conversation about whether a specific problem in a specific team matches a specific set of experience. If it does not match, that is useful information for both of you and not a failure. Candidates who hold this frame come across as calmer, more curious, and considerably more senior, because they are asking questions rather than only answering them.",
+      },
+      { type: "heading", text: "Preparation that removes most of the fear" },
+      {
+        type: "list",
+        items: [
+          "Prepare six specific stories from your experience with a clear situation, action, and measurable result, then adapt them to whatever question comes",
+          "Research the company for ten minutes so you can reference something real about their work",
+          "Write down three questions of your own about the team, the priorities for the first ninety days, and how success is measured",
+          "Practice your answers out loud, not only in your head, because the two feel entirely different",
+          "Prepare a clear, honest, thirty second answer for your biggest perceived weakness in relation to the role",
+        ],
+      },
+      { type: "heading", text: "The hour before" },
+      {
+        type: "paragraph",
+        text: "Stop revising thirty minutes before. Reread only your six stories and your three questions. Drink water. Breathe slowly for two minutes with a longer exhale than inhale, which measurably lowers your heart rate. Remind yourself that they invited you because your CV already convinced them you might be right. You are not starting from zero in that room.",
+      },
+      {
+        type: "paragraph",
+        text: "Use the interview practice tool on Tellus to rehearse role specific questions and get written feedback before the real conversation. Preparation is the most reliable cure for nerves there is.",
+      },
+    ],
+    ctaLabel: "Practice for your interview",
+    ctaPath: "/dashboard",
+  },
+
+  // ── 35. Protecting your energy ────────────────────────────────────────────
+  {
+    id: "protect-your-energy",
+    title: "Protect your energy through the search",
+    subject: "A job search is a marathon. Pace yourself accordingly.",
+    preheader: "Practical boundaries that keep you effective over months, not just days.",
+    heroImage:
+      "https://images.unsplash.com/photo-1476611338391-6f395a0ebc7b?auto=format&fit=crop&w=1200&q=80",
+    heroAlt: "A peaceful early morning walk along a quiet path",
+    eyebrow: "Wellbeing",
+    headline: "Pace yourself so you can keep going",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Hi {{FIRST_NAME}}, a job search takes as long as it takes, and the people who come through it well are not the ones who sprinted hardest in the first two weeks. They are the ones who built a pace they could sustain for months if necessary.",
+      },
+      { type: "heading", text: "Set boundaries around the search" },
+      {
+        type: "list",
+        items: [
+          "Give the search defined hours and stop when they end, rather than letting it bleed into every waking moment",
+          "Do not check your email for replies more than twice a day, because refreshing does not accelerate anyone's hiring process",
+          "Take one full day off from applications every week and treat it as non negotiable",
+          "Keep doing at least one thing that has nothing to do with work and that you are good at",
+          "Move your body daily, even briefly, because the effect on mood and clarity is larger than most people expect",
+        ],
+      },
+      { type: "heading", text: "Guard your sense of self" },
+      {
+        type: "paragraph",
+        text: "During a long search it is easy for your entire identity to collapse into the single question of whether you are employed. You are still the person who is good at their craft, who supports the people around them, who has solved hard problems before. Unemployment is a temporary circumstance, not a description of who you are. Keep the parts of your life that remind you of that.",
+      },
+      { type: "heading", text: "Talk to someone" },
+      {
+        type: "paragraph",
+        text: "Tell at least one person honestly how the search is going, including the difficult parts. Carrying it alone makes it heavier than it needs to be, and the people close to you would almost always rather know than be kept at a distance.",
+      },
+      {
+        type: "paragraph",
+        text: "Let Tellus carry the mechanical load. The searching, matching, drafting, and tracking are handled. Spend your limited energy on the conversations and decisions that only you can make, and rest without guilt in between.",
+      },
+    ],
+    ctaLabel: "Let Tellus do the heavy lifting",
+    ctaPath: "/dashboard",
+  },
+
+  // ── 36. Your comeback ─────────────────────────────────────────────────────
+  {
+    id: "this-is-your-comeback",
+    title: "This is the part before the comeback",
+    subject: "One yes is all it takes, and it only has to happen once",
+    preheader: "A reminder for anyone deep in the search and wondering whether it is worth continuing.",
+    heroImage:
+      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80",
+    heroAlt: "A team celebrating a success together in an office",
+    eyebrow: "Encouragement",
+    headline: "It only has to work once",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Hi {{FIRST_NAME}}, here is something worth holding onto on the days when the search feels endless. You do not need a high success rate. You do not need most employers to say yes. You need one. One role, one manager, one decision, and the entire situation changes in a single afternoon.",
+      },
+      {
+        type: "paragraph",
+        text: "That is a very different challenge from the one your discouragement is describing to you. Your discouragement says nothing is working. Reality says the thing that works has not happened yet, and it only has to happen once.",
+      },
+      { type: "heading", text: "How it usually happens" },
+      {
+        type: "paragraph",
+        text: "Almost nobody sees it coming. A role appears that was not there last week. An application you had almost forgotten produces a reply. Someone you messaged two months ago remembers you when a position opens on their team. The turning point rarely arrives with warning, which means the only way to be there for it is to still be in the process when it comes.",
+      },
+      { type: "heading", text: "What to do this week" },
+      {
+        type: "list",
+        items: [
+          "Open your matched roles and shortlist three that genuinely interest you",
+          "Send two properly tailored applications rather than ten rushed ones",
+          "Follow up on one application that has gone quiet for more than ten days",
+          "Message one person in your network and tell them plainly what you are looking for",
+          "Do one thing that improves your CV, even a single sharper bullet point",
+        ],
+      },
+      {
+        type: "paragraph",
+        text: "Five actions. That is a full week of meaningful progress, and it is entirely within your control regardless of how the market behaves.",
+      },
+      {
+        type: "paragraph",
+        text: "We have watched many people move through this exact stage, feeling exactly the way you may be feeling now, and then start a role they are genuinely excited about a few weeks later. There was no dramatic transformation in between. They simply kept going until the yes arrived.",
+      },
+      {
+        type: "paragraph",
+        text: "Keep going, {{FIRST_NAME}}. We are firmly on your side, and your next chapter is closer than today feels.",
+      },
+    ],
+    ctaLabel: "Open your matched roles",
+    ctaPath: "/dashboard",
+  },
 ];
 
 export function getNewsletter(id: string) {
