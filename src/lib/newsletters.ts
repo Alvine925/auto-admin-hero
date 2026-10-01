@@ -22,6 +22,8 @@ export interface Newsletter {
   blocks: NewsletterBlock[];
   ctaLabel: string;
   ctaPath: string;
+  ctaStyle?: "button" | "link";
+  footerNote?: string;
 }
 
 export const NEWSLETTERS: Newsletter[] = [
@@ -29,83 +31,45 @@ export const NEWSLETTERS: Newsletter[] = [
   {
     id: "introducing-tellus-jobs",
     title: "Introducing Tellus Jobs (personal invite)",
-    subject: "Your job search ends today, {{FIRST_NAME}}",
-    preheader: "The rejection spiral is not your fault. Here is what actually changes it.",
+    subject: "Tired of job-search silence? Start here",
+    preheader: "Less endless scrolling. More roles that fit your skills, and a clearer next step.",
     heroImage:
       "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80",
     heroAlt: "A laptop and notebook on a calm, sunlit desk",
     eyebrow: "A personal invitation",
-    headline: "Another application. Another silence.",
+    headline: "Applications out. No replies. Sound familiar?",
     blocks: [
       {
         type: "paragraph",
-        text: "Hi {{FIRST_NAME}}, you applied again this week, didn't you? You found a role that fit, spent your evening adjusting your CV, wrote the cover letter from scratch, triple checked everything, and hit send.",
+        text: "Hi {{FIRST_NAME}}, job hunting can feel like a full-time job of its own: endless scrolling, tailoring your CV, sending applications, and waiting to hear back.",
       },
       {
         type: "paragraph",
-        text: "And then? Nothing. No reply. No feedback. Not even a rejection. Just that quiet, hollow feeling of shouting into the void and wondering if anyone even opened it.",
+        text: "Then come the rejections—or worse, silence. It is hard to know what to change, and that uncertainty can wear down your confidence even when you have real skills to offer.",
       },
-      { type: "heading", text: "The rejection spiral is real, and it is not your fault" },
+      { type: "heading", text: "A more focused way to find your next role" },
       {
         type: "paragraph",
-        text: "You send out thirty applications and hear back from two. The two that reply send a one line rejection with no reason attached. So you guess. Was it the CV? The cover letter? Your experience? You rewrite everything and start again, more tired and less confident than last week.",
-      },
-      {
-        type: "paragraph",
-        text: "Weeks turn into months. You start doubting skills you know you have. You watch other people announce new jobs and wonder what they have that you don't. Let us say this clearly: the problem is not your talent. The problem is a broken process that treats hundreds of identical, generic applications as numbers and buries good people in the pile.",
+        text: "Tellus Jobs is built for job seekers in Kenya. Add your CV once to find current openings matched to your skills and experience. When a role feels right, get help preparing a tailored cover letter and keep your saved jobs and applications organized in one place.",
       },
       {
         type: "list",
         items: [
-          "Hours lost scrolling through hundreds of listings that do not fit your skills",
-          "The same generic CV sent everywhere because tailoring each one takes too long",
-          "Cover letters written from scratch, over and over, late into the night",
-          "Applications scattered across emails and spreadsheets with no way to track them",
-          "Rejections with zero feedback, leaving you guessing what to fix",
-          "Great roles missed simply because you saw them a day too late",
+          "Discover roles matched to your skills and experience",
+          "Get help writing a cover letter for each opportunity",
+          "Track saved jobs and applications in one place",
         ],
       },
-      { type: "heading", text: "This is exactly why Tellus Jobs exists" },
+      { type: "heading", text: "Take the next step on your terms" },
       {
         type: "paragraph",
-        text: "Tellus Jobs is an AI powered career platform built for job seekers in Kenya. It takes the heavy, repetitive, discouraging parts of job hunting and handles them for you, so your energy goes into what actually gets you hired.",
-      },
-      {
-        type: "paragraph",
-        text: "Upload your CV once and Tellus reads your skills, experience, and seniority, then matches you to live roles that genuinely fit. Every day it gathers fresh openings from Kenya's top job boards and company career pages, so you see opportunities before they go stale. When you find the right role, Tellus writes a personalised cover letter and application email that connects your real experience to what the employer is looking for.",
-      },
-      {
-        type: "list",
-        items: [
-          "Smart matching: your CV is read once, then matched to roles that truly fit",
-          "Fresh jobs daily: new openings pulled from top boards and career pages",
-          "Tailored applications: cover letters and emails written for each specific role",
-          "One clean tracker: every saved job and application in a single dashboard",
-          "Job alerts: get notified the moment a matching role appears",
-          "Interview prep: practise with questions tailored to the exact role",
-          "An AI career coach: ask anything about your CV, salary, or positioning",
-        ],
-      },
-      { type: "heading", text: "Fewer applications. Stronger ones. Real momentum." },
-      {
-        type: "paragraph",
-        text: "Rejection hurts most when it feels random. When your applications target roles that actually suit you, and each one is tailored with care, your odds change completely. Instead of fifty generic applications into silence, you send fewer, sharper ones that get read. Every result, good or bad, teaches you something you can act on.",
-      },
-      {
-        type: "paragraph",
-        text: "You still bring the talent and the drive. Tellus makes sure the right people actually see it. Getting started takes about five minutes: create your free account, upload your CV, and browse your matched roles today.",
-      },
-      {
-        type: "paragraph",
-        text: "{{FIRST_NAME}}, your next role might be one good application away. If you know someone else who is job hunting right now, pass this along. It could be exactly what they need today.",
-      },
-      {
-        type: "paragraph",
-        text: "Wishing you every success, the Tellus Jobs team.",
+        text: "You bring the experience; Tellus helps make the search clearer and the busywork lighter. Create your free account, add your CV, and explore opportunities that fit.",
       },
     ],
     ctaLabel: "Get started free",
     ctaPath: "/marketplace",
+    ctaStyle: "button",
+    footerNote: "You are receiving this because you were invited to explore Tellus Jobs.",
   },
 
 
@@ -2023,6 +1987,18 @@ export function renderNewsletterHtml(n: Newsletter): string {
     .join("");
 
   const ctaUrl = `${APP_DOMAIN}${n.ctaPath}`;
+  const cta =
+    n.ctaStyle === "button"
+      ? `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:38px 0 0;">
+          <tr>
+            <td align="center" bgcolor="${accent}" style="border-radius:6px;">
+              <a href="${esc(ctaUrl)}" style="display:inline-block;padding:15px 24px;font-size:16px;line-height:1.2;font-weight:600;color:#ffffff;text-decoration:none;border-radius:6px;">${esc(n.ctaLabel)}</a>
+            </td>
+          </tr>
+        </table>`
+      : `<div style="margin:38px 0 0;">
+          <a href="${esc(ctaUrl)}" style="font-size:16px;font-weight:600;color:${accent};text-decoration:none;border-bottom:2px solid ${accent};padding-bottom:4px;">${esc(n.ctaLabel)} &rarr;</a>
+        </div>`;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -2052,11 +2028,9 @@ export function renderNewsletterHtml(n: Newsletter): string {
             <div style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:${accent};margin-bottom:12px;">${esc(n.eyebrow)}</div>
             <h1 style="margin:0 0 24px;font-family:Georgia,'Times New Roman',serif;font-size:30px;line-height:1.25;font-weight:600;color:${ink};">${esc(n.headline)}</h1>
             ${blocks}
-            <div style="margin:38px 0 0;">
-              <a href="${esc(ctaUrl)}" style="font-size:16px;font-weight:600;color:${accent};text-decoration:none;border-bottom:2px solid ${accent};padding-bottom:4px;">${esc(n.ctaLabel)} &rarr;</a>
-            </div>
+            ${cta}
             <div style="margin:48px 0 0;font-size:13px;line-height:1.7;color:#8b9a93;">
-              You are receiving this because you have a Tellus Jobs account.<br />
+              ${esc(n.footerNote ?? "You are receiving this because you have a Tellus Jobs account.")}<br />
               <a href="${esc(APP_DOMAIN)}" style="color:#8b9a93;text-decoration:underline;">Visit Tellus Jobs</a>
               &nbsp;&middot;&nbsp;
               <a href="${esc(APP_DOMAIN)}/feedback" style="color:#8b9a93;text-decoration:underline;">Share feedback</a>
