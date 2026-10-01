@@ -29,17 +29,21 @@ export const NEWSLETTERS: Newsletter[] = [
   {
     id: "introducing-tellus-jobs",
     title: "Introducing Tellus Jobs (personal invite)",
-    subject: "Tired of applying and hearing nothing back? This is for you",
-    preheader: "The job search is broken. Here is a smarter way to find, apply, and get hired in Kenya.",
+    subject: "Open this before you send your next job application",
+    preheader: "Why good candidates get ignored, and the fix I have been working on for you",
     heroImage:
       "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80",
     heroAlt: "A laptop and notebook on a calm, sunlit desk",
     eyebrow: "A personal invitation",
-    headline: "Job hunting should not feel like shouting into the void",
+    headline: "Before you apply for another job, read this",
     blocks: [
       {
         type: "paragraph",
-        text: "Hi {{FIRST_NAME}}, I wanted to share something with you personally, because I think it could genuinely change the way your job search feels. Before I tell you what it is, let me describe a situation you might recognise.",
+        text: "Hi {{FIRST_NAME}}, let me ask you something. When was the last time you applied for a job and actually heard back? Not an automated confirmation email. A real reply, from a real person, telling you where you stand.",
+      },
+      {
+        type: "paragraph",
+        text: "If you have to think hard to remember, this email is for you. Here is what is really happening when you hit send.",
       },
       { type: "heading", text: "The problem nobody talks about honestly" },
       {
