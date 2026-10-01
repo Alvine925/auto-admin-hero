@@ -69,7 +69,7 @@ export const NEWSLETTERS: Newsletter[] = [
     ctaLabel: "Get started free",
     ctaPath: "/marketplace",
     ctaStyle: "button",
-    footerNote: "You are receiving this because you were invited to explore Tellus Jobs.",
+    footerNote: "Transforming your job search, one opportunity at a time.",
   },
 
 
