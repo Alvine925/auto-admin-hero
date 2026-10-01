@@ -17,6 +17,8 @@ export function NewsletterComposer({ newsletter }: { newsletter: Newsletter }) {
   const [q, setQ] = useState("");
   const [picked, setPicked] = useState<Record<string, boolean>>({});
   const [sending, setSending] = useState(false);
+  const [customName, setCustomName] = useState("");
+  const [customEmail, setCustomEmail] = useState("");
   const send = useServerFn(sendNewsletter);
 
   const html = useMemo(() => renderNewsletterHtml(newsletter), [newsletter]);
@@ -143,6 +145,30 @@ export function NewsletterComposer({ newsletter }: { newsletter: Newsletter }) {
               </Button>
             </div>
           </div>
+
+          <form
+            className="space-y-2 rounded-md border border-border p-3"
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const email = customEmail.trim();
+              const name = customName.trim();
+              if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 255) {
+                toast.error("Enter a valid email address");
+                return;
+              }
+              await doSend([{ id: "", email, name: name.slice(0, 100) || null }]);
+              setCustomEmail("");
+              setCustomName("");
+            }}
+          >
+            <div className="text-sm font-medium text-foreground">Send to someone new</div>
+            <Input value={customName} onChange={(e) => setCustomName(e.target.value)} placeholder="Recipient name" maxLength={100} />
+            <Input type="email" value={customEmail} onChange={(e) => setCustomEmail(e.target.value)} placeholder="recipient@email.com" maxLength={255} required />
+            <Button type="submit" size="sm" className="w-full" disabled={sending}>
+              {sending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Send className="mr-2 h-4 w-4" />}
+              Send email
+            </Button>
+          </form>
 
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
