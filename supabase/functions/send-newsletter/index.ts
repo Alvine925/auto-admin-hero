@@ -50,7 +50,7 @@ Deno.serve(async (req) => {
     if (!subject || !html || recipients.length === 0) {
       return json({ error: "subject, html and recipients are required" }, 400);
     }
-    if (recipients.length > 2000) return json({ error: "Too many recipients" }, 400);
+    if (recipients.length > 100) return json({ error: "A send is limited to 100 recipients" }, 400);
 
     const brevoKey = Deno.env.get("BREVO_API_KEY");
     if (!brevoKey) return json({ error: "BREVO_API_KEY is not configured" }, 500);
