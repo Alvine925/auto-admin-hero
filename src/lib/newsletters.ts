@@ -25,6 +25,95 @@ export interface Newsletter {
 }
 
 export const NEWSLETTERS: Newsletter[] = [
+  // ── Invite: introduce Tellus to new people ────────────────────────────────
+  {
+    id: "introducing-tellus-jobs",
+    title: "Introducing Tellus Jobs (personal invite)",
+    subject: "Tired of applying and hearing nothing back? This is for you",
+    preheader: "The job search is broken. Here is a smarter way to find, apply, and get hired in Kenya.",
+    heroImage:
+      "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80",
+    heroAlt: "A laptop and notebook on a calm, sunlit desk",
+    eyebrow: "A personal invitation",
+    headline: "Job hunting should not feel like shouting into the void",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Hi {{FIRST_NAME}}, I wanted to share something with you personally, because I think it could genuinely change the way your job search feels. Before I tell you what it is, let me describe a situation you might recognise.",
+      },
+      { type: "heading", text: "The problem nobody talks about honestly" },
+      {
+        type: "paragraph",
+        text: "You find a role that looks perfect. You spend an evening rewriting your CV, drafting a cover letter from scratch, and double checking every detail. You hit send, feeling hopeful. Then nothing. No reply, no feedback, not even a rejection. A week later you do it again. And again.",
+      },
+      {
+        type: "paragraph",
+        text: "When a reply finally comes, it is often a short rejection that tells you nothing about what went wrong. Over time, that silence starts to feel personal. Many talented people begin to doubt themselves, not because they lack ability, but because the process itself is exhausting, unclear, and built against them.",
+      },
+      {
+        type: "list",
+        items: [
+          "Hours lost scrolling through hundreds of listings that do not fit your skills or experience",
+          "The same generic CV sent everywhere because tailoring each one takes too long",
+          "Cover letters written from scratch, over and over, late into the night",
+          "Applications scattered across emails and spreadsheets with no clear way to track them",
+          "Rejections with zero feedback, leaving you guessing what to fix",
+          "Missing great roles simply because you saw them a day too late",
+        ],
+      },
+      {
+        type: "paragraph",
+        text: "If any of that sounds familiar, you are not alone, and it is not your fault. The system is broken. So we built a better one.",
+      },
+      { type: "heading", text: "The solution: Tellus Jobs" },
+      {
+        type: "paragraph",
+        text: "Tellus Jobs is an AI powered career platform built specifically for job seekers in Kenya. It takes the heavy, repetitive, discouraging parts of job hunting and handles them for you, so you can focus your energy on what actually gets you hired: showing up as your best self.",
+      },
+      {
+        type: "list",
+        items: [
+          "Smart matching: upload your CV once and Tellus reads your skills, experience, and seniority, then matches you to live roles that truly fit",
+          "Fresh jobs every day: we gather new openings daily from Kenya's top job boards and company career pages, so you see opportunities early",
+          "Tailored applications: for any role, Tellus writes a personalised cover letter and application email that connects your experience to what the employer wants",
+          "One clean tracker: every saved job and application lives in one dashboard, so you always know where you stand",
+          "Job alerts: set monitors and get notified the moment a matching role appears",
+          "Interview preparation: practise with questions tailored to the exact role you are going for",
+          "An AI career coach: ask anything about your CV, salary expectations, or how to position yourself",
+        ],
+      },
+      { type: "heading", text: "Turning rejection into progress" },
+      {
+        type: "paragraph",
+        text: "Rejection hurts most when it feels random. Tellus changes that. When your applications are targeted at roles that genuinely suit you, and each one is tailored with care, your odds improve dramatically. Instead of sending fifty generic applications into silence, you send fewer, stronger ones that get noticed. Every step becomes intentional, and every result teaches you something.",
+      },
+      {
+        type: "paragraph",
+        text: "You still bring the talent and the drive. Tellus simply makes sure that talent is seen by the right people, at the right time, in the right way.",
+      },
+      { type: "heading", text: "Getting started takes about five minutes" },
+      {
+        type: "list",
+        items: [
+          "Create your free account at myjobs.tellusjobs.site",
+          "Upload your CV and let Tellus build your professional profile automatically",
+          "Browse your matched roles and save the ones that excite you",
+          "Generate a tailored application and send it with confidence",
+        ],
+      },
+      {
+        type: "paragraph",
+        text: "{{FIRST_NAME}}, your next role might be one good application away. I would love for you to give Tellus a try and see the difference for yourself. If you know someone else who is job hunting right now, feel free to pass this along. It could be exactly what they need today.",
+      },
+      {
+        type: "paragraph",
+        text: "Wishing you every success, the Tellus Jobs team.",
+      },
+    ],
+    ctaLabel: "Try Tellus Jobs free",
+    ctaPath: "/",
+  },
+
 
   // ── 1. Welcome ────────────────────────────────────────────────────────────
   {

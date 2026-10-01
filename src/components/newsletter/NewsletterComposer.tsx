@@ -86,7 +86,7 @@ export function NewsletterComposer({ newsletter }: { newsletter: Newsletter }) {
           newsletterTitle: newsletter.title,
           subject: newsletter.subject,
           html,
-          recipients: recipients.map((r) => ({ email: r.email, name: r.name, userId: r.id })),
+          recipients: recipients.map((r) => ({ email: r.email, name: r.name, userId: r.id || null })),
         },
       });
       if (res.error) toast.error(res.error);
