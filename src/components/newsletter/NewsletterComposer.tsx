@@ -7,10 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, Mail, Search, Send, Users } from "lucide-react";
+import { Loader2, Mail, Search, Send, UserCheck, Users } from "lucide-react";
 import { toast } from "sonner";
 import { renderNewsletterHtml, type Newsletter } from "@/lib/newsletters";
 import {
+  MAX_BULK_RECIPIENTS,
   MAX_NEWSLETTER_RECIPIENTS,
   parseBulkNewsletterRecipients,
 } from "@/lib/newsletter-recipients";
@@ -25,6 +26,7 @@ export function NewsletterComposer({ newsletter }: { newsletter: Newsletter }) {
   const [customName, setCustomName] = useState("");
   const [customEmail, setCustomEmail] = useState("");
   const [bulkRecipientsText, setBulkRecipientsText] = useState("");
+  const [progress, setProgress] = useState<string | null>(null);
   const send = useServerFn(sendNewsletter);
 
   const html = useMemo(() => renderNewsletterHtml(newsletter), [newsletter]);
@@ -62,6 +64,50 @@ export function NewsletterComposer({ newsletter }: { newsletter: Newsletter }) {
       return data ?? [];
     },
   });
+
+  const { data: tracking, refetch: refetchTracking } = useQuery({
+    queryKey: ["newsletter-tracking", newsletter.id],
+    queryFn: async () => {
+      const { data: sends } = await supabase
+        .from("newsletter_sends")
+        .select("recipient_email, status, created_at")
+        .eq("newsletter_id", newsletter.id)
+        .eq("status", "sent")
+        .order("created_at", { ascending: true })
+        .limit(5000);
+      const firstSent = new Map<string, string>();
+      for (const r of sends ?? []) {
+        const e = (r.recipient_email ?? "").toLowerCase();
+        if (e && !firstSent.has(e)) firstSent.set(e, r.created_at as string);
+      }
+      const emails = [...firstSent.keys()];
+      const profiles = new Map<string, { id: string; created_at: string }>();
+      for (let i = 0; i < emails.length; i += 200) {
+        const { data } = await supabase
+          .from("profiles")
+          .select("id, email, created_at")
+          .in("email", emails.slice(i, i + 200));
+        for (const p of data ?? [])
+          profiles.set((p.email ?? "").toLowerCase(), { id: p.id, created_at: p.created_at });
+      }
+      const rows = emails.map((email) => {
+        const p = profiles.get(email);
+        const sentAt = firstSent.get(email)!;
+        return {
+          email,
+          sentAt,
+          userId: p?.id ?? null,
+          status: !p
+            ? ("not_signed_up" as const)
+            : new Date(p.created_at) >= new Date(sentAt)
+              ? ("signed_up" as const)
+              : ("existing_user" as const),
+        };
+      });
+      return rows;
+    },
+  });
+  const signedUpCount = (tracking ?? []).filter((t) => t.status === "signed_up").length;
 
   const filtered = (users ?? []).filter((u) => {
     if (!q) return true;
@@ -114,42 +160,49 @@ export function NewsletterComposer({ newsletter }: { newsletter: Newsletter }) {
       toast.error("Select at least one recipient");
       return false;
     }
-    if (recipients.length > MAX_NEWSLETTER_RECIPIENTS) {
-      toast.error(`A send is limited to ${MAX_NEWSLETTER_RECIPIENTS} recipients.`);
+    if (recipients.length > MAX_BULK_RECIPIENTS) {
+      toast.error(`A bulk send is limited to ${MAX_BULK_RECIPIENTS} recipients.`);
       return false;
     }
     setSending(true);
+    let sent = 0;
+    let failed = 0;
     try {
-      const res = await send({
-        data: {
-          newsletterId: newsletter.id,
-          newsletterTitle: newsletter.title,
-          subject: newsletter.subject,
-          html,
-          recipients: recipients.map((r) => ({
-            email: r.email,
-            name: r.name,
-            userId: r.id || null,
-          })),
-        },
-      });
-      if (res.error) {
-        toast.error(res.error);
+      for (let i = 0; i < recipients.length; i += MAX_NEWSLETTER_RECIPIENTS) {
+        const batch = recipients.slice(i, i + MAX_NEWSLETTER_RECIPIENTS);
+        if (recipients.length > MAX_NEWSLETTER_RECIPIENTS) {
+          setProgress(`Sending ${i + 1}-${i + batch.length} of ${recipients.length}`);
+        }
+        const res = await send({
+          data: {
+            newsletterId: newsletter.id,
+            newsletterTitle: newsletter.title,
+            subject: newsletter.subject,
+            html,
+            recipients: batch.map((r) => ({ email: r.email, name: r.name, userId: r.id || null })),
+          },
+        });
+        if (res.error) {
+          toast.error(`${res.error}${sent ? ` (after ${sent} sent)` : ""}`);
+          return false;
+        }
+        sent += res.sent ?? 0;
+        failed += res.failed ?? 0;
+      }
+      if (failed) {
+        toast.warning(`Sent ${sent}, failed ${failed}`);
         return false;
       }
-      if (res.failed) {
-        toast.warning(`Sent ${res.sent}, failed ${res.failed}`);
-        refetchRecent();
-        return false;
-      }
-      toast.success(`Newsletter sent to ${res.sent} recipient${res.sent === 1 ? "" : "s"}`);
-      refetchRecent();
+      toast.success(`Newsletter sent to ${sent} recipient${sent === 1 ? "" : "s"}`);
       return true;
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Failed to send newsletter");
       return false;
     } finally {
       setSending(false);
+      setProgress(null);
+      refetchRecent();
+      refetchTracking();
     }
   };
 
@@ -198,19 +251,17 @@ export function NewsletterComposer({ newsletter }: { newsletter: Newsletter }) {
                 size="sm"
                 variant="secondary"
                 disabled={
-                  sending || filtered.length === 0 || filtered.length > MAX_NEWSLETTER_RECIPIENTS
+                  sending || filtered.length === 0 || filtered.length > MAX_BULK_RECIPIENTS
                 }
                 onClick={() => doSend(filtered)}
               >
-                {filtered.length > MAX_NEWSLETTER_RECIPIENTS
-                  ? `Batch send (max ${MAX_NEWSLETTER_RECIPIENTS})`
-                  : `Batch send (${filtered.length})`}
+                Send to all ({filtered.length})
               </Button>
             </div>
           </div>
-          {filtered.length > MAX_NEWSLETTER_RECIPIENTS && (
-            <p className="text-xs text-muted-foreground">
-              Filter to {MAX_NEWSLETTER_RECIPIENTS} people or fewer to send this batch.
+          {progress && (
+            <p className="flex items-center gap-2 text-xs text-primary">
+              <Loader2 className="h-3 w-3 animate-spin" /> {progress}
             </p>
           )}
 
@@ -275,17 +326,17 @@ export function NewsletterComposer({ newsletter }: { newsletter: Newsletter }) {
               <div className="text-sm font-medium text-foreground">Send to a list</div>
               <Badge
                 variant={
-                  parsedBulkRecipients.entryCount > MAX_NEWSLETTER_RECIPIENTS
+                  parsedBulkRecipients.entryCount > MAX_BULK_RECIPIENTS
                     ? "destructive"
                     : "secondary"
                 }
               >
-                {parsedBulkRecipients.entryCount}/{MAX_NEWSLETTER_RECIPIENTS}
+                {parsedBulkRecipients.entryCount}/{MAX_BULK_RECIPIENTS}
               </Badge>
             </div>
             <p className="text-xs text-muted-foreground">
-              One person per line: name, email. You can also paste tab-separated rows or “Name
-              &lt;email&gt;”.
+              Paste raw emails (any separator) or “name, email” per line. Emails are cleaned,
+              de-duplicated and sorted; missing names become “There”.
             </p>
             <Textarea
               value={bulkRecipientsText}
@@ -295,6 +346,16 @@ export function NewsletterComposer({ newsletter }: { newsletter: Newsletter }) {
               maxLength={50000}
               aria-label="Bulk recipient names and email addresses"
             />
+            {parsedBulkRecipients.recipients.length > 0 && (
+              <div className="max-h-40 divide-y divide-border overflow-y-auto rounded border border-border text-xs">
+                {parsedBulkRecipients.recipients.map((r) => (
+                  <div key={r.email} className="flex justify-between gap-2 px-2 py-1">
+                    <span className="truncate text-foreground">{r.email}</span>
+                    <span className="shrink-0 text-muted-foreground">{r.name}</span>
+                  </div>
+                ))}
+              </div>
+            )}
             {parsedBulkRecipients.errors.length > 0 && (
               <ul className="space-y-1 text-xs text-destructive" role="alert">
                 {parsedBulkRecipients.errors.slice(0, 4).map((error) => (
@@ -368,6 +429,39 @@ export function NewsletterComposer({ newsletter }: { newsletter: Newsletter }) {
                 </Button>
               </div>
             ))}
+          </div>
+
+          <div>
+            <div className="mb-2 flex items-center justify-between text-sm font-medium text-foreground">
+              <span className="flex items-center gap-2">
+                <UserCheck className="h-4 w-4 text-primary" /> Signup tracking
+              </span>
+              <Badge variant="secondary">
+                {signedUpCount} signed up / {(tracking ?? []).length} reached
+              </Badge>
+            </div>
+            <div className="max-h-64 divide-y divide-border overflow-y-auto rounded-md border border-border text-sm">
+              {(tracking ?? []).length === 0 && (
+                <div className="p-3 text-muted-foreground">No recipients yet.</div>
+              )}
+              {(tracking ?? []).map((t) => (
+                <div key={t.email} className="flex items-center justify-between gap-3 px-3 py-2">
+                  <div className="min-w-0">
+                    <div className="truncate text-foreground">{t.email}</div>
+                    <div className="text-xs text-muted-foreground">
+                      Sent {new Date(t.sentAt).toLocaleDateString()}
+                    </div>
+                  </div>
+                  {t.status === "signed_up" ? (
+                    <Badge>Signed up</Badge>
+                  ) : t.status === "existing_user" ? (
+                    <Badge variant="secondary">Already a user</Badge>
+                  ) : (
+                    <Badge variant="outline">Not yet</Badge>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
 
           <div>
