@@ -9,38 +9,33 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as NewslettersRouteImport } from './routes/newsletters'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as NewslettersIndexRouteImport } from './routes/newsletters.index'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as NewslettersRouteImport } from './routes/newsletters'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
-import { Route as NewslettersIdRouteImport } from './routes/newsletters.$id'
-import { Route as DashboardWorkflowsRouteImport } from './routes/dashboard.workflows'
-import { Route as DashboardUsersRouteImport } from './routes/dashboard.users'
-import { Route as DashboardUsageRouteImport } from './routes/dashboard.usage'
-import { Route as DashboardScrapedRouteImport } from './routes/dashboard.scraped'
-import { Route as DashboardNotificationsRouteImport } from './routes/dashboard.notifications'
-import { Route as DashboardJobsRouteImport } from './routes/dashboard.jobs'
-import { Route as DashboardFeedbackRouteImport } from './routes/dashboard.feedback'
-import { Route as DashboardErrorsRouteImport } from './routes/dashboard.errors'
-import { Route as DashboardApplicationsRouteImport } from './routes/dashboard.applications'
 import { Route as DashboardActivityRouteImport } from './routes/dashboard.activity'
-import { Route as DashboardNewslettersIndexRouteImport } from './routes/dashboard.newsletters.index'
+import { Route as DashboardApplicationsRouteImport } from './routes/dashboard.applications'
+import { Route as DashboardErrorsRouteImport } from './routes/dashboard.errors'
+import { Route as DashboardFeedbackRouteImport } from './routes/dashboard.feedback'
+import { Route as DashboardJobsRouteImport } from './routes/dashboard.jobs'
+import { Route as DashboardNotificationsRouteImport } from './routes/dashboard.notifications'
+import { Route as DashboardScrapedRouteImport } from './routes/dashboard.scraped'
+import { Route as DashboardUsageRouteImport } from './routes/dashboard.usage'
+import { Route as DashboardUsersRouteImport } from './routes/dashboard.users'
+import { Route as DashboardWorkflowsRouteImport } from './routes/dashboard.workflows'
+import { Route as NewslettersIndexRouteImport } from './routes/newsletters.index'
+import { Route as NewslettersIdRouteImport } from './routes/newsletters.$id'
 import { Route as DashboardDocumentsIndexRouteImport } from './routes/dashboard.documents.index'
-import { Route as DashboardJourneyUserIdRouteImport } from './routes/dashboard.journey.$userId'
 import { Route as DashboardDocumentsUserIdRouteImport } from './routes/dashboard.documents.$userId'
+import { Route as DashboardJourneyUserIdRouteImport } from './routes/dashboard.journey.$userId'
+import { Route as DashboardNewslettersIndexRouteImport } from './routes/dashboard.newsletters.index'
 import { Route as DashboardTTableIndexRouteImport } from './routes/dashboard.t.$table.index'
 import { Route as DashboardTTableIdRouteImport } from './routes/dashboard.t.$table.$id'
 
-const NewslettersRoute = NewslettersRouteImport.update({
-  id: '/newsletters',
-  path: '/newsletters',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -48,69 +43,19 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const NewslettersIndexRoute = NewslettersIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => NewslettersRoute,
+const NewslettersRoute = NewslettersRouteImport.update({
+  id: '/newsletters',
+  path: '/newsletters',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const NewslettersIdRoute = NewslettersIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => NewslettersRoute,
-} as any)
-const DashboardWorkflowsRoute = DashboardWorkflowsRouteImport.update({
-  id: '/workflows',
-  path: '/workflows',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardUsersRoute = DashboardUsersRouteImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardUsageRoute = DashboardUsageRouteImport.update({
-  id: '/usage',
-  path: '/usage',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardScrapedRoute = DashboardScrapedRouteImport.update({
-  id: '/scraped',
-  path: '/scraped',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardNotificationsRoute = DashboardNotificationsRouteImport.update({
-  id: '/notifications',
-  path: '/notifications',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardJobsRoute = DashboardJobsRouteImport.update({
-  id: '/jobs',
-  path: '/jobs',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardFeedbackRoute = DashboardFeedbackRouteImport.update({
-  id: '/feedback',
-  path: '/feedback',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardErrorsRoute = DashboardErrorsRouteImport.update({
-  id: '/errors',
-  path: '/errors',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardApplicationsRoute = DashboardApplicationsRouteImport.update({
-  id: '/applications',
-  path: '/applications',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardActivityRoute = DashboardActivityRouteImport.update({
@@ -118,26 +63,81 @@ const DashboardActivityRoute = DashboardActivityRouteImport.update({
   path: '/activity',
   getParentRoute: () => DashboardRoute,
 } as any)
-const DashboardNewslettersIndexRoute =
-  DashboardNewslettersIndexRouteImport.update({
-    id: '/newsletters/',
-    path: '/newsletters/',
-    getParentRoute: () => DashboardRoute,
-  } as any)
+const DashboardApplicationsRoute = DashboardApplicationsRouteImport.update({
+  id: '/applications',
+  path: '/applications',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardErrorsRoute = DashboardErrorsRouteImport.update({
+  id: '/errors',
+  path: '/errors',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardFeedbackRoute = DashboardFeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardJobsRoute = DashboardJobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardNotificationsRoute = DashboardNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardScrapedRoute = DashboardScrapedRouteImport.update({
+  id: '/scraped',
+  path: '/scraped',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardUsageRoute = DashboardUsageRouteImport.update({
+  id: '/usage',
+  path: '/usage',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardUsersRoute = DashboardUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardWorkflowsRoute = DashboardWorkflowsRouteImport.update({
+  id: '/workflows',
+  path: '/workflows',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const NewslettersIndexRoute = NewslettersIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => NewslettersRoute,
+} as any)
+const NewslettersIdRoute = NewslettersIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => NewslettersRoute,
+} as any)
 const DashboardDocumentsIndexRoute = DashboardDocumentsIndexRouteImport.update({
   id: '/documents/',
   path: '/documents/',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardJourneyUserIdRoute = DashboardJourneyUserIdRouteImport.update({
-  id: '/journey/$userId',
-  path: '/journey/$userId',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardDocumentsUserIdRoute =
   DashboardDocumentsUserIdRouteImport.update({
     id: '/documents/$userId',
     path: '/documents/$userId',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardJourneyUserIdRoute = DashboardJourneyUserIdRouteImport.update({
+  id: '/journey/$userId',
+  path: '/journey/$userId',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardNewslettersIndexRoute =
+  DashboardNewslettersIndexRouteImport.update({
+    id: '/newsletters/',
+    path: '/newsletters/',
     getParentRoute: () => DashboardRoute,
   } as any)
 const DashboardTTableIndexRoute = DashboardTTableIndexRouteImport.update({
@@ -310,18 +310,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/newsletters': {
-      id: '/newsletters'
-      path: '/newsletters'
-      fullPath: '/newsletters'
-      preLoaderRoute: typeof NewslettersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -331,95 +324,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/newsletters/': {
-      id: '/newsletters/'
-      path: '/'
-      fullPath: '/newsletters/'
-      preLoaderRoute: typeof NewslettersIndexRouteImport
-      parentRoute: typeof NewslettersRoute
+    '/newsletters': {
+      id: '/newsletters'
+      path: '/newsletters'
+      fullPath: '/newsletters'
+      preLoaderRoute: typeof NewslettersRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/dashboard/': {
       id: '/dashboard/'
       path: '/'
       fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/newsletters/$id': {
-      id: '/newsletters/$id'
-      path: '/$id'
-      fullPath: '/newsletters/$id'
-      preLoaderRoute: typeof NewslettersIdRouteImport
-      parentRoute: typeof NewslettersRoute
-    }
-    '/dashboard/workflows': {
-      id: '/dashboard/workflows'
-      path: '/workflows'
-      fullPath: '/dashboard/workflows'
-      preLoaderRoute: typeof DashboardWorkflowsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/users': {
-      id: '/dashboard/users'
-      path: '/users'
-      fullPath: '/dashboard/users'
-      preLoaderRoute: typeof DashboardUsersRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/usage': {
-      id: '/dashboard/usage'
-      path: '/usage'
-      fullPath: '/dashboard/usage'
-      preLoaderRoute: typeof DashboardUsageRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/scraped': {
-      id: '/dashboard/scraped'
-      path: '/scraped'
-      fullPath: '/dashboard/scraped'
-      preLoaderRoute: typeof DashboardScrapedRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/notifications': {
-      id: '/dashboard/notifications'
-      path: '/notifications'
-      fullPath: '/dashboard/notifications'
-      preLoaderRoute: typeof DashboardNotificationsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/jobs': {
-      id: '/dashboard/jobs'
-      path: '/jobs'
-      fullPath: '/dashboard/jobs'
-      preLoaderRoute: typeof DashboardJobsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/feedback': {
-      id: '/dashboard/feedback'
-      path: '/feedback'
-      fullPath: '/dashboard/feedback'
-      preLoaderRoute: typeof DashboardFeedbackRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/errors': {
-      id: '/dashboard/errors'
-      path: '/errors'
-      fullPath: '/dashboard/errors'
-      preLoaderRoute: typeof DashboardErrorsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/applications': {
-      id: '/dashboard/applications'
-      path: '/applications'
-      fullPath: '/dashboard/applications'
-      preLoaderRoute: typeof DashboardApplicationsRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/dashboard/activity': {
@@ -429,18 +352,95 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardActivityRouteImport
       parentRoute: typeof DashboardRoute
     }
-    '/dashboard/newsletters/': {
-      id: '/dashboard/newsletters/'
-      path: '/newsletters'
-      fullPath: '/dashboard/newsletters/'
-      preLoaderRoute: typeof DashboardNewslettersIndexRouteImport
+    '/dashboard/applications': {
+      id: '/dashboard/applications'
+      path: '/applications'
+      fullPath: '/dashboard/applications'
+      preLoaderRoute: typeof DashboardApplicationsRouteImport
       parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/errors': {
+      id: '/dashboard/errors'
+      path: '/errors'
+      fullPath: '/dashboard/errors'
+      preLoaderRoute: typeof DashboardErrorsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/feedback': {
+      id: '/dashboard/feedback'
+      path: '/feedback'
+      fullPath: '/dashboard/feedback'
+      preLoaderRoute: typeof DashboardFeedbackRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/jobs': {
+      id: '/dashboard/jobs'
+      path: '/jobs'
+      fullPath: '/dashboard/jobs'
+      preLoaderRoute: typeof DashboardJobsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/notifications': {
+      id: '/dashboard/notifications'
+      path: '/notifications'
+      fullPath: '/dashboard/notifications'
+      preLoaderRoute: typeof DashboardNotificationsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/scraped': {
+      id: '/dashboard/scraped'
+      path: '/scraped'
+      fullPath: '/dashboard/scraped'
+      preLoaderRoute: typeof DashboardScrapedRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/usage': {
+      id: '/dashboard/usage'
+      path: '/usage'
+      fullPath: '/dashboard/usage'
+      preLoaderRoute: typeof DashboardUsageRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/users': {
+      id: '/dashboard/users'
+      path: '/users'
+      fullPath: '/dashboard/users'
+      preLoaderRoute: typeof DashboardUsersRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/workflows': {
+      id: '/dashboard/workflows'
+      path: '/workflows'
+      fullPath: '/dashboard/workflows'
+      preLoaderRoute: typeof DashboardWorkflowsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/newsletters/': {
+      id: '/newsletters/'
+      path: '/'
+      fullPath: '/newsletters/'
+      preLoaderRoute: typeof NewslettersIndexRouteImport
+      parentRoute: typeof NewslettersRoute
+    }
+    '/newsletters/$id': {
+      id: '/newsletters/$id'
+      path: '/$id'
+      fullPath: '/newsletters/$id'
+      preLoaderRoute: typeof NewslettersIdRouteImport
+      parentRoute: typeof NewslettersRoute
     }
     '/dashboard/documents/': {
       id: '/dashboard/documents/'
       path: '/documents'
       fullPath: '/dashboard/documents/'
       preLoaderRoute: typeof DashboardDocumentsIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/documents/$userId': {
+      id: '/dashboard/documents/$userId'
+      path: '/documents/$userId'
+      fullPath: '/dashboard/documents/$userId'
+      preLoaderRoute: typeof DashboardDocumentsUserIdRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/dashboard/journey/$userId': {
@@ -450,11 +450,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardJourneyUserIdRouteImport
       parentRoute: typeof DashboardRoute
     }
-    '/dashboard/documents/$userId': {
-      id: '/dashboard/documents/$userId'
-      path: '/documents/$userId'
-      fullPath: '/dashboard/documents/$userId'
-      preLoaderRoute: typeof DashboardDocumentsUserIdRouteImport
+    '/dashboard/newsletters/': {
+      id: '/dashboard/newsletters/'
+      path: '/newsletters'
+      fullPath: '/dashboard/newsletters/'
+      preLoaderRoute: typeof DashboardNewslettersIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/dashboard/t/$table/': {
