@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.add_newsletter_recipient_to_mailing_list() FROM PUBLIC, anon, authenticated;
