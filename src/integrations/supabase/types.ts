@@ -1764,6 +1764,36 @@ export type Database = {
         }
         Relationships: []
       }
+      mailing_list: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string | null
+          source: string
+          subscribed: boolean
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name?: string | null
+          source?: string
+          subscribed?: boolean
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string | null
+          source?: string
+          subscribed?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
       monitored_jobs: {
         Row: {
           added_to_jobs: boolean
