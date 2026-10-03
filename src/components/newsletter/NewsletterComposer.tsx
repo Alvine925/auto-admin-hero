@@ -19,7 +19,36 @@ import { sendNewsletter } from "@/lib/newsletter.functions";
 
 type Recipient = { id: string; email: string; name: string | null };
 
-export function NewsletterComposer({ newsletter }: { newsletter: Newsletter }) {
+export function NewsletterComposer({ newsletter: base }: { newsletter: Newsletter }) {
+  const { data: liveJobs, refetch: refetchJobs, isFetching: jobsLoading } = useQuery({
+    queryKey: ["newsletter-live-jobs", base.id],
+    enabled: !!base.dynamicJobs,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("scraped_jobs")
+        .select("title, company, location, description_summary, summary, description")
+        .order("scraped_at", { ascending: false })
+        .limit(10);
+      return (data ?? []).map((j) => ({
+        title: j.title,
+        company: j.company,
+        location: j.location,
+        summary: j.description_summary || j.summary || (j.description ?? "").slice(0, 400),
+      }));
+    },
+  });
+  const newsletter = useMemo<Newsletter>(
+    () =>
+      base.dynamicJobs
+        ? {
+            ...base,
+            blocks: base.blocks.map((b) =>
+              b.type === "jobs" ? { type: "jobs", jobs: liveJobs ?? [] } : b,
+            ),
+          }
+        : base,
+    [base, liveJobs],
+  );
   const [q, setQ] = useState("");
   const [picked, setPicked] = useState<Record<string, boolean>>({});
   const [sending, setSending] = useState(false);
@@ -214,6 +243,18 @@ export function NewsletterComposer({ newsletter }: { newsletter: Newsletter }) {
             {newsletter.title}
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">{newsletter.subject}</p>
+          {base.dynamicJobs && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-2"
+              disabled={jobsLoading}
+              onClick={() => refetchJobs()}
+            >
+              {jobsLoading && <Loader2 className="mr-2 h-3 w-3 animate-spin" />}
+              Refresh jobs ({liveJobs?.length ?? 0} loaded)
+            </Button>
+          )}
         </div>
         <Button onClick={() => doSend(selected)} disabled={sending || selected.length === 0}>
           {sending ? (

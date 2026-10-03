@@ -8,7 +8,15 @@ export const APP_DOMAIN = "https://myjobs.tellusjobs.site";
 export type NewsletterBlock =
   | { type: "paragraph"; text: string }
   | { type: "heading"; text: string }
-  | { type: "list"; items: string[] };
+  | { type: "list"; items: string[] }
+  | { type: "jobs"; jobs: NewsletterJob[] };
+
+export type NewsletterJob = {
+  title: string;
+  company?: string | null;
+  location?: string | null;
+  summary?: string | null;
+};
 
 export interface Newsletter {
   id: string;
@@ -24,6 +32,8 @@ export interface Newsletter {
   ctaPath: string;
   ctaStyle?: "button" | "link";
   footerNote?: string;
+  /** When true, the composer fetches the latest jobs and fills any "jobs" block. */
+  dynamicJobs?: boolean;
 }
 
 export const NEWSLETTERS: Newsletter[] = [
@@ -1950,6 +1960,46 @@ export const NEWSLETTERS: Newsletter[] = [
     ctaLabel: "Open your matched roles",
     ctaPath: "/dashboard",
   },
+  // ── Weekly job picks: ten live jobs pulled from the marketplace ───────────
+  {
+    id: "ten-jobs-this-week",
+    title: "Ten fresh jobs this week (live)",
+    subject: "{{FIRST_NAME}}, 10 new jobs just landed. Is one of them yours?",
+    preheader: "Ten fresh openings, plus how to get roles picked just for you.",
+    heroImage:
+      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80",
+    heroAlt: "A team working together around a table",
+    eyebrow: "Fresh on the marketplace",
+    headline: "Ten new jobs worth a look this week",
+    dynamicJobs: true,
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Hi {{FIRST_NAME}}, scrolling through endless job boards and hearing nothing back is exhausting. So we did some of the searching for you. Here are ten of the newest openings on the Tellus Jobs marketplace right now.",
+      },
+      { type: "jobs", jobs: [] },
+      { type: "heading", text: "Want jobs picked just for you?" },
+      {
+        type: "paragraph",
+        text: "These ten are a general selection. Tellus Jobs can do much better when it knows what you want. Tell us the roles you are aiming for, your preferred county, your salary range and whether you are open to remote work, and we will match new openings to you the moment they appear.",
+      },
+      {
+        type: "list",
+        items: [
+          "Already have an account? Log in and update your desired roles and job preferences so your matches get sharper.",
+          "New here? Create a free account in a couple of minutes, upload your CV and set the jobs you want. We will handle the searching.",
+        ],
+      },
+      {
+        type: "paragraph",
+        text: "The right role often goes to the person who applies early. Set your preferences today so you hear about it first.",
+      },
+    ],
+    ctaLabel: "Browse all jobs and set your preferences",
+    ctaPath: "/marketplace",
+    ctaStyle: "link",
+    footerNote: "You are receiving this because you are part of the Tellus Jobs community.",
+  },
 ];
 
 export function getNewsletter(id: string) {
@@ -1981,6 +2031,26 @@ export function renderNewsletterHtml(n: Newsletter): string {
           )
           .join("");
         return `<ul style="margin:16px 0 0;padding:0 0 0 20px;">${items}</ul>`;
+      }
+      if (b.type === "jobs") {
+        const link = `${APP_DOMAIN}/marketplace`;
+        if (!b.jobs.length) {
+          return `<p style="margin:0 0 18px;font-size:15px;color:${soft};font-style:italic;">Jobs will appear here.</p>`;
+        }
+        return b.jobs
+          .map((j, i) => {
+            const meta = [j.company, j.location].filter(Boolean).map((x) => esc(String(x))).join(" &middot; ");
+            const summary = (j.summary ?? "").replace(/\s+/g, " ").trim();
+            const short = summary.length > 260 ? summary.slice(0, 257).replace(/\s+\S*$/, "") + "..." : summary;
+            return `<div style="margin:0;padding:22px 0;border-top:1px solid #e6e2d6;">
+              <div style="font-size:12px;letter-spacing:0.12em;color:${accent};margin-bottom:6px;">${String(i + 1).padStart(2, "0")}</div>
+              <h3 style="margin:0 0 4px;font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:1.35;font-weight:600;color:${ink};">${esc(j.title)}</h3>
+              ${meta ? `<div style="font-size:14px;color:${accent};margin-bottom:10px;">${meta}</div>` : ""}
+              ${short ? `<p style="margin:0 0 10px;font-size:15px;line-height:1.7;color:${soft};">${esc(short)}</p>` : ""}
+              <a href="${esc(link)}" style="font-size:15px;font-weight:600;color:${accent};text-decoration:none;border-bottom:1px solid ${accent};">Learn more &rarr;</a>
+            </div>`;
+          })
+          .join("");
       }
       return `<p style="margin:0 0 18px;font-size:16px;line-height:1.75;color:${soft};">${escKeepTags(b.text)}</p>`;
     })
