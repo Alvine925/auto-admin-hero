@@ -136,6 +136,32 @@ export function NewsletterComposer({ newsletter: base }: { newsletter: Newslette
       return rows;
     },
   });
+  const { data: mailingList, refetch: refetchMailing } = useQuery({
+    queryKey: ["mailing-list"],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("mailing_list")
+        .select("id, email, name")
+        .eq("subscribed", true)
+        .order("email")
+        .limit(5000);
+      const rows = data ?? [];
+      const signed = new Set<string>();
+      for (let i = 0; i < rows.length; i += 200) {
+        const { data: ps } = await supabase
+          .from("profiles")
+          .select("email")
+          .in("email", rows.slice(i, i + 200).map((r) => r.email));
+        for (const p of ps ?? []) signed.add((p.email ?? "").toLowerCase());
+      }
+      return rows.filter((r) => !signed.has(r.email.toLowerCase()));
+    },
+  });
+  const removeFromList = async (id: string) => {
+    const { error } = await supabase.from("mailing_list").update({ subscribed: false }).eq("id", id);
+    if (error) toast.error(error.message);
+    else refetchMailing();
+  };
   const signedUpCount = (tracking ?? []).filter((t) => t.status === "signed_up").length;
 
   const filtered = (users ?? []).filter((u) => {
@@ -232,6 +258,7 @@ export function NewsletterComposer({ newsletter: base }: { newsletter: Newslette
       setProgress(null);
       refetchRecent();
       refetchTracking();
+      refetchMailing();
     }
   };
 
@@ -470,6 +497,41 @@ export function NewsletterComposer({ newsletter: base }: { newsletter: Newslette
                 </Button>
               </div>
             ))}
+          </div>
+
+          <div>
+            <div className="mb-2 flex items-center justify-between gap-2 text-sm font-medium text-foreground">
+              <span className="flex items-center gap-2">
+                <Mail className="h-4 w-4 text-primary" /> Mailing list (not signed up)
+                <Badge variant="secondary">{(mailingList ?? []).length}</Badge>
+              </span>
+              <Button
+                size="sm"
+                variant="secondary"
+                disabled={sending || !(mailingList ?? []).length}
+                onClick={() =>
+                  doSend((mailingList ?? []).map((m) => ({ id: "", email: m.email, name: m.name || "There" })))
+                }
+              >
+                Send to mailing list
+              </Button>
+            </div>
+            <p className="mb-2 text-xs text-muted-foreground">
+              Everyone you email who has no account is added here automatically. People leave the list once they sign up.
+            </p>
+            <div className="max-h-64 divide-y divide-border overflow-y-auto rounded-md border border-border text-sm">
+              {(mailingList ?? []).length === 0 && (
+                <div className="p-3 text-muted-foreground">No one on the list yet.</div>
+              )}
+              {(mailingList ?? []).map((m) => (
+                <div key={m.id} className="flex items-center justify-between gap-3 px-3 py-2">
+                  <span className="truncate text-foreground">{m.email}</span>
+                  <Button size="sm" variant="ghost" onClick={() => removeFromList(m.id)}>
+                    Remove
+                  </Button>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div>
