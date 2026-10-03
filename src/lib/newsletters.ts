@@ -2000,6 +2000,57 @@ export const NEWSLETTERS: Newsletter[] = [
     ctaStyle: "link",
     footerNote: "You are receiving this because you are part of the Tellus Jobs community.",
   },
+
+  // ── Tailor your CV ───────────────────────────────────────────────────────
+  {
+    id: "tailor-your-cv",
+    title: "Tailor your CV (one click per role)",
+    subject: "The same CV for every job? That could be why they pass on you",
+    preheader: "One CV cannot fit every role. Here is how to tailor yours in minutes, for free.",
+    heroImage:
+      "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=1200&q=80",
+    heroAlt: "A person reviewing a printed CV at a tidy desk",
+    eyebrow: "Small fix, big difference",
+    headline: "Your CV is not bad. It is just not speaking their language.",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Hi {{FIRST_NAME}}, here is something most job seekers are never told: recruiters spend a few seconds scanning each CV, and they are looking for the words from the job advert. If your CV is one general document sent everywhere, the right words are often missing, and your application quietly moves on without you.",
+      },
+      {
+        type: "paragraph",
+        text: "It is not that you lack the skills. A CV written for an accountant does not highlight the same things as one written for a finance manager, even when both describe you. When every application gets the same document, every rejection feels like a verdict on you, when it is really just a mismatch on paper.",
+      },
+      { type: "heading", text: "Why tailoring works" },
+      {
+        type: "list",
+        items: [
+          "Your strongest, most relevant experience moves to the top where recruiters actually look",
+          "The exact terms from the job advert appear in your CV, so keyword screening stops filtering you out",
+          "Irrelevant details get trimmed, so the few seconds a recruiter gives you are spent on what matters",
+          "Each application feels personal to the employer, and personal applications get replies",
+        ],
+      },
+      { type: "heading", text: "This is exactly why Tellus Jobs exists" },
+      {
+        type: "paragraph",
+        text: "On Tellus Jobs, you upload your CV once, then tell us the kind of job you want. When a role matches, we generate a tailored version of your CV for that specific job, plus a matching cover letter, in minutes. No retyping, no second-guessing which parts to move around, and no cost to get started.",
+      },
+      {
+        type: "paragraph",
+        text: "You also get jobs matched to your skills from across the market, so the roles you tailor for are roles worth applying to in the first place.",
+      },
+      { type: "heading", text: "Tailor your first CV today" },
+      {
+        type: "paragraph",
+        text: "Create your free account, upload your CV, and set the job you want. The next matching role could reach you today, and your tailored CV will be ready before you finish your tea.",
+      },
+    ],
+    ctaLabel: "Tailor my CV now",
+    ctaPath: "/marketplace",
+    ctaStyle: "button",
+    footerNote: "You are receiving this because you are part of the Tellus Jobs community.",
+  },
 ];
 
 export function getNewsletter(id: string) {
